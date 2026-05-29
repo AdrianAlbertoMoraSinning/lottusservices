@@ -1,0 +1,10 @@
+{
+  "name":"Lottus Services Inc.",
+  "short_name":"Lottus",
+  "start_url":"/",
+  "display":"standalone",
+  "background_color":"#050606",
+  "theme_color":"#050606",
+  "description":"Reliable hauling and dump trailer services in Calgary.",
+  "icons":[]
+}
