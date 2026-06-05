@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pay Online | Lottus Services Inc.</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">L</span>
+      <span><strong>LOTTUS</strong><small>SERVICES INC.</small></span>
+    </a>
+    <a class="header-call" href="index.html">Back to Home</a>
+  </header>
+
+  <main class="section section-tight">
+    <div class="section-head">
+      <p class="eyebrow">Secure Payment Portal</p>
+      <h2>Pay Online</h2>
+      <p>Enter your promo code and payment details. Card information is securely processed by Stripe.</p>
+    </div>
+
+    <form id="paymentForm" class="why-panel">
+      <label>Promo Code</label>
+      <input id="promoCode" required placeholder="1000 or 1050" />
+
+      <label>Website Development Payment CAD</label>
+      <input id="websiteAmount" type="number" min="1" step="0.01" required placeholder="Enter agreed amount" />
+
+      <label>Monthly Maintenance CAD</label>
+      <input id="maintenanceAmount" type="number" min="1" step="0.01" required placeholder="Monthly amount" />
+
+      <button class="btn primary" type="submit">Continue to Secure Payment</button>
+      <p id="paymentMessage"></p>
+    </form>
+  </main>
+
+  <script>
+    const promoCode = document.getElementById("promoCode");
+    const maintenanceAmount = document.getElementById("maintenanceAmount");
+    const form = document.getElementById("paymentForm");
+    const message = document.getElementById("paymentMessage");
+
+    promoCode.addEventListener("input", () => {
+      const code = promoCode.value.trim();
+
+      if (code === "1000") {
+        maintenanceAmount.value = "40.00";
+        maintenanceAmount.readOnly = true;
+      } else if (code === "1050") {
+        maintenanceAmount.value = "";
+        maintenanceAmount.readOnly = false;
+      } else {
+        maintenanceAmount.value = "";
+        maintenanceAmount.readOnly = false;
+      }
+    });
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const payload = {
+        promoCode: promoCode.value.trim(),
+        websiteAmount: document.getElementById("websiteAmount").value,
+        maintenanceAmount: maintenanceAmount.value
+      };
+
+      const response = await fetch("/.netlify/functions/create-checkout-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await response.json();
+
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        message.textContent = data.error || "Payment could not be started.";
+      }
+    });
+  </script>
+</body>
+</html>
