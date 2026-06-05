@@ -1,29 +1,39 @@
 const Stripe = require("stripe");
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-
 exports.handler = async function (event) {
   if (event.httpMethod !== "POST") {
-    return response(405, "Method not allowed.");
+    return textResponse(405, "Method not allowed.");
+  }
+
+  const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+  if (!stripeSecretKey) {
+    return textResponse(500, "Missing STRIPE_SECRET_KEY.");
+  }
+
+  if (!webhookSecret) {
+    return textResponse(500, "Missing STRIPE_WEBHOOK_SECRET.");
   }
 
   const signature = event.headers["stripe-signature"];
-  const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
-  if (!endpointSecret) {
-    return response(500, "Missing STRIPE_WEBHOOK_SECRET.");
+  if (!signature) {
+    return textResponse(400, "Missing Stripe signature.");
   }
+
+  const stripe = new Stripe(stripeSecretKey);
 
   let stripeEvent;
 
   try {
-    const rawBody = event.isBase64Encoded
-      ? Buffer.from(event.body, "base64").toString("utf8")
-      : event.body;
-
-    stripeEvent = stripe.webhooks.constructEvent(rawBody, signature, endpointSecret);
+    stripeEvent = stripe.webhooks.constructEvent(
+      event.body,
+      signature,
+      webhookSecret
+    );
   } catch (error) {
-    return response(400, `Webhook signature verification failed: ${error.message}`);
+    return textResponse(400, `Webhook signature verification failed: ${error.message}`);
   }
 
   try {
@@ -47,9 +57,9 @@ exports.handler = async function (event) {
       }
     }
 
-    return response(200, "Webhook received.");
+    return textResponse(200, "Webhook received.");
   } catch (error) {
-    return response(500, `Webhook handler error: ${error.message}`);
+    return textResponse(500, `Webhook handler error: ${error.message}`);
   }
 };
 
@@ -59,7 +69,7 @@ function addMonthsUnix(unixSeconds, months) {
   return Math.floor(date.getTime() / 1000);
 }
 
-function response(statusCode, body) {
+function textResponse(statusCode, body) {
   return {
     statusCode,
     headers: {
