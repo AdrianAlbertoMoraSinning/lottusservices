@@ -4,36 +4,170 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Pay Online | Lottus Services Inc.</title>
+  <meta name="description" content="Secure online payments for Lottus Services Inc." />
   <link rel="stylesheet" href="style.css" />
+
+  <style>
+    .payment-page{
+      min-height:100vh;
+      background:
+        radial-gradient(circle at top right, rgba(244,185,32,.13), transparent 34%),
+        linear-gradient(135deg,#050505 0%,#0d0b04 55%,#171101 100%);
+    }
+
+    .payment-wrap{
+      max-width:980px;
+      margin:0 auto;
+      padding:70px 20px 100px;
+    }
+
+    .payment-card{
+      margin-top:28px;
+      background:rgba(10,10,10,.86);
+      border:1px solid rgba(244,185,32,.38);
+      border-radius:26px;
+      padding:34px;
+      box-shadow:0 24px 70px rgba(0,0,0,.45);
+    }
+
+    .payment-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:22px;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+
+    .field.full{
+      grid-column:1 / -1;
+    }
+
+    .field label{
+      font-weight:800;
+      font-size:.86rem;
+      letter-spacing:.04em;
+      color:#fff;
+    }
+
+    .field input{
+      width:100%;
+      height:52px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.16);
+      background:#fff;
+      color:#111;
+      padding:0 15px;
+      font-size:1rem;
+      outline:none;
+    }
+
+    .field input:focus{
+      border-color:#f4b920;
+      box-shadow:0 0 0 4px rgba(244,185,32,.16);
+    }
+
+    .payment-note{
+      margin:18px 0 0;
+      color:rgba(255,255,255,.72);
+      font-size:.95rem;
+      line-height:1.55;
+    }
+
+    .payment-actions{
+      margin-top:28px;
+      display:flex;
+      align-items:center;
+      gap:16px;
+      flex-wrap:wrap;
+    }
+
+    #paymentMessage{
+      color:#ffcf40;
+      margin:0;
+      font-weight:700;
+    }
+
+    .secure-line{
+      margin-top:20px;
+      padding-top:18px;
+      border-top:1px solid rgba(255,255,255,.1);
+      color:rgba(255,255,255,.68);
+      font-size:.9rem;
+    }
+
+    @media(max-width:760px){
+      .payment-wrap{
+        padding:44px 18px 80px;
+      }
+
+      .payment-card{
+        padding:24px;
+        border-radius:22px;
+      }
+
+      .payment-grid{
+        grid-template-columns:1fr;
+      }
+
+      .payment-actions .btn{
+        width:100%;
+        justify-content:center;
+      }
+    }
+  </style>
 </head>
-<body>
+
+<body class="payment-page">
   <header class="site-header">
-    <a class="brand" href="index.html">
+    <a class="brand" href="index.html" aria-label="Lottus Services Inc. home">
       <span class="brand-mark">L</span>
       <span><strong>LOTTUS</strong><small>SERVICES INC.</small></span>
     </a>
     <a class="header-call" href="index.html">Back to Home</a>
   </header>
 
-  <main class="section section-tight">
+  <main class="payment-wrap">
     <div class="section-head">
       <p class="eyebrow">Secure Payment Portal</p>
       <h2>Pay Online</h2>
-      <p>Enter your promo code and payment details. Card information is securely processed by Stripe.</p>
+      <p>Enter your promo code and agreed payment details. Card information is securely processed by Stripe.</p>
     </div>
 
-    <form id="paymentForm" class="why-panel">
-      <label>Promo Code</label>
-      <input id="promoCode" required placeholder="1000 or 1050" />
+    <form id="paymentForm" class="payment-card">
+      <div class="payment-grid">
+        <div class="field full">
+          <label for="promoCode">Promo Code</label>
+          <input id="promoCode" required placeholder="Enter 1000 or 1050" />
+        </div>
 
-      <label>Website Development Payment CAD</label>
-      <input id="websiteAmount" type="number" min="1" step="0.01" required placeholder="Enter agreed amount" />
+        <div class="field">
+          <label for="websiteAmount">Website Development Payment CAD</label>
+          <input id="websiteAmount" type="number" min="1" step="0.01" required placeholder="Example: 516.00" />
+        </div>
 
-      <label>Monthly Maintenance CAD</label>
-      <input id="maintenanceAmount" type="number" min="1" step="0.01" required placeholder="Monthly amount" />
+        <div class="field">
+          <label for="maintenanceAmount">Monthly Maintenance CAD</label>
+          <input id="maintenanceAmount" type="number" min="0" step="0.01" required placeholder="Monthly amount" />
+        </div>
+      </div>
 
-      <button class="btn primary" type="submit">Continue to Secure Payment</button>
-      <p id="paymentMessage"></p>
+      <p class="payment-note">
+        Promo code <strong>1000</strong> automatically applies CAD $40.00 monthly maintenance.
+        Promo code <strong>1050</strong> allows a custom monthly maintenance amount.
+      </p>
+
+      <div class="payment-actions">
+        <button class="btn primary" type="submit">Continue to Secure Payment</button>
+        <p id="paymentMessage"></p>
+      </div>
+
+      <div class="secure-line">
+        Payments are completed through Stripe checkout. Lottus Services Inc. does not store card information.
+      </div>
     </form>
   </main>
 
@@ -49,9 +183,6 @@
       if (code === "1000") {
         maintenanceAmount.value = "40.00";
         maintenanceAmount.readOnly = true;
-      } else if (code === "1050") {
-        maintenanceAmount.value = "";
-        maintenanceAmount.readOnly = false;
       } else {
         maintenanceAmount.value = "";
         maintenanceAmount.readOnly = false;
@@ -60,6 +191,7 @@
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
+      message.textContent = "Preparing secure checkout...";
 
       const payload = {
         promoCode: promoCode.value.trim(),
@@ -67,18 +199,22 @@
         maintenanceAmount: maintenanceAmount.value
       };
 
-      const response = await fetch("/.netlify/functions/create-checkout-session", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
+      try {
+        const response = await fetch("/.netlify/functions/create-checkout-session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
 
-      const data = await response.json();
+        const data = await response.json();
 
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        message.textContent = data.error || "Payment could not be started.";
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          message.textContent = data.error || "Payment could not be started.";
+        }
+      } catch (error) {
+        message.textContent = "Connection error. Please try again.";
       }
     });
   </script>
