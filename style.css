@@ -1,14 +1,18 @@
 ```css
 :root{
   --bg:#050606;
-  --panel:#101111;
-  --panel2:#161616;
+  --panel:#ffffff;
+  --panel2:#f6f2ea;
   --text:#f5f5f0;
+  --dark:#111111;
+  --body:#4a463f;
   --muted:#c8c8c0;
   --gold:#dca314;
   --gold2:#f2bd22;
   --line:rgba(220,163,20,.32);
+  --soft-line:rgba(220,163,20,.25);
   --shadow:0 22px 70px rgba(0,0,0,.45);
+  --soft-shadow:0 8px 24px rgba(0,0,0,.06);
 }
 
 *{
@@ -43,12 +47,12 @@ img{
 .site-header{
   position:sticky;
   top:0;
-  z-index:20;
+  z-index:50;
   display:flex;
   align-items:center;
   justify-content:space-between;
   padding:16px 5vw;
-  background:rgba(5,6,6,.88);
+  background:rgba(5,6,6,.92);
   backdrop-filter:blur(14px);
   border-bottom:1px solid var(--line);
 }
@@ -79,6 +83,7 @@ img{
 .brand strong{
   font-size:25px;
   letter-spacing:.08em;
+  color:#fff;
 }
 
 .brand small{
@@ -192,6 +197,7 @@ img{
 
 .btn.dark{
   background:#111;
+  color:#fff;
 }
 
 .hero-media{
@@ -275,7 +281,6 @@ img{
 
 .strip p,
 .section-head p,
-.equipment-copy p,
 .cta p{
   margin:0;
   color:var(--muted);
@@ -310,26 +315,29 @@ img{
 }
 
 .card{
-  background:linear-gradient(180deg,#131313,#0c0c0c);
-  border:1px solid var(--line);
+  background:#ffffff;
+  border:1px solid var(--soft-line);
   border-radius:18px;
-  padding:18px;
+  padding:22px;
   min-height:150px;
+  color:var(--dark);
+  box-shadow:var(--soft-shadow);
 }
 
 .card span{
-  font-size:28px;
+  font-size:30px;
 }
 
 .card h3{
-  margin:10px 0 6px;
-  font-size:18px;
+  margin:12px 0 8px;
+  font-size:19px;
+  color:var(--dark);
 }
 
 .card p{
   margin:0;
-  color:var(--muted);
-  font-size:14px;
+  color:var(--body);
+  font-size:15px;
 }
 
 /* EQUIPMENT */
@@ -346,10 +354,23 @@ img{
 .equipment-gallery,
 .equipment-copy,
 .why-panel{
-  background:#0d0e0e;
-  border:1px solid var(--line);
+  background:#ffffff;
+  border:1px solid var(--soft-line);
   border-radius:20px;
   padding:18px;
+  color:var(--dark);
+  box-shadow:var(--soft-shadow);
+}
+
+.equipment-copy p,
+.why-panel p{
+  color:var(--body);
+}
+
+.equipment-copy h2,
+.why-panel h2,
+.why-panel h3{
+  color:var(--dark);
 }
 
 .main-photo{
@@ -382,14 +403,14 @@ img{
 .check-list li{
   padding-left:30px;
   position:relative;
-  color:#eee;
+  color:var(--body);
 }
 
 .check-list li:before{
   content:"✓";
   position:absolute;
   left:0;
-  color:var(--gold2);
+  color:var(--gold);
   font-weight:900;
 }
 
@@ -413,11 +434,13 @@ img{
   gap:8px;
   place-items:center;
   text-align:center;
-  background:#111;
-  border:1px solid var(--line);
+  background:#ffffff;
+  color:var(--dark);
+  border:1px solid var(--soft-line);
   border-radius:14px;
   padding:14px 8px;
   min-height:118px;
+  box-shadow:0 6px 18px rgba(0,0,0,.05);
 }
 
 .demand-row b{
@@ -431,18 +454,18 @@ img{
 }
 
 .why-grid article{
-  border-top:1px solid var(--line);
+  border-top:1px solid var(--soft-line);
   padding-top:12px;
 }
 
 .why-grid h3{
   margin:0 0 6px;
-  color:var(--gold2);
+  color:var(--gold);
 }
 
 .why-grid p{
   margin:0;
-  color:var(--muted);
+  color:var(--body);
   font-size:14px;
 }
 
@@ -506,6 +529,14 @@ footer{
   text-align:center;
 }
 
+.landscaping-showcase h2{
+  color:#fff;
+}
+
+.landscaping-showcase p{
+  color:var(--muted);
+}
+
 .landscaping-image{
   margin-top:30px;
 }
@@ -522,9 +553,6 @@ footer{
 @media (max-width:900px){
 
   .site-header{
-    position:sticky;
-    top:0;
-    z-index:50;
     display:grid;
     grid-template-columns:1fr;
     gap:12px;
@@ -547,13 +575,11 @@ footer{
 
   .brand strong{
     font-size:20px;
-    color:#fff;
   }
 
   .brand small{
     font-size:9px;
     letter-spacing:.28em;
-    color:#fff;
   }
 
   .desktop-nav{
@@ -574,10 +600,6 @@ footer{
     background:#111;
     color:#fff;
     font-size:11px;
-  }
-
-  .desktop-nav a:hover{
-    color:var(--gold2);
   }
 
   .header-call{
@@ -620,28 +642,6 @@ footer{
   .compact-grid,
   .why-grid{
     grid-template-columns:1fr;
-  }
-
-  .card,
-  .equipment-gallery,
-  .equipment-copy,
-  .why-panel{
-    background:#111;
-    color:#fff;
-  }
-
-  .card h3,
-  .equipment-copy h2,
-  .section-head h2,
-  .two-col h2{
-    color:#fff;
-  }
-
-  .card p,
-  .equipment-copy p,
-  .section-head p,
-  .why-grid p{
-    color:#d8d8d0;
   }
 
   .demand-row{
@@ -769,3 +769,4 @@ footer{
     padding:16px;
   }
 }
+```
