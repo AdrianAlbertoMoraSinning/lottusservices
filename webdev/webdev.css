@@ -1026,3 +1026,57 @@ footer{
     font-size:24px;
   }
 
+/* MOBILE HERO VISUAL FIX */
+
+@media(max-width:900px){
+  .hero-visual{
+    min-height:0 !important;
+    margin-top:28px !important;
+  }
+
+  .browser-card{
+    position:relative !important;
+    inset:auto !important;
+    transform:none !important;
+    width:100% !important;
+    max-width:100% !important;
+  }
+
+  .floating-card{
+    position:relative !important;
+    display:inline-flex !important;
+    margin-top:12px !important;
+    left:auto !important;
+    right:auto !important;
+    bottom:auto !important;
+    top:auto !important;
+  }
+
+  .card-one,
+  .card-two{
+    position:relative !important;
+  }
+
+  .trust-strip{
+    margin-top:28px !important;
+  }
+}
+
+@media(max-width:520px){
+  .browser-card{
+    padding:16px !important;
+    border-radius:22px !important;
+  }
+
+  .mock-hero{
+    height:120px !important;
+  }
+
+  .mock-grid span{
+    height:42px !important;
+  }
+
+  .mock-buttons b{
+    height:40px !important;
+  }
+}
