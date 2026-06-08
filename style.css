@@ -998,4 +998,363 @@ footer{
     display:grid !important;
   }
 }
-```
+/* ===============================
+   LOTTUS MOBILE + CLEAN DESIGN FIX
+   Paste at the END of style.css
+================================ */
+
+/* Base light layout */
+body{
+  background:#f7f4ee !important;
+  color:#111 !important;
+}
+
+/* Header */
+.site-header{
+  background:#101010 !important;
+  color:#fff !important;
+  border-bottom:1px solid rgba(220,163,20,.35) !important;
+  box-shadow:0 8px 20px rgba(0,0,0,.18) !important;
+}
+
+.brand strong,
+.brand small,
+.desktop-nav a{
+  color:#fff !important;
+}
+
+.header-call{
+  color:#f2bd22 !important;
+  border-color:#dca314 !important;
+}
+
+/* Hero */
+.hero{
+  min-height:auto !important;
+  padding:56px 0 38px !important;
+  gap:32px !important;
+}
+
+.hero h1{
+  color:#111 !important;
+  margin-bottom:22px !important;
+}
+
+.hero h1 span{
+  color:#111 !important;
+}
+
+.lead{
+  color:#4a4a4a !important;
+  margin-bottom:24px !important;
+}
+
+.eyebrow{
+  color:#9b6b00 !important;
+}
+
+/* Buttons */
+.btn{
+  background:#111 !important;
+  color:#fff !important;
+  border:1px solid #111 !important;
+  border-radius:14px !important;
+}
+
+.btn.primary{
+  background:linear-gradient(135deg,#f2bd22,#dca314) !important;
+  color:#111 !important;
+  border-color:#dca314 !important;
+}
+
+.btn.dark{
+  background:#fff !important;
+  color:#111 !important;
+  border:1px solid rgba(0,0,0,.18) !important;
+}
+
+/* Sections */
+.section-tight{
+  padding:42px 0 !important;
+}
+
+.section-head h2,
+.strip h2,
+.equipment-copy h2,
+.two-col h2,
+.cta h2{
+  color:#111 !important;
+}
+
+.section-head p,
+.strip p,
+.equipment-copy p,
+.why-panel p,
+.card p,
+.why-grid p,
+.cta p{
+  color:#4a4a4a !important;
+}
+
+/* Services cards */
+.card,
+.equipment-gallery,
+.equipment-copy,
+.why-panel,
+.demand-row span{
+  background:#ffffff !important;
+  color:#111 !important;
+  border:1px solid rgba(220,163,20,.25) !important;
+  box-shadow:0 10px 26px rgba(0,0,0,.07) !important;
+}
+
+.card{
+  border-radius:20px !important;
+  padding:24px !important;
+  min-height:180px !important;
+}
+
+.card h3{
+  color:#111 !important;
+  font-weight:900 !important;
+}
+
+.card p{
+  color:#4a4a4a !important;
+}
+
+.card span{
+  display:inline-flex !important;
+  width:52px !important;
+  height:52px !important;
+  align-items:center !important;
+  justify-content:center !important;
+  background:#f8efd8 !important;
+  border-radius:50% !important;
+  font-size:28px !important;
+}
+
+/* Equipment */
+.equipment-gallery,
+.equipment-copy,
+.why-panel{
+  border-radius:22px !important;
+  padding:24px !important;
+}
+
+.check-list li{
+  color:#222 !important;
+}
+
+.check-list li:before{
+  color:#9b6b00 !important;
+}
+
+/* Demand boxes */
+.demand-row span{
+  border-radius:16px !important;
+  min-height:120px !important;
+}
+
+.demand-row b{
+  color:#111 !important;
+}
+
+/* Why Us */
+.why-grid h3{
+  color:#9b6b00 !important;
+}
+
+.why-grid article{
+  border-top:1px solid rgba(220,163,20,.25) !important;
+}
+
+/* CTA */
+.cta{
+  background:linear-gradient(135deg,#f2bd22,#dca314) !important;
+  color:#111 !important;
+  border-radius:26px !important;
+  padding:34px !important;
+  margin-bottom:40px !important;
+}
+
+.cta h2,
+.cta p,
+.cta .eyebrow{
+  color:#111 !important;
+}
+
+.cta-actions{
+  display:flex !important;
+  gap:14px !important;
+  flex-wrap:wrap !important;
+}
+
+.cta-actions .btn{
+  min-width:180px !important;
+}
+
+/* Footer */
+footer{
+  background:#f7f4ee !important;
+  color:#111 !important;
+  padding:28px 5vw 110px !important;
+}
+
+/* Mobile */
+@media (max-width:900px){
+
+  .site-header{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:14px !important;
+    padding:18px 18px 22px !important;
+    position:sticky !important;
+    top:0 !important;
+  }
+
+  .brand{
+    justify-content:center !important;
+  }
+
+  .brand-mark{
+    width:42px !important;
+    height:42px !important;
+    font-size:22px !important;
+  }
+
+  .brand strong{
+    font-size:22px !important;
+  }
+
+  .brand small{
+    font-size:10px !important;
+    letter-spacing:.28em !important;
+  }
+
+  .desktop-nav{
+    display:flex !important;
+    justify-content:center !important;
+    flex-wrap:wrap !important;
+    gap:10px !important;
+  }
+
+  .desktop-nav a{
+    background:#151515 !important;
+    color:#fff !important;
+    border:1px solid rgba(220,163,20,.45) !important;
+    border-radius:999px !important;
+    padding:10px 16px !important;
+    font-size:12px !important;
+  }
+
+  .header-call{
+    display:none !important;
+  }
+
+  .hero{
+    display:block !important;
+    padding:46px 22px 34px !important;
+  }
+
+  .hero h1{
+    font-size:48px !important;
+    line-height:.95 !important;
+    margin-bottom:24px !important;
+  }
+
+  .lead{
+    font-size:22px !important;
+    line-height:1.45 !important;
+  }
+
+  .actions{
+    display:grid !important;
+    gap:12px !important;
+    margin-top:26px !important;
+  }
+
+  .btn{
+    width:100% !important;
+    min-height:58px !important;
+  }
+
+  .hero-media{
+    margin-top:28px !important;
+  }
+
+  .strip,
+  .equipment,
+  .two-col,
+  .cta{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+  }
+
+  .compact-grid,
+  .mini-stats,
+  .why-grid,
+  .demand-row{
+    grid-template-columns:1fr !important;
+  }
+
+  .section,
+  .section-compact,
+  .strip,
+  .equipment,
+  .cta{
+    width:92vw !important;
+  }
+
+  .section-tight{
+    padding:36px 0 !important;
+  }
+
+  .card{
+    min-height:auto !important;
+    padding:24px !important;
+  }
+
+  .cta{
+    padding:28px 22px !important;
+  }
+
+  .cta-actions{
+    display:grid !important;
+  }
+
+  .mobile-sticky{
+    display:none !important;
+  }
+
+  footer{
+    display:block !important;
+    text-align:center !important;
+    padding-bottom:40px !important;
+  }
+}
+
+@media (max-width:520px){
+
+  .hero h1{
+    font-size:42px !important;
+  }
+
+  .lead{
+    font-size:20px !important;
+  }
+
+  .desktop-nav a{
+    font-size:11px !important;
+    padding:9px 14px !important;
+  }
+
+  .section-head h2,
+  .equipment-copy h2,
+  .two-col h2,
+  .cta h2{
+    font-size:34px !important;
+  }
+}
+
+
