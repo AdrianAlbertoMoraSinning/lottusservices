@@ -760,3 +760,47 @@ footer{
     padding-top:28px !important;
   }
 }
+
+/* DESKTOP MENU */
+
+@media screen and (min-width:769px){
+
+  .desktop-nav{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:38px;
+  }
+
+  .desktop-nav a{
+    background:transparent !important;
+    border:none !important;
+    box-shadow:none !important;
+    padding:0 !important;
+
+    color:#111;
+    font-size:15px;
+    font-weight:900;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+
+    transition:.25s;
+  }
+
+  .desktop-nav a:hover{
+    color:#9b6b00;
+    transform:translateY(-1px);
+  }
+
+  .desktop-nav a[href="payment.html"]{
+    background:transparent !important;
+    color:#111 !important;
+    border:none !important;
+    box-shadow:none !important;
+  }
+
+  .brand-logo{
+    width:170px;
+    max-width:170px;
+  }
+}
