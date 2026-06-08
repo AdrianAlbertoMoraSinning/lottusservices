@@ -770,3 +770,232 @@ footer{
   }
 }
 ```
+```css
+/* ================================
+   FINAL CLEAN DESIGN FIX - LOTTUS
+   Place this at the VERY END of style.css
+================================ */
+
+/* General page correction */
+body{
+  background:#f7f4ee !important;
+  color:#111 !important;
+}
+
+/* Keep header dark and professional */
+.site-header{
+  background:#111 !important;
+  color:#fff !important;
+  border-bottom:1px solid rgba(220,163,20,.35) !important;
+}
+
+.brand strong,
+.brand small,
+.desktop-nav a,
+.header-call{
+  color:#fff !important;
+}
+
+.header-call{
+  color:#f2bd22 !important;
+  border-color:#dca314 !important;
+}
+
+/* Hero correction */
+.hero h1,
+.section-head h2,
+.two-col h2,
+.equipment-copy h2,
+.cta h2{
+  color:#111 !important;
+}
+
+.hero .eyebrow,
+.section-head .eyebrow,
+.two-col .eyebrow,
+.equipment-copy .eyebrow{
+  color:#9b6b00 !important;
+}
+
+.lead,
+.section-head p,
+.strip p,
+.equipment-copy p,
+.why-panel p,
+.card p,
+.why-grid p,
+.cta p{
+  color:#444 !important;
+}
+
+/* Services cards */
+.card{
+  background:#ffffff !important;
+  color:#111 !important;
+  border:1px solid rgba(220,163,20,.28) !important;
+  border-radius:20px !important;
+  padding:26px !important;
+  box-shadow:0 10px 28px rgba(0,0,0,.08) !important;
+}
+
+.card h3{
+  color:#111 !important;
+  font-weight:900 !important;
+}
+
+.card p{
+  color:#444 !important;
+}
+
+/* Equipment and Why Us panels */
+.equipment-gallery,
+.equipment-copy,
+.why-panel{
+  background:#ffffff !important;
+  color:#111 !important;
+  border:1px solid rgba(220,163,20,.28) !important;
+  border-radius:22px !important;
+  box-shadow:0 10px 28px rgba(0,0,0,.08) !important;
+}
+
+.equipment-copy h2,
+.why-panel h2,
+.why-panel h3{
+  color:#111 !important;
+}
+
+.equipment-copy p,
+.why-panel p{
+  color:#444 !important;
+}
+
+.check-list li{
+  color:#222 !important;
+}
+
+/* Demand row */
+.demand-row span{
+  background:#ffffff !important;
+  color:#111 !important;
+  border:1px solid rgba(220,163,20,.28) !important;
+  border-radius:16px !important;
+  box-shadow:0 8px 20px rgba(0,0,0,.07) !important;
+}
+
+.demand-row b{
+  color:#111 !important;
+}
+
+/* Why grid */
+.why-grid h3{
+  color:#9b6b00 !important;
+}
+
+.why-grid article{
+  border-top:1px solid rgba(220,163,20,.28) !important;
+}
+
+/* CTA final */
+.cta{
+  background:linear-gradient(135deg,#f2bd22,#dca314) !important;
+  color:#111 !important;
+  border-radius:24px !important;
+}
+
+.cta h2,
+.cta p,
+.cta .eyebrow{
+  color:#111 !important;
+}
+
+.cta .btn.primary{
+  background:#111 !important;
+  color:#fff !important;
+}
+
+.cta .btn.dark{
+  background:#fff !important;
+  color:#111 !important;
+}
+
+/* Footer */
+footer{
+  background:#f7f4ee !important;
+  color:#111 !important;
+}
+
+/* Mobile header */
+@media (max-width:900px){
+  .site-header{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:12px !important;
+    padding:14px 4vw !important;
+  }
+
+  .brand{
+    justify-content:center !important;
+  }
+
+  .desktop-nav{
+    display:flex !important;
+    justify-content:center !important;
+    flex-wrap:wrap !important;
+    gap:8px !important;
+  }
+
+  .desktop-nav a{
+    background:#1a1a1a !important;
+    color:#fff !important;
+    border:1px solid rgba(220,163,20,.35) !important;
+    border-radius:999px !important;
+    padding:9px 11px !important;
+    font-size:11px !important;
+  }
+
+  .header-call{
+    display:none !important;
+  }
+
+  .compact-grid,
+  .mini-stats,
+  .why-grid{
+    grid-template-columns:1fr !important;
+  }
+
+  .equipment,
+  .two-col,
+  .cta,
+  .strip{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+  }
+
+  .demand-row{
+    grid-template-columns:repeat(2,1fr) !important;
+  }
+}
+
+@media (max-width:520px){
+  .demand-row{
+    grid-template-columns:1fr !important;
+  }
+
+  .desktop-nav a{
+    font-size:10px !important;
+    padding:8px 9px !important;
+  }
+
+  .hero h1{
+    font-size:38px !important;
+  }
+
+  .btn{
+    width:100% !important;
+  }
+
+  .actions{
+    display:grid !important;
+  }
+}
+```
