@@ -1,4 +1,4 @@
-```css
+
 :root{
   --bg:#f7f4ee;
   --dark:#111111;
@@ -543,4 +543,115 @@ footer{
 .landscaping-showcase{
   padding:60px 20px;
   max-width
-```
+
+Bórralas todas.
+
+Luego pega este bloque **al final del CSS**:
+
+```css
+@media screen and (max-width: 768px){
+
+  html, body{
+    width:100% !important;
+    overflow-x:hidden !important;
+  }
+
+  .site-header{
+    display:block !important;
+    width:100% !important;
+    padding:14px 16px 18px !important;
+  }
+
+  .brand{
+    display:flex !important;
+    justify-content:center !important;
+    margin-bottom:12px !important;
+  }
+
+  .brand-logo{
+    width:105px !important;
+    max-width:105px !important;
+    margin:0 auto !important;
+  }
+
+  .desktop-nav{
+    display:flex !important;
+    justify-content:center !important;
+    flex-wrap:wrap !important;
+    gap:8px !important;
+    width:100% !important;
+  }
+
+  .desktop-nav a{
+    font-size:10px !important;
+    padding:8px 10px !important;
+    border:1px solid rgba(155,107,0,.28) !important;
+    border-radius:999px !important;
+    background:#fff !important;
+  }
+
+  .header-call{
+    display:none !important;
+  }
+
+  .hero{
+    display:block !important;
+    width:92vw !important;
+    padding:34px 0 28px !important;
+  }
+
+  .hero h1{
+    font-size:34px !important;
+    line-height:.96 !important;
+    max-width:100% !important;
+  }
+
+  .lead{
+    font-size:17px !important;
+    line-height:1.45 !important;
+  }
+
+  .actions{
+    display:grid !important;
+    gap:12px !important;
+  }
+
+  .btn{
+    width:100% !important;
+  }
+
+  .hero-media{
+    display:block !important;
+    width:100% !important;
+    margin-top:24px !important;
+  }
+
+  .hero-fleet{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:12px !important;
+  }
+
+  .hero-fleet .hero-truck,
+  .hero-fleet .hero-trailer{
+    width:100% !important;
+    height:220px !important;
+    border-radius:18px !important;
+  }
+
+  .strip,
+  .equipment,
+  .two-col,
+  .cta{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    width:92vw !important;
+  }
+
+  .compact-grid,
+  .mini-stats,
+  .why-grid,
+  .demand-row{
+    grid-template-columns:1fr !important;
+  }
+}
