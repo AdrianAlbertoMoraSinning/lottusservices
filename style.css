@@ -521,42 +521,67 @@ footer{
 
 @media (max-width:900px){
 
-  .desktop-nav{
-    display:none;
-  }
-
-  .header-call{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    padding:10px 14px;
-    font-size:12px;
-    border-radius:999px;
-    white-space:nowrap;
-  }
-
   .site-header{
-    padding:12px 4vw;
-    gap:10px;
+    position:sticky;
+    top:0;
+    z-index:50;
+    display:grid;
+    grid-template-columns:1fr;
+    gap:12px;
+    padding:14px 4vw;
+    background:rgba(5,6,6,.96);
   }
 
   .brand{
-    gap:10px;
+    justify-content:center;
+    gap:12px;
+  }
+
+  .brand-mark{
+    width:44px;
+    height:44px;
+    font-size:22px;
+    color:var(--gold2);
+    border-color:var(--gold2);
   }
 
   .brand strong{
-    font-size:18px;
+    font-size:20px;
+    color:#fff;
   }
 
   .brand small{
     font-size:9px;
-    letter-spacing:.22em;
+    letter-spacing:.28em;
+    color:#fff;
   }
 
-  .brand-mark{
-    width:42px;
-    height:42px;
-    font-size:22px;
+  .desktop-nav{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:8px;
+    width:100%;
+  }
+
+  .desktop-nav a{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:9px 11px;
+    border:1px solid var(--line);
+    border-radius:999px;
+    background:#111;
+    color:#fff;
+    font-size:11px;
+  }
+
+  .desktop-nav a:hover{
+    color:var(--gold2);
+  }
+
+  .header-call{
+    display:none;
   }
 
   .hero{
@@ -597,6 +622,28 @@ footer{
     grid-template-columns:1fr;
   }
 
+  .card,
+  .equipment-gallery,
+  .equipment-copy,
+  .why-panel{
+    background:#111;
+    color:#fff;
+  }
+
+  .card h3,
+  .equipment-copy h2,
+  .section-head h2,
+  .two-col h2{
+    color:#fff;
+  }
+
+  .card p,
+  .equipment-copy p,
+  .section-head p,
+  .why-grid p{
+    color:#d8d8d0;
+  }
+
   .demand-row{
     grid-template-columns:repeat(2,1fr);
   }
@@ -611,7 +658,7 @@ footer{
 
   .mobile-sticky{
     position:fixed;
-    z-index:30;
+    z-index:60;
     left:0;
     right:0;
     bottom:0;
@@ -647,16 +694,20 @@ footer{
 @media (max-width:520px){
 
   .site-header{
-    align-items:center;
+    padding:12px 3vw;
   }
 
-  .header-call{
-    padding:9px 11px;
-    font-size:11px;
+  .desktop-nav{
+    gap:6px;
+  }
+
+  .desktop-nav a{
+    font-size:10px;
+    padding:8px 9px;
   }
 
   .brand strong{
-    font-size:16px;
+    font-size:18px;
   }
 
   .brand small{
@@ -664,8 +715,8 @@ footer{
   }
 
   .brand-mark{
-    width:38px;
-    height:38px;
+    width:40px;
+    height:40px;
     font-size:20px;
   }
 
@@ -718,4 +769,3 @@ footer{
     padding:16px;
   }
 }
-```
