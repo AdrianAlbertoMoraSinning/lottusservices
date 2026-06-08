@@ -1508,3 +1508,129 @@ footer{
     padding:9px 13px !important;
   }
 }
+
+/* ===============================
+   HEADER + LOGO FINAL FIX
+================================ */
+
+.site-header{
+  background:#f7f4ee !important;
+  color:#111 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:28px !important;
+  padding:16px 5vw !important;
+  border-bottom:1px solid rgba(220,163,20,.25) !important;
+  box-shadow:0 6px 18px rgba(0,0,0,.06) !important;
+}
+
+.brand{
+  flex:0 0 auto !important;
+}
+
+.brand-logo{
+  width:135px !important;
+  max-width:135px !important;
+  height:auto !important;
+  display:block !important;
+}
+
+.desktop-nav{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:28px !important;
+  flex:1 !important;
+}
+
+.desktop-nav a{
+  background:transparent !important;
+  box-shadow:none !important;
+  border:none !important;
+  padding:0 !important;
+  color:#111 !important;
+  font-size:14px !important;
+  font-weight:900 !important;
+  letter-spacing:.04em !important;
+}
+
+.desktop-nav a:hover{
+  color:#9b6b00 !important;
+}
+
+.header-call{
+  background:#ffffff !important;
+  color:#111 !important;
+  border:1px solid rgba(220,163,20,.28) !important;
+  border-radius:999px !important;
+  padding:14px 24px !important;
+  font-weight:900 !important;
+  white-space:nowrap !important;
+}
+
+/* MOBILE HEADER */
+@media (max-width:900px){
+
+  .site-header{
+    display:grid !important;
+    grid-template-columns:auto 1fr !important;
+    align-items:center !important;
+    gap:12px !important;
+    padding:12px 14px !important;
+  }
+
+  .brand{
+    justify-content:flex-start !important;
+  }
+
+  .brand-logo{
+    width:86px !important;
+    max-width:86px !important;
+  }
+
+  .desktop-nav{
+    display:flex !important;
+    justify-content:flex-end !important;
+    align-items:center !important;
+    flex-wrap:wrap !important;
+    gap:7px !important;
+  }
+
+  .desktop-nav a{
+    background:#ffffff !important;
+    color:#111 !important;
+    border:1px solid rgba(155,107,0,.28) !important;
+    border-radius:999px !important;
+    padding:8px 10px !important;
+    font-size:10px !important;
+    line-height:1 !important;
+    box-shadow:0 4px 10px rgba(0,0,0,.04) !important;
+  }
+
+  .desktop-nav a[href="payment.html"]{
+    background:#f2bd22 !important;
+    border-color:#dca314 !important;
+  }
+
+  .header-call{
+    display:none !important;
+  }
+}
+
+@media (max-width:420px){
+
+  .brand-logo{
+    width:76px !important;
+    max-width:76px !important;
+  }
+
+  .desktop-nav{
+    gap:6px !important;
+  }
+
+  .desktop-nav a{
+    font-size:9.5px !important;
+    padding:7px 8px !important;
+  }
+}
