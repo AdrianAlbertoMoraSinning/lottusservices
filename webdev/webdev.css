@@ -1019,4 +1019,48 @@ footer{
     font-size:26px;
   }
 }
-```
+.commerce-features{
+  display:flex;
+  flex-wrap:wrap;
+  gap:14px;
+  margin-top:24px;
+}
+
+.commerce-features span{
+  position:relative;
+  padding:14px 22px;
+  border-radius:999px;
+
+  background:linear-gradient(
+    135deg,
+    rgba(24,199,255,.22),
+    rgba(37,99,235,.35)
+  );
+
+  border:1px solid rgba(24,199,255,.45);
+
+  color:#ffffff;
+  font-size:14px;
+  font-weight:800;
+  letter-spacing:.02em;
+
+  box-shadow:
+    0 0 0 1px rgba(24,199,255,.15),
+    0 8px 30px rgba(24,199,255,.18);
+
+  transition:.3s ease;
+}
+
+.commerce-features span:hover{
+  transform:translateY(-3px);
+  box-shadow:
+    0 0 18px rgba(24,199,255,.45),
+    0 12px 40px rgba(24,199,255,.25);
+}
+
+.commerce-features span::before{
+  content:"✦";
+  margin-right:8px;
+  color:#18c7ff;
+  font-size:14px;
+}
