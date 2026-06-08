@@ -842,3 +842,78 @@ footer{
 .brand-logo{
     width:95px !important;
 }
+.referral-main{
+  width:min(1180px,92vw);
+  margin:50px auto 36px;
+  padding:38px;
+  display:grid;
+  grid-template-columns:1.25fr .75fr;
+  gap:28px;
+  align-items:center;
+  background:linear-gradient(135deg,#f2bd22,#dca314);
+  color:#111;
+  border-radius:28px;
+  box-shadow:0 18px 45px rgba(0,0,0,.12);
+}
+
+.referral-main .eyebrow{
+  color:#111;
+  margin-bottom:12px;
+}
+
+.referral-main h2{
+  margin:0 0 14px;
+  font-size:clamp(34px,4vw,58px);
+  line-height:1;
+  letter-spacing:-.05em;
+  color:#111;
+}
+
+.referral-main p{
+  margin:0;
+  color:#1e1e1e;
+  font-size:18px;
+  max-width:760px;
+}
+
+.ref-card-main{
+  background:#fff;
+  color:#111;
+  padding:28px;
+  border-radius:22px;
+  box-shadow:0 10px 26px rgba(0,0,0,.10);
+}
+
+.ref-card-main strong{
+  display:block;
+  font-size:26px;
+  margin-bottom:10px;
+}
+
+.ref-card-main span{
+  display:block;
+  color:#9b6b00;
+  font-weight:900;
+  margin-bottom:12px;
+}
+
+.ref-card-main small{
+  color:#555;
+  line-height:1.5;
+}
+
+@media(max-width:768px){
+  .referral-main{
+    grid-template-columns:1fr;
+    padding:28px 22px;
+    margin:36px auto 28px;
+  }
+
+  .referral-main h2{
+    font-size:36px;
+  }
+
+  .referral-main p{
+    font-size:16px;
+  }
+}
