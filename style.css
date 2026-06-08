@@ -1357,4 +1357,61 @@ footer{
   }
 }
 
+```css
+/* ===============================
+   FIX MINI-STATS MOBILE SECTION
+   Flexible / Reliable / Ready
+================================ */
+
+.mini-stats{
+  display:grid !important;
+  grid-template-columns:repeat(3,1fr) !important;
+  gap:14px !important;
+}
+
+.mini-stats span{
+  background:#ffffff !important;
+  border:1px solid rgba(220,163,20,.28) !important;
+  border-radius:18px !important;
+  padding:18px 12px !important;
+  text-align:center !important;
+  color:#444 !important;
+  box-shadow:0 8px 22px rgba(0,0,0,.06) !important;
+}
+
+.mini-stats strong{
+  display:block !important;
+  color:#9b6b00 !important;
+  font-size:18px !important;
+  font-weight:900 !important;
+  margin-bottom:6px !important;
+}
+
+@media (max-width:900px){
+  .strip{
+    margin-top:0 !important;
+    margin-bottom:34px !important;
+    padding:24px !important;
+    background:#ffffff !important;
+    border:1px solid rgba(220,163,20,.28) !important;
+    border-radius:22px !important;
+    box-shadow:0 10px 26px rgba(0,0,0,.06) !important;
+  }
+
+  .mini-stats{
+    grid-template-columns:1fr !important;
+    margin-top:22px !important;
+  }
+
+  .mini-stats span{
+    min-height:auto !important;
+    padding:20px 14px !important;
+  }
+
+  .mini-stats strong{
+    color:#9b6b00 !important;
+    font-size:22px !important;
+  }
+}
+```
 
