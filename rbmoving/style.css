@@ -12,7 +12,24 @@
 .marketing-card{background:#fff;border:1px solid var(--line);border-radius:30px;padding:16px;box-shadow:var(--shadow)}
 .marketing-image{width:100%;display:block;border-radius:24px;background:#eef7f1}
 .marketing-copy p{font-size:1.08rem;color:var(--muted);line-height:1.7;max-width:680px}
-.feature-pills{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+
+.feature-pills{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:22px;
+}
+
+.cta div{
+  display:flex;
+  gap:22px;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+  margin-top:24px;
+}
+
+
 .feature-pills span{border:1px solid var(--line);background:#fff;border-radius:999px;padding:11px 14px;font-weight:900;color:#17351f}
 @media(max-width:850px){.hero-image{height:250px}.marketing-split{grid-template-columns:1fr;padding-top:48px}.marketing-copy{order:-1}.why-panel{padding:20px 2px 2px}}
 
