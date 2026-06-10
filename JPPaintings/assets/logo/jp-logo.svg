@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 520" role="img" aria-label="JP Painting logo">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe55b"/><stop offset="1" stop-color="#ffc400"/></linearGradient>
+    <filter id="s" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#001b46" flood-opacity=".25"/></filter>
+  </defs>
+  <circle cx="260" cy="260" r="238" fill="url(#g)"/>
+  <circle cx="260" cy="260" r="230" fill="none" stroke="#0b3f91" stroke-width="10" opacity=".15"/>
+  <g filter="url(#s)" fill="#0b3f91">
+    <path d="M154 314c0 34-25 57-65 57-25 0-47-8-64-24l33-43c8 8 16 12 27 12 14 0 22-8 22-25V149h47v165z"/>
+    <path d="M185 149h104c62 0 101 32 101 86 0 57-43 91-107 91h-51v44h-47V149zm98 132c37 0 59-17 59-45 0-29-22-44-59-44h-51v89h51z"/>
+  </g>
+  <text x="260" y="432" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-weight="900" font-size="54" fill="#111827" letter-spacing="2">PAINTING</text>
+</svg>
