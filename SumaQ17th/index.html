@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SumaQ on 17th | Peruvian Fusion Cuisine</title>
+  <meta name="description" content="Prototype website for SumaQ on 17th in Calgary. Menu, reservations, private events, delivery, contact and work with us." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar" id="top">
+    <a class="brand" href="#home" aria-label="SumaQ on 17th home">
+      <span class="brand-mark">S<br>U<br>M<br>A<br>Q</span>
+      <span><strong>SumaQ</strong><small>on 17th</small></span>
+    </a>
+    <button class="menu-toggle" type="button" aria-label="Open menu">☰</button>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="#home">Home</a>
+      <a href="#menu">Menu</a>
+      <a href="#reservations">Reservations</a>
+      <a href="#events">Private Events</a>
+      <a href="#delivery">Delivery</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <a href="#work">Work With Us</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-copy">
+        <p class="eyebrow">Peruvian fusion cuisine · Calgary</p>
+        <h1>Fusion of flavours that fills the heart.</h1>
+        <p>Prototype built from the original SumaQ visual design. The layout preserves the page order, colours, photography and philosophy shown in the design PDF, while adding reservation and payment-ready modules.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#reservations">Make a Reservation</a>
+          <a class="btn secondary" href="#menu">View Menu</a>
+        </div>
+      </div>
+      <figure class="screen-card hero-screen">
+        <img src="assets/screens/01-home.jpg" alt="Original SumaQ home page design with Peruvian dishes, menu, reservation and delivery sections" />
+      </figure>
+    </section>
+
+    <section class="section" id="menu">
+      <div class="section-head">
+        <p class="eyebrow">Menu</p>
+        <h2>Authentic and diverse flavours of Peruvian gastronomy.</h2>
+        <p>The menu page keeps the original order: Peruvian menu, Nikkei fusion and cocktails.</p>
+      </div>
+      <figure class="screen-card">
+        <img src="assets/screens/02-menu.jpg" alt="Original SumaQ menu design showing menu, nikkei and cocktails blocks" />
+      </figure>
+      <div class="action-row">
+        <a class="btn primary" href="#reservations">Reserve after viewing the menu</a>
+      </div>
+    </section>
+
+    <section class="section reservation-section" id="reservations">
+      <div class="section-head">
+        <p class="eyebrow">Reservations</p>
+        <h2>Book your table and let each dish bring you closer to the soul of Peruvian cuisine.</h2>
+        <p>The visible design remains aligned with the original reservations page, and this prototype adds a working booking form with party configuration, time selection, payment status and admin export.</p>
+      </div>
+
+      <div class="reservation-grid">
+        <figure class="screen-card design-reference">
+          <img src="assets/screens/03-reservations.jpg" alt="Original SumaQ reservations page with party size, date, time and book now button" />
+        </figure>
+
+        <form id="reservationForm" class="form-card" autocomplete="on">
+          <h3>Reservation request</h3>
+          <p class="muted">Select the date, time, adults and minors. The payment box appears only when the reservation configuration requires a deposit.</p>
+
+          <div class="two">
+            <label>First name *<input name="firstName" required placeholder="First name"></label>
+            <label>Last name<input name="lastName" placeholder="Last name"></label>
+          </div>
+          <div class="two">
+            <label>Phone *<input name="phone" required placeholder="(587) 401-4083"></label>
+            <label>Email *<input name="email" type="email" required placeholder="email@example.com"></label>
+          </div>
+          <div class="three">
+            <label>Adults *<input name="adults" id="adults" type="number" min="1" max="20" value="2" required></label>
+            <label>Minors<input name="minors" id="minors" type="number" min="0" max="20" value="0"></label>
+            <label>Party size<input name="partySize" id="partySize" readonly value="2 guests"></label>
+          </div>
+          <div class="two">
+            <label>Date *<input name="date" type="date" required></label>
+            <label>Preferred time *
+              <select name="time" required>
+                <option value="">Select time</option>
+                <option>12:00 p.m.</option>
+                <option>12:15 p.m.</option>
+                <option>12:30 p.m.</option>
+                <option>4:00 p.m.</option>
+                <option>5:30 p.m.</option>
+                <option>7:00 p.m.</option>
+                <option>8:30 p.m.</option>
+                <option>10:00 p.m.</option>
+              </select>
+            </label>
+          </div>
+          <label>Special notes<textarea name="notes" rows="4" placeholder="Allergies, stroller/high chair, celebration, seating preference..."></textarea></label>
+
+          <div id="paymentBox" class="payment-box" hidden>
+            <div>
+              <strong>Reservation deposit required</strong>
+              <p id="paymentSummary">Deposit will be calculated from the current reservation settings.</p>
+            </div>
+            <button class="btn pay" type="button" id="payDepositBtn">Pay deposit with Stripe</button>
+          </div>
+
+          <div id="noPaymentBox" class="payment-box no-pay">
+            <strong>No online payment required for this reservation.</strong>
+            <p>The request will be saved as pending confirmation.</p>
+          </div>
+
+          <button class="btn primary full" type="submit">Book Now</button>
+          <p id="reservationMsg" class="form-msg" role="status"></p>
+          <p class="tiny">Prototype storage: reservations are saved in this browser. The admin page can export CSV. A Google Apps Script endpoint can be added later for live owner notifications.</p>
+        </form>
+      </div>
+    </section>
+
+    <section class="section" id="events">
+      <div class="section-head">
+        <p class="eyebrow">Private events</p>
+        <h2>Book your special celebration.</h2>
+        <p>The event section follows the original hero image and form concept for private celebrations.</p>
+      </div>
+      <div class="split">
+        <figure class="screen-card"><img src="assets/screens/04-private-events.jpg" alt="Original private events page with celebration image and form" /></figure>
+        <form id="eventForm" class="form-card compact">
+          <h3>Private event inquiry</h3>
+          <div class="two"><label>First name *<input name="firstName" required></label><label>Last name<input name="lastName"></label></div>
+          <div class="two"><label>Email *<input type="email" name="email" required></label><label>Phone<input name="phone"></label></div>
+          <label>Message<textarea name="message" rows="5" placeholder="Date, number of guests and celebration details" required></textarea></label>
+          <button class="btn secondary full" type="submit">Submit Inquiry</button>
+          <p id="eventMsg" class="form-msg"></p>
+        </form>
+      </div>
+    </section>
+
+    <section class="section" id="delivery">
+      <div class="section-head"><p class="eyebrow">Delivery</p><h2>Enjoy our flavours at home.</h2></div>
+      <figure class="screen-card"><img src="assets/screens/05-delivery.jpg" alt="Original SumaQ delivery page with Uber Eats, Skip and DoorDash options" /></figure>
+      <div class="delivery-links">
+        <a href="#delivery" class="delivery-btn">Uber Eats</a>
+        <a href="#delivery" class="delivery-btn">Skip</a>
+        <a href="#delivery" class="delivery-btn">DoorDash</a>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="section-head"><p class="eyebrow">About us</p><h2>Fusion of flavours that fills the heart.</h2></div>
+      <figure class="screen-card"><img src="assets/screens/06-about.jpg" alt="Original SumaQ about page with food images and brand philosophy" /></figure>
+    </section>
+
+    <section class="section contact-section" id="contact">
+      <div class="section-head"><p class="eyebrow">Contact</p><h2>Visit SumaQ on 17th.</h2></div>
+      <div class="split">
+        <figure class="screen-card"><img src="assets/screens/07-contact.jpg" alt="Original SumaQ contact page with hours, address and contact details" /></figure>
+        <div class="contact-card">
+          <h3>Contact details</h3>
+          <p><strong>Email:</strong> <a href="mailto:marketing.sumaq17@gmail.com">marketing.sumaq17@gmail.com</a></p>
+          <p><strong>Phone:</strong> <a href="tel:+15874014083">(587) 401-4083</a></p>
+          <p><strong>Address:</strong> 1424 17th Ave SW, Calgary, T2T 0C3</p>
+          <p><strong>Hours:</strong> Monday closed · Tue-Thu 4:00 PM-10:00 PM · Fri-Sat 12:00 PM-1:00 AM · Sunday 12:00 PM-9:00 PM</p>
+          <div class="hero-actions"><a class="btn primary" href="#reservations">Reserve a table</a><a class="btn secondary" href="https://maps.google.com/?q=1424+17th+Ave+SW+Calgary" target="_blank" rel="noopener">Open Map</a></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="work">
+      <div class="section-head"><p class="eyebrow">Work with us</p><h2>Join our team.</h2></div>
+      <figure class="screen-card"><img src="assets/screens/08-work-with-us.jpg" alt="Original SumaQ work with us page with restaurant interior" /></figure>
+      <div class="action-row"><a class="btn secondary" href="mailto:marketing.sumaq17@gmail.com?subject=Work%20With%20Us%20-%20SumaQ%20on%2017th">Join our Team</a></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div><strong>SumaQ on 17th</strong><p>Peruvian fusion cuisine · Calgary</p></div>
+    <nav><a href="#menu">Menu</a><a href="#reservations">Reservations</a><a href="admin.html">Admin</a><a href="../index.html">Lottus Home</a></nav>
+  </footer>
+
+  <a class="floating-reserve" href="#reservations">Reserve</a>
+  <script src="script.js"></script>
+</body>
+</html>
