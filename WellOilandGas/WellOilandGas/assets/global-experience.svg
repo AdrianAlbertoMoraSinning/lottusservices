@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 650">
+<rect width="900" height="650" fill="#edf3f8"/>
+<path d="M80 350c160-210 430-230 730-80" fill="none" stroke="#d79d42" stroke-width="5" stroke-dasharray="12 14"/>
+<circle cx="210" cy="245" r="18" fill="#1f8ea3"/><text x="238" y="252" font-family="Inter,Arial" font-size="28" font-weight="800" fill="#091827">Canada / Alberta</text>
+<circle cx="470" cy="390" r="18" fill="#d79d42"/><text x="498" y="398" font-family="Inter,Arial" font-size="28" font-weight="800" fill="#091827">Argentina</text>
+<circle cx="690" cy="230" r="18" fill="#1f8ea3"/><text x="718" y="238" font-family="Inter,Arial" font-size="28" font-weight="800" fill="#091827">Colombia</text>
+<g fill="#091827" opacity=".08"><path d="M120 130h180v80H120zM580 330h200v90H580zM330 470h140v65H330z"/></g>
+<text x="72" y="560" font-family="Inter,Arial" font-size="54" font-weight="900" fill="#091827">International Field + Engineering Experience</text>
+</svg>
