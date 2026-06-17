@@ -1,16 +1,17 @@
-# Carlos Drilling Fluids Website
+# Carlos Tirado — Drilling Fluids & Well Engineering Consulting Website
 
-Premium one-page website for a Senior Drilling Fluids / Wellbore Stability Consultant.
+Updated website package ready to upload/drag into GitHub under the `WellOilandGas` folder.
 
-## Replace before publishing
-- Carlos' full name and credentials
-- Phone number, email and LinkedIn
-- Actual resume PDF
-- Any real project metrics: number of wells, fluids systems, regions, companies, safety record
-- Final company/consulting name if he operates as Inc.
+## Included
+- Main landing page with professional Oil & Gas positioning.
+- Carlos Tirado profile data, 20+ years experience, Canada / Argentina / Colombia.
+- Technical profile page updated with experience, education, awards and capabilities.
+- Contact links: Call, SMS, WhatsApp, email and LinkedIn.
+- Clean transparent logo preserved in the center brand showcase.
 
-## Photos
-The site currently uses real oilfield/drilling-fluid related images loaded from Wikimedia Commons via remote URLs. This keeps the ZIP light and avoids using unlicensed stock files. If Carlos has his own field photos, replace the image URLs in `index.html` and `css/style.css` with local files in `assets/photos/`.
-
-## Deployment
-Upload the folder to Netlify, GitHub Pages, cPanel, Namecheap hosting or any static web hosting.
+## Contact configured
+- Phone: +1 (438) 866-2398
+- WhatsApp: https://wa.me/14388662398
+- SMS: sms:+14388662398
+- Email: tiradocarlos10@gmail.com
+- LinkedIn: https://www.linkedin.com/in/carlos-tirado-274207135

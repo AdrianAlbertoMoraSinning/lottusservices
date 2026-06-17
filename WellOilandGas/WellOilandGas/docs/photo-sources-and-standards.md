@@ -1,21 +1,16 @@
-# Photo Sources and Standards
+# Photo and Standards Notes
 
-## Images
-The current site uses remote Wikimedia Commons image paths for oilfield/drilling-fluid context. This keeps the repository light and avoids bundling unlicensed stock photography.
+## Remote real-photo sources used
+- Wikimedia Commons: Oil_Rig_Shaker.JPG
+- Wikimedia Commons: Oil_Base_Mud_in_tank.jpg
+- Wikimedia Commons: Mud_tank_and_shakers_during_groundwater_well_drilling.jpg
 
-Current remote images:
-- Oil Rig Shaker
-- Oil Base Mud in Tank
-- Mud Tank and Shakers During Drilling
+## Technical / safety references reflected in the content
+- API RP 13B-1 / ISO 10414-1: field testing of water-based drilling fluids
+- API RP 13B-2: field testing of oil-based drilling fluids
+- API Specification 13A: drilling fluids material specifications
+- Alberta Energy Regulator Directive 050: drilling waste management
+- AER Directive 058 / Manual 034: upstream oilfield waste management
+- IADC HSE practices for drilling operations
 
-If Carlos provides real field photos, replace the remote URLs in `index.html` and `css/style.css` with local files stored under `assets/photos/`.
-
-## Practice areas referenced in the website
-- API RP 13B-1 / ISO 10414-1 — Field testing water-based drilling fluids
-- API RP 13B-2 — Field testing oil-based drilling fluids
-- API Specification 13A — Drilling fluid materials
-- AER Directive 050 — Drilling waste management
-- AER Directive 058 / Manual 034 — Oilfield waste management
-- IADC HSE practices — Drilling unit safety and field discipline
-
-The standards section is written as a positioning and practice-area reference, not as a legal certification claim.
+This is marketing positioning, not a legal compliance certification. Carlos should confirm exactly which standards and company procedures apply to his current contracts.
