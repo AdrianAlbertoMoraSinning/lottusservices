@@ -1,0 +1,10 @@
+[
+  {"id":"onta-001","name":"Camiseta Monastery 19 Black Gold","brand":"Monastery","category":"Camisetas","price":269000,"image":"assets/img/monastery-19.webp","badge":"Drop urbano","sizes":["S","M","L","XL"],"colors":["Negro / Dorado"],"featured":true},
+  {"id":"onta-002","name":"Polo premium negra Monastery","brand":"Monastery","category":"Polos","price":329000,"image":"assets/img/polo-negro.webp","badge":"Elegancia casual","sizes":["S","M","L","XL"],"colors":["Negro"],"featured":true},
+  {"id":"onta-003","name":"Polo premium blanca Monastery","brand":"Monastery","category":"Polos","price":329000,"image":"assets/img/polo-blanco.webp","badge":"Look ejecutivo","sizes":["S","M","L","XL"],"colors":["Blanco"],"featured":true},
+  {"id":"onta-004","name":"Jeans negro slim destroyed","brand":"ONTA Select","category":"Jeans","price":389000,"image":"assets/img/jeans-premium.webp","badge":"Fit exclusivo","sizes":["30","32","34","36"],"colors":["Black denim"],"featured":false},
+  {"id":"onta-005","name":"Camiseta básica premium ONTA","brand":"ONTA Select","category":"Camisetas","price":179000,"image":"assets/img/camisetas-premium.webp","badge":"3 colores","sizes":["S","M","L","XL"],"colors":["Naranja","Gris","Negro"],"featured":false},
+  {"id":"onta-006","name":"Look Única - crop top premium","brand":"ONTA Women","category":"Mujer","price":219000,"image":"assets/img/model-unica.webp","badge":"Única","sizes":["XS","S","M","L"],"colors":["Blanco"],"featured":true},
+  {"id":"onta-007","name":"Look Hipnótica - outfit black & white","brand":"ONTA Women","category":"Mujer","price":349000,"image":"assets/img/model-hipnotica.webp","badge":"Hipnótica","sizes":["XS","S","M","L"],"colors":["Negro / Blanco"],"featured":true},
+  {"id":"onta-008","name":"Look Exótica - crop contrast","brand":"ONTA Women","category":"Mujer","price":229000,"image":"assets/img/model-exotica.webp","badge":"Exótica","sizes":["XS","S","M","L"],"colors":["Blanco / Negro"],"featured":false}
+]
