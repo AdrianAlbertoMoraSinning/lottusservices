@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ONTA STORE | Boutique Premium Cúcuta</title>
-  <meta name="description" content="Prototipo ONTA STORE: vitrina virtual, catálogo premium, carrito, pago online demo, clientes VIP, lanzamientos y promociones.">
+  <meta name="description" content="ONTA STORE: boutique premium en Cúcuta con vitrina virtual, catálogo, carrito, pago online y clientes VIP.">
   <link rel="icon" href="assets/icons/favicon.png">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -22,14 +22,14 @@
         <a href="#vip">VIP</a>
         <a href="#pago">Pago</a>
       </div>
-      <button class="cart-pill" id="openCart">🛍️ Bolsa <b id="cartCount">0</b></button>
+      <button class="cart-pill" id="openCart">🛒 Carrito <b id="cartCount">0</b></button>
     </nav>
 
     <section class="hero">
       <div class="hero-copy">
         <span class="eyebrow">Cúcuta · Norte de Santander</span>
-        <h1>Una boutique digital para vender moda premium con impacto.</h1>
-        <p>Un prototipo elegante, simple y comercial para que el cliente recorra vitrinas, vea marcas, seleccione prendas, se registre como VIP y avance a pago online.</p>
+        <h1>Moda premium, vitrinas exclusivas y compra fácil desde Cúcuta.</h1>
+        <p>Explora la colección, elige tus prendas favoritas, registra tus fechas especiales y recibe atención personalizada por WhatsApp o correo.</p>
         <div class="hero-actions">
           <a href="#catalogo" class="btn primary">Comprar ahora</a>
           <a href="#vitrina" class="btn ghost">Ver vitrina</a>
@@ -51,25 +51,33 @@
   </header>
 
   <main>
+    <section class="onta-signature" aria-label="ONTA STORE logo central">
+      <img src="assets/img/onta-logo.webp" alt="ONTA STORE logo oso">
+      <div>
+        <span>ONTA STORE</span>
+        <strong>CC Ventura Plaza · Local 2-20 · Cúcuta</strong>
+      </div>
+    </section>
+
     <section class="section brand-section" id="marcas">
       <div class="section-head">
         <span class="eyebrow">Selección de alto nivel</span>
-        <h2>Marcas que elevan la percepción de la tienda.</h2>
-        <p>El diseño integra los logos reales suministrados para posicionar a ONTA STORE como vitrina premium de moda urbana y casual de alto costo.</p>
+        <h2>Marcas seleccionadas para un estilo exclusivo.</h2>
+        <p>Una selección curada de moda urbana, casual y premium para clientes que buscan presencia, calidad y exclusividad.</p>
       </div>
       <div class="brand-logo-grid">
-        <article><img src="assets/brands/monastery-couture.png" alt="Monastery Couture"><span>Monastery Couture</span></article>
-        <article class="dark"><img src="assets/brands/giorgio-armani.png" alt="Giorgio Armani"><span>Giorgio Armani</span></article>
-        <article class="polo-card"><img src="assets/brands/polo-ralph-lauren.png" alt="Polo Ralph Lauren"><span>Polo Ralph Lauren</span></article>
-        <article><img src="assets/brands/nike.png" alt="Nike"><span>Nike</span></article>
+        <article><img src="assets/brands/monastery-couture.png" alt="Monastery Couture"></article>
+        <article class="dark"><img src="assets/brands/giorgio-armani.png" alt="Giorgio Armani"></article>
+        <article class="polo-card"><img src="assets/brands/polo-ralph-lauren.png" alt="Polo Ralph Lauren"></article>
+        <article><img src="assets/brands/nike.png" alt="Nike"></article>
       </div>
     </section>
 
     <section class="section showroom" id="vitrina">
       <div class="section-head left">
         <span class="eyebrow">Tour de tienda</span>
-        <h2>Vitrina virtual simple, elegante y visual.</h2>
-        <p>Las fotos se organizaron para presentar la experiencia como un recorrido: fachada visual, looks femeninos, prendas masculinas y detalles de producto.</p>
+        <h2>Vitrina virtual ONTA STORE.</h2>
+        <p>Recorre la tienda, descubre los looks de temporada y revisa detalles de prendas antes de comprar.</p>
       </div>
       <div class="showroom-grid">
         <article class="wide"><img src="assets/img/showroom-vitrina.webp" alt="Showroom ONTA STORE"><div><b>Showroom Ventura Plaza</b><small>Local 2-20 · segundo piso</small></div></article>
@@ -84,12 +92,13 @@
 
     <section class="section buy-panel" id="catalogo">
       <div class="section-head">
-        <span class="eyebrow">Carrito visible + pago destacado</span>
-        <h2>Catálogo listo para vender.</h2>
-        <p>El cliente puede filtrar, escoger talla/color, agregar a la bolsa y pasar a pedido por WhatsApp o botón de pago.</p>
+        <span class="eyebrow">Compra rápida</span>
+        <h2>Catálogo premium ONTA.</h2>
+        <p>Filtra por categoría, selecciona talla y color, agrega al carrito y confirma tu pedido en línea.</p>
       </div>
       <div class="commerce-bar">
-        <div><strong>🛍️ Bolsa ONTA</strong><span id="barItems">0 prendas seleccionadas</span></div>
+        <div><strong>🛒 Carrito ONTA</strong><span id="barItems">0 prendas seleccionadas</span></div>
+        <button class="btn ghost" id="demoCart">Simular compra</button>
         <button class="btn ghost" id="openCart2">Ver carrito</button>
         <a class="btn primary" href="#pago">Pagar online</a>
       </div>
@@ -106,8 +115,8 @@
     <section class="section vip-section" id="vip">
       <div class="vip-copy">
         <span class="eyebrow">ONTA VIP</span>
-        <h2>Registro de clientes para cumpleaños, fechas especiales y promociones.</h2>
-        <p>Esta sección convierte visitas en base de datos comercial. Registra WhatsApp, fecha de cumpleaños, marca favorita e intención de compra para luego enviar campañas.</p>
+        <h2>Club VIP para clientes ONTA.</h2>
+        <p>Regístrate para recibir promociones de cumpleaños, lanzamientos privados, beneficios por temporada y asesoría personalizada.</p>
         <div class="vip-benefits">
           <span>🎁 Promos de cumpleaños</span>
           <span>🔥 Drops anticipados</span>
@@ -131,12 +140,12 @@
 
     <section class="section campaigns" id="promos">
       <div class="section-head left">
-        <span class="eyebrow">Promos y lanzamientos</span>
-        <h2>Espacios de publicidad que venden.</h2>
-        <p>Bloques preparados para reels, colecciones por temporada, combos, campañas de cumpleaños y lanzamientos exclusivos.</p>
+        <span class="eyebrow">Promociones</span>
+        <h2>Lanzamientos, reels y beneficios exclusivos.</h2>
+        <p>Nuevas colecciones, campañas de temporada, promociones VIP y contenido de moda para inspirar tu próxima compra.</p>
       </div>
       <div class="campaign-grid">
-        <article class="campaign feature"><img src="assets/img/model-exotica.webp" alt="Campaña ONTA"><div><span>Reel vertical</span><h3>Drop Exótica</h3><p>Zona lista para incrustar videos de Instagram, TikTok o reels propios.</p><button class="playBtn" data-video="Drop Exótica · ONTA STORE">▶ Ver demo</button></div></article>
+        <article class="campaign feature"><img src="assets/img/model-exotica.webp" alt="Campaña ONTA"><div><span>Reel vertical</span><h3>Drop Exótica</h3><p>Nuevo look de temporada con disponibilidad limitada.</p><button class="playBtn" data-video="Drop Exótica · ONTA STORE">▶ Ver demo</button></div></article>
         <article class="campaign"><h3>ONTA Birthday</h3><p>Promos automáticas por mes de cumpleaños.</p><strong>-15% VIP</strong></article>
         <article class="campaign"><h3>Reserva privada</h3><p>Separación de prendas exclusivas antes de agotar tallas.</p><strong>Early Access</strong></article>
         <article class="campaign"><h3>Domicilio local</h3><p>Compra, confirma dirección y recibe en casa.</p><strong>Cúcuta Express</strong></article>
@@ -147,13 +156,13 @@
       <div>
         <span class="eyebrow">Pago online</span>
         <h2>Botón de pago visible para cerrar la venta.</h2>
-        <p>En producción se conecta con Wompi, PayU, Mercado Pago, Nequi, Bancolombia o el link real del comercio. El prototipo ya toma el total de la bolsa.</p>
+        <p>Revisa el total de tu carrito y continúa con pago online o confirma tu pedido por WhatsApp.</p>
       </div>
       <div class="payment-box">
         <h3>Resumen de compra</h3>
-        <p class="muted">Total actual de la bolsa:</p>
+        <p class="muted">Total actual del carrito:</p>
         <strong class="checkout-total" id="checkoutTotal">$0</strong>
-        <button class="btn primary full" id="payDemo">Pagar online demo</button>
+        <button class="btn primary full" id="payDemo">Pagar online</button>
         <button class="btn ghost full" id="whatsappOrder2">Enviar pedido por WhatsApp</button>
       </div>
     </section>
@@ -161,18 +170,18 @@
 
   <footer class="footer">
     <img src="assets/img/onta-logo.webp" alt="ONTA logo">
-    <div><h3>ONTA STORE</h3><p>La mejor tienda de ropa de la ciudad · CC Ventura Plaza Local 2-20, segundo piso · Cúcuta, Norte de Santander.</p><p><a href="https://www.instagram.com/ontastore.com.co/" target="_blank" rel="noreferrer">Instagram</a> · <a href="admin.html">Panel VIP</a> · <a href="#catalogo">Comprar</a></p></div>
+    <div><h3>ONTA STORE</h3><p>La mejor tienda de ropa de la ciudad · CC Ventura Plaza Local 2-20, segundo piso · Cúcuta, Norte de Santander.</p><p><a href="https://www.instagram.com/ontastore.com.co/" target="_blank" rel="noreferrer">Instagram</a> · <a href="https://wa.me/573168749334" target="_blank" rel="noreferrer">WhatsApp</a> · <a href="mailto:ventas@onta.com.co">ventas@onta.com.co</a> · <a href="admin.html">Panel VIP</a> · <a href="#catalogo">Comprar</a></p></div>
   </footer>
 
   <aside class="cart-drawer" id="cartDrawer" aria-hidden="true">
-    <div class="cart-head"><h2>Bolsa ONTA</h2><button id="closeCart">×</button></div>
+    <div class="cart-head"><h2>🛒 Carrito ONTA</h2><button id="closeCart">×</button></div>
     <div id="cartItems" class="cart-items"></div>
     <div class="cart-total"><span>Total</span><strong id="cartTotal">$0</strong></div>
-    <button class="btn primary full" id="whatsappOrder">Enviar pedido WhatsApp</button>
+    <button class="btn primary full" id="whatsappOrder">Enviar pedido por WhatsApp</button>
     <a class="btn ghost full" href="#pago" onclick="document.getElementById('cartDrawer').classList.remove('open');document.getElementById('overlay').classList.remove('show')">Ir a pago online</a>
   </aside>
   <div class="overlay" id="overlay"></div>
-  <div class="video-modal" id="videoModal"><button id="closeVideo">×</button><div class="video-stage"><div class="play-symbol">▶</div><h2 id="videoTitle">ONTA Promo</h2><p>Área preparada para insertar reels reales, videos de campaña, lanzamientos y testimonios.</p></div></div>
+  <div class="video-modal" id="videoModal"><button id="closeVideo">×</button><div class="video-stage"><div class="play-symbol">▶</div><h2 id="videoTitle">ONTA Promo</h2><p>Reels, campañas, lanzamientos y testimonios de ONTA STORE.</p></div></div>
   <script src="data/config.js"></script><script src="script.js"></script>
 </body>
 </html>
