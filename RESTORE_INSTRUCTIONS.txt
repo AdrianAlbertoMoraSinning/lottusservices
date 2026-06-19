@@ -1,0 +1,12 @@
+RESTORE PACKAGE - Lottus dependent pages
+
+Purpose:
+- Restore the known working Lottus Services root site and dependent pages.
+- Keep Onta untouched. This package does NOT include the Onta folder.
+
+Upload/replace these files and folders in GitHub:
+- root: index.html, style.css, app.js, payment.html, payment-success.html, manifest.json, package.json, service-worker.js
+- folders: assets, images, rbmoving, webdev, JPPaintings, WellOilandGas, SumaQ17th
+
+Likely issue observed:
+- A later upload while working on Onta appears to have overwritten or affected shared/root files, causing the Lottus-dependent pages to render extremely narrow on desktop.
