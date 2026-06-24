@@ -13,3 +13,14 @@ form?.addEventListener('submit',(e)=>{
   const msg=`Hello Carlos, I would like to discuss a project.%0A%0AName / Company: ${encodeURIComponent(data.get('name')||'')}%0AEmail: ${encodeURIComponent(data.get('email')||'')}%0ALocation: ${encodeURIComponent(data.get('location')||'')}%0AService: ${encodeURIComponent(data.get('service')||'')}%0AMessage: ${encodeURIComponent(data.get('message')||'')}`;
   window.open(`https://wa.me/14388662398?text=${msg}`,'_blank','noopener');
 });
+
+// Country experience selector
+const countryControls = document.querySelectorAll('[data-country]');
+const countryPanels = document.querySelectorAll('.country-panel');
+countryControls.forEach(control => {
+  control.addEventListener('click', () => {
+    const country = control.dataset.country;
+    countryControls.forEach(c => c.classList.toggle('active', c.dataset.country === country));
+    countryPanels.forEach(panel => panel.classList.toggle('active', panel.id === `country-${country}`));
+  });
+});

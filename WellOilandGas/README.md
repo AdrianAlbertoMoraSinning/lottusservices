@@ -15,3 +15,9 @@ Updated website package ready to upload/drag into GitHub under the `WellOilandGa
 - SMS: sms:+14388662398
 - Email: tiradocarlos10@gmail.com
 - LinkedIn: https://www.linkedin.com/in/carlos-tirado-274207135
+
+## Latest update
+- Added clickable country experience section for Canada, Argentina and Colombia.
+- Expanded Carlos Tirado's experience narrative in English based on the new country-specific background provided.
+- Complemented the technical profile page with detailed country experience.
+- Preserved the existing visual design and transparent logo placement.
