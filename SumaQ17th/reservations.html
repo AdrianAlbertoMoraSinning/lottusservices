@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SumaQ on 17th | Reservations</title>
+  <meta name="description" content="SumaQ on 17th in Calgary. Peruvian fusion cuisine, menu, reservations, private events, delivery, contact and careers." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="page-reservations">
+  <header class="topbar" id="top">
+    <a class="brand" href="index.html" aria-label="SumaQ on 17th home">
+      <span class="brand-mark">S<br>U<br>M<br>A<br>Q</span>
+      <span><strong>SumaQ</strong><small>on 17th</small></span>
+    </a>
+    <button class="menu-toggle" type="button" aria-label="Open menu">☰</button>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a class="" href="index.html">Home</a>
+      <a class="" href="menu.html">Menu</a>
+      <a class="active" href="reservations.html">Reservations</a>
+      <a class="" href="private-events.html">Private Events</a>
+      <a class="" href="delivery.html">Delivery</a>
+      <a class="" href="about.html">About</a>
+      <a class="" href="contact.html">Contact</a>
+      <a class="" href="work-with-us.html">Work With Us</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="section reservation-section standalone" id="reservations">
+      <div class="section-head">
+        <p class="eyebrow">Window 2</p>
+        <h2>Reservations</h2>
+        <p>For parties of 1 to 4 guests, the request is saved without online payment. For parties of more than 4 guests, the deposit option appears automatically.</p>
+      </div>
+      <div class="reservation-grid">
+        <figure class="screen-card design-reference">
+          <img src="assets/screens/03-reservations.jpg" alt="SumaQ reservations visual" />
+        </figure>
+        <form id="reservationForm" class="form-card" autocomplete="on">
+          <h3>Book your table</h3>
+          <p class="muted">Complete the request. SumaQ will confirm availability using your contact details.</p>
+          <div class="two">
+            <label>First name *<input name="firstName" required placeholder="First name"></label>
+            <label>Last name<input name="lastName" placeholder="Last name"></label>
+          </div>
+          <div class="two">
+            <label>Phone *<input name="phone" required placeholder="(587) 401-4083"></label>
+            <label>Email *<input name="email" type="email" required placeholder="email@example.com"></label>
+          </div>
+          <div class="three">
+            <label>Adults *<input name="adults" id="adults" type="number" min="1" max="40" value="2" required></label>
+            <label>Minors<input name="minors" id="minors" type="number" min="0" max="40" value="0"></label>
+            <label>Party size<input name="partySize" id="partySize" readonly value="2 guests"></label>
+          </div>
+          <div class="two">
+            <label>Date *<input name="date" type="date" required></label>
+            <label>Preferred time *
+              <select name="time" required>
+                <option value="">Select time</option>
+                <option>12:00 p.m.</option><option>12:15 p.m.</option><option>12:30 p.m.</option>
+                <option>4:00 p.m.</option><option>5:30 p.m.</option><option>7:00 p.m.</option><option>8:30 p.m.</option><option>10:00 p.m.</option>
+              </select>
+            </label>
+          </div>
+          <label>Special notes<textarea name="notes" rows="4" placeholder="Allergies, celebration, seating preference..."></textarea></label>
+          <div id="paymentBox" class="payment-box" hidden>
+            <div><strong>Deposit required for groups over 4 guests</strong><p id="paymentSummary">Deposit will be calculated from the current reservation settings.</p></div>
+            <button class="btn pay" type="button" id="payDepositBtn">Pay deposit with Stripe</button>
+          </div>
+          <div id="noPaymentBox" class="payment-box no-pay"><strong>No online payment required.</strong><p>Deposit applies only for reservations of more than 4 guests.</p></div>
+          <button class="btn primary full" type="submit">Book Now</button>
+          <p id="reservationMsg" class="form-msg" role="status"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div><strong>SumaQ on 17th</strong><p>Peruvian fusion cuisine · Calgary</p></div>
+    <nav><a href="menu.html">Menu</a><a href="reservations.html">Reservations</a><a href="private-events.html">Private Events</a><a href="admin.html">Admin</a></nav>
+  </footer>
+
+  <a class="floating-reserve" href="reservations.html">Reserve</a>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SumaQ on 17th | Home</title>
+  <title>SumaQ on 17th | Menu</title>
   <meta name="description" content="SumaQ on 17th in Calgary. Peruvian fusion cuisine, menu, reservations, private events, delivery, contact and careers." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
-<body class="page-home">
+<body class="page-menu">
   <header class="topbar" id="top">
     <a class="brand" href="index.html" aria-label="SumaQ on 17th home">
       <span class="brand-mark">S<br>U<br>M<br>A<br>Q</span>
@@ -18,8 +18,8 @@
     </a>
     <button class="menu-toggle" type="button" aria-label="Open menu">☰</button>
     <nav class="nav-links" aria-label="Main navigation">
-      <a class="active" href="index.html">Home</a>
-      <a class="" href="menu.html">Menu</a>
+      <a class="" href="index.html">Home</a>
+      <a class="active" href="menu.html">Menu</a>
       <a class="" href="reservations.html">Reservations</a>
       <a class="" href="private-events.html">Private Events</a>
       <a class="" href="delivery.html">Delivery</a>
@@ -30,29 +30,29 @@
   </header>
 
   <main>
-    <section class="home-window standalone" id="home">
-      <div class="home-media">
-        <img src="assets/screens/01-home.jpg" alt="SumaQ Peruvian fusion dishes and original home visual" />
-        <div class="video-panel">
-          <p class="eyebrow">Brand video</p>
-          <h1>Fusion of flavours that fills the heart.</h1>
-          <p>This space is ready for the promotional video. For now, it works as a clean visual placeholder.</p>
-          <button class="video-placeholder" type="button" aria-label="Video placeholder">▶</button>
-          <div class="hero-actions">
-            <a class="btn primary" href="reservations.html">Make a Reservation</a>
-            <a class="btn secondary" href="menu.html">View Menu</a>
-          </div>
-        </div>
+    <section class="section menu-section standalone" id="menu">
+      <div class="section-head">
+        <p class="eyebrow">Window 1</p>
+        <h2>Menu</h2>
+        <p>Choose a menu category. Each button is prepared to open a PDF or external menu link when the restaurant provides the final files.</p>
       </div>
-      <div class="bot-card" id="assistantBot">
-        <div>
-          <strong>SumaQ Assistant</strong>
-          <p>Ask about reservations, menu, delivery, hours or private events.</p>
+      <div class="menu-window">
+        <img src="assets/screens/02-menu.jpg" alt="SumaQ menu visual with Peruvian menu, Nikkei and cocktails" />
+        <div class="menu-actions">
+          <button class="btn menu-btn" data-menu="Main Menu">Main Menu</button>
+          <button class="btn menu-btn magenta" data-menu="Nikkei">Nikkei</button>
+          <button class="btn menu-btn teal" data-menu="Cocktails">Cocktails</button>
         </div>
-        <button class="btn mini" type="button" id="botDemoBtn">Open</button>
       </div>
     </section>
   </main>
+
+  <dialog id="menuDialog" class="menu-dialog">
+    <button class="dialog-close" type="button" aria-label="Close menu">×</button>
+    <h3 id="menuDialogTitle">Menu</h3>
+    <p id="menuDialogText">Final PDF or external link can be connected here.</p>
+    <a id="menuDialogLink" class="btn primary" href="menu.html">View Here</a>
+  </dialog>
 
   <footer class="footer">
     <div><strong>SumaQ on 17th</strong><p>Peruvian fusion cuisine · Calgary</p></div>

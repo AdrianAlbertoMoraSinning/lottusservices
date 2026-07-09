@@ -54,3 +54,17 @@ Success URL:
 ## Pending client assets
 - Final promotional video for Home.
 - Final PDF or external links for Main Menu, Nikkei and Cocktails.
+
+
+## Multi-page structure update
+This package was updated from a one-page scrolling website to independent screens/pages:
+- `index.html` — Home
+- `menu.html` — Menu
+- `reservations.html` — Reservations
+- `private-events.html` — Private Events
+- `delivery.html` — Delivery
+- `about.html` — About Us
+- `contact.html` — Contact Us
+- `work-with-us.html` — Work With Us
+
+The top navigation now opens each page directly instead of jumping to sections inside one continuous page. Internal buttons were updated to point to the corresponding page.
