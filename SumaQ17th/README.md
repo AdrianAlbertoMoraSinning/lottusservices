@@ -68,3 +68,22 @@ This package was updated from a one-page scrolling website to independent screen
 - `work-with-us.html` — Work With Us
 
 The top navigation now opens each page directly instead of jumping to sections inside one continuous page. Internal buttons were updated to point to the corresponding page.
+
+
+## Chatbot integration update
+
+The Jotform AI Agent embed script has been added before the closing `</body>` tag on the public pages:
+
+- index.html
+- menu.html
+- about.html
+- contact.html
+- delivery.html
+- private-events.html
+- reservations.html
+- work-with-us.html
+
+The embed script was intentionally not added to `admin.html` or `payment-success.html`.
+
+Jotform embed:
+`https://cdn.jotfor.ms/agent/embedjs/019f4787dc9070008494bdde9961d38e81b7/embed.js`
