@@ -1,63 +1,77 @@
 # LuBoutique — High-End Apparel
 
-Sitio web estático premium, responsive y listo para publicar en GitHub Pages o Netlify. El proyecto fue limpiado y reconstruido para LuBoutique; no contiene referencias a la tienda base anterior.
+A production-ready, responsive boutique website for LuBoutique in Calgary, Alberta, Canada.
 
-## Funcionalidades
+## Features
 
-- Hero editorial y colecciones para dama, caballero y sport wear.
-- Catálogo desde `data/products.json` con filtros, tallas, colores y campos preparados para precio, descuento, SKU, galería y promociones.
-- Bolsa persistente con `localStorage`, cantidades, eliminación y vaciado.
-- Solicitud del pedido por WhatsApp o correo.
-- Preparación para Stripe mediante `stripeCheckoutUrl` y `paymentMode` en la configuración.
-- Registro VIP con consentimiento, preferencias, ciudad y cumpleaños.
-- Panel local `admin.html` con métricas y exportación CSV.
-- SEO básico, Open Graph, Schema.org, favicon y carga diferida.
-- Páginas de privacidad, términos, envíos, devoluciones y cookies.
-- Headers de seguridad para Netlify.
+- Premium responsive storefront in Canadian English
+- Dynamic catalog loaded from `data/products.json`
+- Category filters and product options
+- Persistent shopping bag using `localStorage`
+- WhatsApp and email product inquiries
+- Private-list customer registration
+- Local admin dashboard with customer metrics and CSV export
+- Privacy, terms, shipping, returns and cookie pages
+- SEO metadata, Open Graph, Schema.org and favicon
+- Netlify security headers and deployment configuration
+- Centralized business settings in `data/config.js`
 
-## Configuración obligatoria antes de publicar
+## Contact information
 
-Editar `data/config.js` y completar los datos reales:
+- SMS / WhatsApp: +1 (825) 945-6581
+- Email: lufe.portilla23@gmail.com
+- Location: Calgary, Alberta, Canada
+
+## Configuration
+
+Edit `data/config.js` to update business information, contact details, social links, hours, currency, language and future payment settings.
+
+The WhatsApp value must contain digits only:
 
 ```js
-window.LUBOUTIQUE_CONFIG = {
-  storeName: 'LuBoutique',
-  city: 'Calgary, Alberta',
-  address: 'Dirección real',
-  whatsapp: '14035551234', // formato internacional, sin +
-  phone: '+1 403 555 1234',
-  email: 'info@dominio.com',
-  instagram: 'https://instagram.com/...',
-  facebook: '',
-  tiktok: '',
-  currency: 'CAD',
-  locale: 'en-CA',
-  paymentMode: 'whatsapp',
-  stripeCheckoutUrl: ''
-};
+whatsapp: '18259456581'
 ```
 
-Los enlaces sociales vacíos se ocultan automáticamente. WhatsApp y correo muestran un aviso de configuración si todavía están vacíos.
+## Product catalog
 
-## Catálogo
+Products are stored in `data/products.json`. Each product supports:
 
-Editar `data/products.json`. Para activar precios, use un número mayor que cero en `price`. Mientras sea `0`, se mostrará `priceLabel`.
+- ID and SKU
+- Name and description
+- Brand and category
+- Price or inquiry label
+- Main image and gallery
+- Badge
+- Sizes and colours
+- Featured, new-arrival and promotion flags
 
-## Publicación
+## Local testing
 
-### GitHub Pages
-1. Subir el contenido de esta carpeta a un repositorio.
-2. Settings → Pages → Deploy from branch.
-3. Seleccionar la rama principal y la carpeta raíz.
+Because the catalog is loaded with `fetch`, run the project through a local web server rather than opening `index.html` directly.
 
-### Netlify
-1. Importar el repositorio desde Netlify.
-2. Build command: dejar vacío.
-3. Publish directory: `.`
+```bash
+python -m http.server 8080
+```
 
-## Limitaciones actuales
+Then open `http://localhost:8080`.
 
-- El panel y el formulario VIP usan almacenamiento local; no son multiusuario.
-- No hay inventario ni autenticación real.
-- Stripe requiere un checkout seguro o una función serverless antes de producción.
-- Las políticas deben ser revisadas con los datos y reglas reales de la empresa.
+## Deploying to Netlify
+
+1. Upload this project to a GitHub repository.
+2. In Netlify, choose **Add new site → Import an existing project**.
+3. Select the GitHub repository.
+4. Leave the build command empty.
+5. Set the publish directory to the repository root.
+6. Deploy the site.
+
+`netlify.toml` already provides recommended security and caching headers.
+
+## Admin dashboard
+
+Open `admin.html` to review locally stored private-list registrations and export them as CSV.
+
+This is a front-end demonstration dashboard. Browser storage is not a secure production database. Before collecting live customer data at scale, connect the forms and dashboard to a secure authenticated backend such as Firebase or Supabase.
+
+## Future integrations
+
+The project is structured for future integration with Stripe Checkout, Firebase, Supabase, Airtable, Google Sheets and a secure authenticated administration system.
