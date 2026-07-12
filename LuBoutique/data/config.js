@@ -1,0 +1,21 @@
+window.LUBOUTIQUE_CONFIG = {
+  storeName: 'LuBoutique',
+  tagline: 'High-End Apparel',
+  city: 'Calgary, Alberta',
+  address: 'Calgary, Alberta, Canada',
+  country: 'Canada',
+  whatsapp: '',
+  phone: '',
+  email: '',
+  instagram: '',
+  facebook: '',
+  tiktok: '',
+  linkedin: '',
+  currency: 'CAD',
+  locale: 'en-CA',
+  language: 'es',
+  paymentMode: 'whatsapp',
+  stripeCheckoutUrl: '',
+  businessHours: 'Atención con cita previa',
+  shippingNote: 'Envíos y entrega coordinados directamente con el cliente.'
+};

@@ -1,0 +1,32 @@
+[
+  {
+    "id":"lu-001","sku":"LU-BOSS-SHOE-001","name":"BOSS Performance Golf Footwear","description":"Selección premium de calzado deportivo y casual para un estilo refinado dentro y fuera del campo.","brand":"BOSS","category":"Calzado","price":0,"priceLabel":"Consultar disponibilidad","image":"assets/img/boss-sport-shoes.webp","gallery":["assets/img/boss-sport-shoes.webp"],"badge":"Colección destacada","sizes":["Consultar"],"colors":["Borgoña","Azul marino","Blanco"],"featured":true,"new":true,"promotion":false
+  },
+  {
+    "id":"lu-002","sku":"LU-BOSS-CAP-002","name":"BOSS Sports Headwear Collection","description":"Gorras deportivas de acabado premium con estética limpia, técnica y contemporánea.","brand":"BOSS","category":"Gorras","price":0,"priceLabel":"Consultar disponibilidad","image":"assets/img/boss-headwear.webp","gallery":["assets/img/boss-headwear.webp"],"badge":"Performance","sizes":["Ajustable"],"colors":["Grafito","Azul marino","Borgoña"],"featured":true,"new":false,"promotion":false
+  },
+  {
+    "id":"lu-003","sku":"LU-BOSS-TEE-003","name":"BOSS Performance Technical Shirts","description":"Camisetas técnicas de alto desempeño, tacto ligero y diseño versátil para dama y caballero.","brand":"BOSS","category":"Camisetas","price":0,"priceLabel":"Consultar disponibilidad","image":"assets/img/boss-shirts.webp","gallery":["assets/img/boss-shirts.webp"],"badge":"Technical wear","sizes":["S","M","L","XL"],"colors":["Grafito","Azul marino","Borgoña"],"featured":true,"new":true,"promotion":false
+  },
+  {
+    "id":"lu-004","sku":"LU-ARMANI-004","name":"Armani Sports & Accessories Edit","description":"Una selección de camisetas, gorras, calzado y accesorios de inspiración italiana.","brand":"Armani","category":"Colecciones","price":0,"priceLabel":"Consultar disponibilidad","image":"assets/img/armani-collection.webp","gallery":["assets/img/armani-collection.webp"],"badge":"Italian edit","sizes":["Consultar"],"colors":["Selección surtida"],"featured":true,"new":false,"promotion":false
+  },
+  {
+    "id":"lu-005","sku":"LU-SPORT-005","name":"LuBoutique Sport Wear Collection","description":"Camisetas, gorras y zapatillas deportivas seleccionadas para una imagen activa y sofisticada.","brand":"LuBoutique Select","category":"Sport Wear","price":0,"priceLabel":"Consultar disponibilidad","image":"assets/img/sportwear-collection.webp","gallery":["assets/img/sportwear-collection.webp"],"badge":"LuBoutique Select","sizes":["Consultar"],"colors":["Selección surtida"],"featured":true,"new":true,"promotion":false
+  },
+  {
+    "id":"lu-006","sku":"LU-GENT-SHOE-006","name":"Gentlemen Black Oxford Shoes","description":"Zapato formal negro de líneas clásicas y presencia ejecutiva para ocasiones especiales.","brand":"LuBoutique Select","category":"Calzado","price":0,"priceLabel":"Consultar disponibilidad","image":"assets/img/gentlemen-shoes.webp","gallery":["assets/img/gentlemen-shoes.webp"],"badge":"Formal essentials","sizes":["Consultar"],"colors":["Negro"],"featured":false,"new":false,"promotion":false
+  },
+  {
+    "id":"lu-007","sku":"LU-LADIES-007","name":"Ladies High-End Collection","description":"Una edición femenina de prendas y detalles refinados, creada para una elegancia natural.","brand":"LuBoutique","category":"Dama","price":0,"priceLabel":"Consultar disponibilidad","image":"assets/img/ladies-collection.webp","gallery":["assets/img/ladies-collection.webp"],"badge":"Ladies edit","sizes":["XS","S","M","L"],"colors":["Consultar"],"featured":true,"new":true,"promotion":false
+  },
+  {
+    "id":"lu-008","sku":"LU-GENT-008","name":"Gentlemen Tailored Collection","description":"Sastrería y accesorios de imagen ejecutiva para un guardarropa masculino impecable.","brand":"LuBoutique","category":"Caballero","price":0,"priceLabel":"Consultar disponibilidad","image":"assets/img/gentlemen-collection.webp","gallery":["assets/img/gentlemen-collection.webp"],"badge":"Gentlemen edit","sizes":["S","M","L","XL"],"colors":["Negro","Gris","Blanco"],"featured":true,"new":false,"promotion":false
+  },
+  {
+    "id":"lu-009","sku":"LU-PRADA-CAP-009","name":"Prada Performance Headwear","description":"Gorras técnicas de inspiración golf con estilismo editorial para dama y caballero.","brand":"Prada","category":"Gorras","price":0,"priceLabel":"Consultar disponibilidad","image":"assets/img/prada-headwear-models.webp","gallery":["assets/img/prada-headwear-models.webp"],"badge":"Featured models","sizes":["Ajustable"],"colors":["Borgoña","Azul marino","Blanco"],"featured":true,"new":true,"promotion":false
+  },
+  {
+    "id":"lu-010","sku":"LU-PRADA-TEE-010","name":"Prada Performance Golf Shirts","description":"Camisetas técnicas premium con diseño deportivo, respirabilidad y estilo contemporáneo.","brand":"Prada","category":"Camisetas","price":0,"priceLabel":"Consultar disponibilidad","image":"assets/img/prada-shirts-models.webp","gallery":["assets/img/prada-shirts-models.webp","assets/img/prada-shirts.webp"],"badge":"Golf performance","sizes":["S","M","L","XL"],"colors":["Borgoña","Azul marino","Blanco"],"featured":true,"new":false,"promotion":false
+  }
+]

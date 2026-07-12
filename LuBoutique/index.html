@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>LuBoutique | High-End Apparel</title>
+  <meta name="description" content="LuBoutique: selección curada de moda premium, sport wear, calzado y accesorios para dama y caballero.">
+  <meta name="keywords" content="LuBoutique, high-end apparel, boutique premium, moda, calzado, sport wear, dama, caballero">
+  <meta name="theme-color" content="#10100f">
+  <meta property="og:type" content="website"><meta property="og:title" content="LuBoutique | High-End Apparel"><meta property="og:description" content="Moda premium seleccionada para una presencia impecable."><meta property="og:image" content="assets/img/logo-wall.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/icons/favicon.png">
+  <link rel="preload" href="assets/img/prada-shirts-models.webp" as="image">
+  <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"ClothingStore","name":"LuBoutique","description":"High-End Apparel","areaServed":"Calgary, Alberta","image":"assets/img/logo-wall.webp"}</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Saltar al contenido</a>
+  <div class="announcement">LU BOUTIQUE · HIGH-END APPAREL · ATENCIÓN PERSONALIZADA</div>
+  <header class="site-header" id="inicio">
+    <nav class="nav" aria-label="Navegación principal">
+      <a class="brand" href="#inicio" aria-label="LuBoutique, inicio"><img src="assets/img/logo-transparent.webp" alt="LuBoutique"><span><b>LuBoutique</b><small>High-End Apparel</small></span></a>
+      <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      <div class="nav-links">
+        <a href="#colecciones">Colecciones</a><a href="#catalogo">Catálogo</a><a href="#experiencia">Experiencia</a><a href="#vip">VIP</a><a href="#contacto">Contacto</a>
+      </div>
+      <button class="cart-pill" id="openCart" aria-label="Abrir carrito">Bolsa <b id="cartCount">0</b></button>
+    </nav>
+    <section class="hero">
+      <div class="hero-media"><img src="assets/img/prada-shirts-models.webp" alt="Colección deportiva premium de LuBoutique" fetchpriority="high"></div>
+      <div class="hero-copy">
+        <span class="eyebrow">Curated luxury · Modern performance</span>
+        <h1>Una selección de moda diseñada para destacar.</h1>
+        <p>Prendas, calzado y accesorios premium para dama y caballero, presentados con una experiencia de compra cercana, elegante y personalizada.</p>
+        <div class="hero-actions"><a class="btn primary" href="#catalogo">Explorar catálogo</a><a class="btn ghost" href="#contacto">Solicitar asesoría</a></div>
+        <div class="trust-row"><span>Selección curada</span><span>Atención personal</span><span>Pedidos directos</span></div>
+      </div>
+    </section>
+  </header>
+  <main id="main">
+    <section class="section intro" id="colecciones">
+      <div class="section-head"><span class="eyebrow">The LuBoutique Edit</span><h2>Colecciones para cada expresión de estilo.</h2><p>Una vitrina visual de piezas contemporáneas, sport wear técnico, calzado y accesorios de inspiración internacional.</p></div>
+      <div class="editorial-grid">
+        <article class="editorial large"><img loading="lazy" src="assets/img/ladies-collection.webp" alt="Colección para dama"><div><span>Dama</span><h3>Elegancia natural</h3><a href="#catalogo" data-jump-filter="Dama">Ver selección</a></div></article>
+        <article class="editorial"><img loading="lazy" src="assets/img/gentlemen-collection.webp" alt="Colección para caballero"><div><span>Caballero</span><h3>Presencia impecable</h3><a href="#catalogo" data-jump-filter="Caballero">Ver selección</a></div></article>
+        <article class="editorial"><img loading="lazy" src="assets/img/sportwear-collection.webp" alt="Colección sport wear"><div><span>Sport wear</span><h3>Performance refinado</h3><a href="#catalogo" data-jump-filter="Sport Wear">Ver selección</a></div></article>
+      </div>
+    </section>
+    <section class="section showcase" id="experiencia">
+      <div class="showcase-copy"><span class="eyebrow">Premium presentation</span><h2>Detalles que transforman una prenda en una experiencia.</h2><p>Texturas, acabados, proporciones y asesoría se combinan para ayudarte a elegir piezas que representen tu estilo con autenticidad.</p><ul><li>Selección para dama y caballero</li><li>Sport wear, calzado, gorras y accesorios</li><li>Atención personalizada antes de confirmar el pedido</li></ul></div>
+      <div class="showcase-collage"><img loading="lazy" class="a" src="assets/img/logo-wall.webp" alt="Identidad LuBoutique"><img loading="lazy" class="b" src="assets/img/gentlemen-shoes.webp" alt="Calzado formal LuBoutique"><img loading="lazy" class="c" src="assets/img/prada-headwear-models.webp" alt="Gorras deportivas premium"></div>
+    </section>
+    <section class="section catalog-section" id="catalogo">
+      <div class="section-head left"><span class="eyebrow">Catálogo curado</span><h2>Descubre la selección LuBoutique.</h2><p>Agrega productos a tu bolsa y envía una solicitud. La disponibilidad, talla y precio final se confirman directamente contigo.</p></div>
+      <div class="commerce-bar"><div><strong>Tu selección</strong><span id="barItems">0 artículos seleccionados</span></div><button class="btn ghost" id="openCart2">Ver bolsa</button><button class="btn soft" id="clearCart">Vaciar</button></div>
+      <div class="filters" id="filters" aria-label="Filtros del catálogo"><button class="active" data-filter="Todos">Todos</button><button data-filter="Dama">Dama</button><button data-filter="Caballero">Caballero</button><button data-filter="Camisetas">Camisetas</button><button data-filter="Gorras">Gorras</button><button data-filter="Calzado">Calzado</button><button data-filter="Sport Wear">Sport Wear</button></div>
+      <div class="product-grid" id="productGrid" aria-live="polite"></div>
+    </section>
+    <section class="section vip-section" id="vip">
+      <div class="vip-visual"><img loading="lazy" src="assets/img/footer-brand.webp" alt="LuBoutique VIP"></div>
+      <div class="vip-content"><span class="eyebrow">LuBoutique Private List</span><h2>Acceso preferencial a nuevas colecciones.</h2><p>Regístrate para recibir atención prioritaria, novedades, selecciones especiales y comunicaciones relacionadas con tus preferencias.</p>
+        <form id="vipForm" class="vip-form"><label>Nombre completo<input required name="name" autocomplete="name"></label><label>WhatsApp<input required name="phone" autocomplete="tel"></label><label>Correo<input type="email" name="email" autocomplete="email"></label><label>Cumpleaños<input type="date" name="birthday"></label><label>Ciudad<input name="city" autocomplete="address-level2"></label><label>Preferencia<select name="interest"><option>Dama</option><option>Caballero</option><option>Sport Wear</option><option>Calzado</option><option>Accesorios</option></select></label><label class="consent"><input required type="checkbox" name="consent" value="yes"> Acepto el tratamiento de mis datos según la política de privacidad.</label><button class="btn primary" type="submit">Unirme a la lista privada</button><p class="form-ok" id="vipOk" role="status"></p></form>
+      </div>
+    </section>
+    <section class="section contact" id="contacto">
+      <div><span class="eyebrow">Private shopping</span><h2>Encuentra tu próxima pieza con asesoría personalizada.</h2><p>Comparte la referencia, talla o estilo que buscas. LuBoutique confirmará disponibilidad y coordinará tu pedido.</p></div>
+      <div class="contact-actions"><button class="btn primary" id="contactWhatsapp">Contactar por WhatsApp</button><a class="btn ghost" id="contactEmail" href="#">Enviar correo</a><p id="contactFallback">Los datos de contacto pueden configurarse en <code>data/config.js</code>.</p></div>
+    </section>
+  </main>
+  <footer class="footer">
+    <div class="footer-brand"><img src="assets/img/logo-transparent.webp" alt="LuBoutique"><p>Moda premium seleccionada para una presencia impecable.</p></div>
+    <div><h3>Explorar</h3><a href="#colecciones">Colecciones</a><a href="#catalogo">Catálogo</a><a href="#vip">Private List</a><a href="admin.html">Panel</a></div>
+    <div><h3>Información</h3><a href="privacy.html">Privacidad</a><a href="terms.html">Términos</a><a href="shipping.html">Envíos</a><a href="returns.html">Devoluciones</a><a href="cookies.html">Cookies</a></div>
+    <div><h3>Conectar</h3><a data-social="instagram" hidden>Instagram</a><a data-social="facebook" hidden>Facebook</a><a data-social="tiktok" hidden>TikTok</a><span id="footerLocation">Calgary, Alberta</span></div>
+    <p class="copyright">© <span id="year"></span> LuBoutique. Todos los derechos reservados.</p>
+  </footer>
+  <aside class="cart-drawer" id="cartDrawer" aria-hidden="true" aria-label="Bolsa de compras"><div class="cart-head"><h2>Tu selección</h2><button id="closeCart" aria-label="Cerrar">×</button></div><div id="cartItems" class="cart-items"></div><div class="cart-total"><span>Total estimado</span><strong id="cartTotal">Por confirmar</strong></div><button class="btn primary full" id="whatsappOrder">Solicitar por WhatsApp</button><button class="btn ghost full" id="emailOrder">Solicitar por correo</button></aside><div class="overlay" id="overlay"></div>
+  <script src="data/config.js"></script><script src="script.js"></script>
+</body></html>
