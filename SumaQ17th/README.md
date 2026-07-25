@@ -29,3 +29,6 @@ The current version remains deployable as a static Netlify prototype and stores 
 - Parties of 4 guests or fewer are booked immediately when **Book Now** is selected.
 - Parties of more than 4 guests are redirected from **Book Now** to the CAD 50 payment demonstration.
 - After the simulated payment is approved, the reservation is stored as booked and the deposit status is recorded as paid in demo mode.
+
+## Pickup payment demonstration
+The Order Pickup catalog contains the full restaurant menu. Customers select quantities, review subtotal, GST and total, then choose **Pay securely**. The project stores the pending order and opens `order-payment.html`, a clearly labelled card-payment demonstration. After simulated approval, the order is marked `Paid (demo)`, the pickup cart is cleared, and the customer returns to `order-pickup.html` with confirmation.
