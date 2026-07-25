@@ -32,3 +32,7 @@ The current version remains deployable as a static Netlify prototype and stores 
 
 ## Pickup payment demonstration
 The Order Pickup catalog contains the full restaurant menu. Customers select quantities, review subtotal, GST and total, then choose **Pay securely**. The project stores the pending order and opens `order-payment.html`, a clearly labelled card-payment demonstration. After simulated approval, the order is marked `Paid (demo)`, the pickup cart is cleared, and the customer returns to `order-pickup.html` with confirmation.
+
+## Version 3.2.1 fix
+- Fixed JavaScript global-name collision that prevented the Order Pickup catalog from rendering.
+- Restored quantity selection, cart totals, GST calculation, demo payment, and paid-order return flow.
