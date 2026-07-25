@@ -36,7 +36,7 @@
       <div class="section-head">
         <p class="eyebrow">Window 2</p>
         <h2>Reservations</h2>
-        <p>For parties of 1 to 4 guests, the request is saved without online payment. For parties of more than 4 guests, the deposit option appears automatically.</p>
+        <p>For parties of more than 4 guests, a fixed CAD 50 reservation deposit is required. The payment demonstration shows the customer experience before live processing is enabled.</p>
       </div>
       <div class="reservation-grid">
         <figure class="screen-card design-reference">
@@ -70,8 +70,8 @@
           </div>
           <label>Special notes<textarea name="notes" rows="4" placeholder="Allergies, celebration, seating preference..."></textarea></label>
           <div id="paymentBox" class="payment-box" hidden>
-            <div><strong>Deposit required for groups over 4 guests</strong><p id="paymentSummary">Deposit will be calculated from the current reservation settings.</p></div>
-            <button class="btn pay" type="button" id="payDepositBtn">Pay deposit with Stripe</button>
+            <div><strong>CAD 50 deposit required for groups over 4 guests</strong><p id="paymentSummary">Fixed reservation deposit: $50.00 CAD.</p></div>
+            <button class="btn pay" type="button" id="payDepositBtn">Continue to secure payment</button>
           </div>
           <div id="noPaymentBox" class="payment-box no-pay"><strong>No online payment required.</strong><p>Deposit applies only for reservations of more than 4 guests.</p></div>
           <button class="btn primary full" type="submit">Book Now</button>
