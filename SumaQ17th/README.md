@@ -22,3 +22,10 @@ The current version remains deployable as a static Netlify prototype and stores 
 - The Shop contains an estimated ingredient catalog based on core ingredients used by the menu. Prices are approximate Calgary retail values and must be confirmed before commercial launch.
 - Admin access uses password SumaQ17*123. The plaintext password is not displayed in the interface or source; the static demo compares a SHA-256 hash. For production-grade security, move authentication to Netlify Identity or a server-side authentication provider.
 - Pricing references consulted for estimates included current Walmart Canada, Real Canadian Superstore and Calgary specialty retailer listings in July 2026.
+
+
+## Reservation booking flow
+
+- Parties of 4 guests or fewer are booked immediately when **Book Now** is selected.
+- Parties of more than 4 guests are redirected from **Book Now** to the CAD 50 payment demonstration.
+- After the simulated payment is approved, the reservation is stored as booked and the deposit status is recorded as paid in demo mode.
