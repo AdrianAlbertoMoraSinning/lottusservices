@@ -1,17 +1,76 @@
-const PASSWORD_HASH='ae208b74a32e4148f03aa5b03a89252d2dd0c87a222ce794eab749606249b5f9';const CONFIG_KEY='sumaqReservationConfig';const RES_KEY='sumaqReservations';const EVENT_KEY='sumaqEventInquiries';const DEFAULT_CONFIG={depositRequired:true,adultDeposit:20,minorDeposit:10,currency:'CAD',depositThreshold:4};
-const $=id=>document.getElementById(id);function read(key,fallback){try{return JSON.parse(localStorage.getItem(key)||JSON.stringify(fallback))}catch{return fallback}}function write(key,value){localStorage.setItem(key,JSON.stringify(value))}function csvEscape(v){return `"${String(v??'').replaceAll('"','""')}"`}function downloadCsv(name,rows){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([rows],{type:'text/csv'}));a.download=name;a.click()}function fmtDate(s){return s?new Date(s).toLocaleString():''}function money(n){return `$${Number(n||0).toFixed(2)} CAD`}
-async function sha256(v){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(v));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
-$('loginBtn').onclick=async()=>{const ok=await sha256($('pin').value)===PASSWORD_HASH;if(ok){sessionStorage.setItem('sumaqAdminAuth','1');$('login').classList.add('hidden');$('dashboard').classList.remove('hidden');loadAll()}else{$('loginMsg').textContent='Invalid password.'}};
-function loadAll(){renderReservations();renderEvents();runCommerceReport()}
-function renderReservations(){const items=read(RES_KEY,[]);$('reservationsBody').innerHTML=items.length?items.map(r=>`<tr><td>${fmtDate(r.createdAt)}<br><small>${r.id||''}</small></td><td>${r.date||''}<br>${r.time||''}</td><td>${r.firstName||''} ${r.lastName||''}</td><td>${r.adults||0} adults<br>${r.minors||0} minors<br>${r.partySize||''} total</td><td>${r.phone||''}<br>${r.email||''}</td><td>${money(r.depositAmount)}<br>${r.paymentStatus||''}</td><td><span class="pill">${r.status||'New'}</span></td><td>${r.notes||''}</td></tr>`).join(''):'<tr><td colspan="8">No reservations saved in this browser yet.</td></tr>'}
-function renderEvents(){const items=read(EVENT_KEY,[]);$('eventsBody').innerHTML=items.length?items.map(r=>`<tr><td>${fmtDate(r.createdAt)}<br><small>${r.id||''}</small></td><td>${r.firstName||''} ${r.lastName||''}</td><td>${r.email||''}</td><td>${r.phone||''}</td><td>${r.message||''}</td><td><span class="pill">${r.status||'New'}</span></td></tr>`).join(''):'<tr><td colspan="6">No private event inquiries saved in this browser yet.</td></tr>'}
-$('exportReservations').onclick=()=>{const items=read(RES_KEY,[]);const header='ID,Created,Date,Time,First Name,Last Name,Phone,Email,Adults,Minors,Party Size,Deposit Required,Deposit Amount,Payment Status,Status,Notes';const rows=items.map(r=>[r.id,r.createdAt,r.date,r.time,r.firstName,r.lastName,r.phone,r.email,r.adults,r.minors,r.partySize,r.depositRequired,r.depositAmount,r.paymentStatus,r.status,r.notes].map(csvEscape).join(','));downloadCsv('sumaq-reservations.csv',[header,...rows].join('\n'))};
-$('exportEvents').onclick=()=>{const items=read(EVENT_KEY,[]);const header='ID,Created,First Name,Last Name,Phone,Email,Message,Status';const rows=items.map(r=>[r.id,r.createdAt,r.firstName,r.lastName,r.phone,r.email,r.message,r.status].map(csvEscape).join(','));downloadCsv('sumaq-private-events.csv',[header,...rows].join('\n'))};
-$('clearReservations').onclick=()=>{if(confirm('Clear all reservation records saved in this browser?')){localStorage.removeItem(RES_KEY);renderReservations()}};$('clearEvents').onclick=()=>{if(confirm('Clear all private event inquiries saved in this browser?')){localStorage.removeItem(EVENT_KEY);renderEvents()}};
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>SumaQ Administration</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="admin-page">
+<header class="site-header"><a class="brand" href="index.html"><span class="brand-mark">SUMAQ</span><span>SumaQ<br><small>on 17th</small></span></a><nav><a href="about.html">Back to About</a><a href="index.html">Website</a></nav></header>
+<main class="admin-shell">
+  <section id="login" class="admin-login card-panel">
+    <p class="eyebrow">Website management</p><h1>Administration</h1>
+    <p>Authorized SumaQ staff only.</p>
+    <label>Password<input id="pin" type="password" autocomplete="current-password" placeholder="Enter password"></label>
+    <button id="loginBtn" class="btn primary" type="button">Open dashboard</button>
+    <p id="loginMsg" class="form-message" aria-live="polite"></p>
+  </section>
 
-const ORDER_KEY='sumaqCommerceOrders';let currentCommerceRows=[];
-function reportDateValue(id){const v=$(id)?.value;return v?new Date(v+'T00:00:00'):null}
-function runCommerceReport(){const type=$('reportType')?.value||'pickup',from=reportDateValue('reportFrom'),to=reportDateValue('reportTo');if(to)to.setHours(23,59,59,999);const orders=read(ORDER_KEY,[]).filter(o=>o.type===type&&(!from||new Date(o.createdAt)>=from)&&(!to||new Date(o.createdAt)<=to));const gross=orders.reduce((s,o)=>s+Number(o.total||0),0),tax=orders.reduce((s,o)=>s+Number(o.tax||0),0);$('metricOrders').textContent=orders.length;$('metricGross').textContent=money(gross);$('metricTax').textContent=money(tax);$('metricAverage').textContent=money(orders.length?gross/orders.length:0);const map={};orders.forEach(o=>(o.items||[]).forEach(i=>{const k=i.name||i.id;if(!map[k])map[k]={name:k,qty:0,sales:0};map[k].qty+=Number(i.qty||0);map[k].sales+=Number(i.qty||0)*Number(i.price||0)}));currentCommerceRows=Object.values(map).sort((a,b)=>b.sales-a.sales);$('productSalesBody').innerHTML=currentCommerceRows.length?currentCommerceRows.map(r=>`<tr><td>${r.name}</td><td>${r.qty}</td><td>${money(r.sales)}</td></tr>`).join(''):'<tr><td colspan="3">No sales for this selection.</td></tr>'}
-$('runReport')?.addEventListener('click',runCommerceReport);$('exportCommerce')?.addEventListener('click',()=>{const rows=['Item,Units Sold,Sales CAD',...currentCommerceRows.map(r=>[r.name,r.qty,r.sales.toFixed(2)].map(csvEscape).join(','))];downloadCsv(`sumaq-${$('reportType').value}-sales.csv`,rows.join('\n'))});
+  <section id="dashboard" class="hidden admin-dashboard">
+    <div class="admin-heading"><div><p class="eyebrow">SumaQ on 17th</p><h1>Management dashboard</h1><p>Manage customer activity, menu dishes, shop products and sales reports.</p></div><button id="logoutBtn" class="btn secondary" type="button">Log out</button></div>
+    <div class="admin-tabs" role="tablist">
+      <button class="active" data-tab="reservationsPanel">Reservations</button><button data-tab="eventsPanel">Private Events</button><button data-tab="pickupPanel">Order Pickup Menu</button><button data-tab="shopPanel">Shop Products</button><button data-tab="reportsPanel">Sales Reports</button>
+    </div>
 
-if(sessionStorage.getItem('sumaqAdminAuth')==='1'){$('login').classList.add('hidden');$('dashboard').classList.remove('hidden');loadAll();}
+    <section id="reservationsPanel" class="admin-panel active">
+      <div class="panel-title"><div><h2>Reservations</h2><p>Review, update and export reservations saved by the website.</p></div><div><button id="exportReservations" class="btn secondary">Export CSV</button><button id="clearReservations" class="btn danger">Clear all</button></div></div>
+      <div class="table-wrap"><table><thead><tr><th>Created</th><th>Date / Time</th><th>Guest</th><th>Party</th><th>Contact</th><th>Deposit</th><th>Status</th><th>Notes</th><th>Action</th></tr></thead><tbody id="reservationsBody"></tbody></table></div>
+    </section>
+
+    <section id="eventsPanel" class="admin-panel">
+      <div class="panel-title"><div><h2>Private event inquiries</h2><p>Review and update private-event requests.</p></div><div><button id="exportEvents" class="btn secondary">Export CSV</button><button id="clearEvents" class="btn danger">Clear all</button></div></div>
+      <div class="table-wrap"><table><thead><tr><th>Created</th><th>Name</th><th>Email</th><th>Phone</th><th>Message</th><th>Status</th><th>Action</th></tr></thead><tbody id="eventsBody"></tbody></table></div>
+    </section>
+
+    <section id="pickupPanel" class="admin-panel">
+      <div class="panel-title"><div><h2>Order Pickup dishes</h2><p>Edit photos, names, categories, descriptions, prices and units, or add new dishes.</p></div><button class="btn primary add-product" data-type="pickup">Add new dish</button></div>
+      <div id="pickupEditor" class="catalog-admin-grid"></div>
+    </section>
+
+    <section id="shopPanel" class="admin-panel">
+      <div class="panel-title"><div><h2>Shop ingredients and products</h2><p>Edit the Shop catalogue or add new ingredients and products.</p></div><button class="btn primary add-product" data-type="shop">Add new product</button></div>
+      <div id="shopEditor" class="catalog-admin-grid"></div>
+    </section>
+
+    <section id="reportsPanel" class="admin-panel">
+      <div class="panel-title"><div><h2>Sales reports</h2><p>Filter sales by operation and date range.</p></div><button id="exportCommerce" class="btn secondary">Export CSV</button></div>
+      <div class="report-filters"><label>Operation<select id="reportType"><option value="pickup">Order Pickup</option><option value="shop">Shop</option></select></label><label>From<input id="reportFrom" type="date"></label><label>To<input id="reportTo" type="date"></label><button id="runReport" class="btn primary">Run report</button></div>
+      <div class="metric-grid"><article><small>Orders</small><strong id="metricOrders">0</strong></article><article><small>Gross sales</small><strong id="metricGross">$0.00</strong></article><article><small>GST</small><strong id="metricTax">$0.00</strong></article><article><small>Average order</small><strong id="metricAverage">$0.00</strong></article></div>
+      <div class="table-wrap"><table><thead><tr><th>Item</th><th>Units sold</th><th>Sales</th></tr></thead><tbody id="productSalesBody"></tbody></table></div>
+    </section>
+  </section>
+</main>
+
+<div id="productModal" class="admin-modal hidden" role="dialog" aria-modal="true" aria-labelledby="productModalTitle">
+  <div class="admin-modal-card">
+    <button id="closeProductModal" class="modal-close" aria-label="Close">×</button>
+    <h2 id="productModalTitle">Edit item</h2>
+    <form id="productForm" class="admin-form">
+      <input id="productType" type="hidden"><input id="productOriginalId" type="hidden">
+      <label>Item ID<input id="productId" required pattern="[a-z0-9-]+" placeholder="example-item"></label>
+      <label>Name<input id="productName" required></label>
+      <label>Category<input id="productCategory" required></label>
+      <label>Price CAD<input id="productPrice" type="number" min="0" step="0.01" required></label>
+      <label>Unit / presentation<input id="productUnit" required placeholder="plate, jar, 1 kg bag"></label>
+      <label class="full">Description<textarea id="productDescription" rows="4" required></textarea></label>
+      <label class="full">Image path or URL<input id="productImage" placeholder="assets/photos/image.webp or https://..."></label>
+      <label class="full">Upload image from this device<input id="productImageFile" type="file" accept="image/*"><small>The image is resized and stored in this browser for the demo dashboard.</small></label>
+      <div class="image-preview full"><img id="productPreview" alt="Item preview"></div>
+      <div class="form-actions full"><button class="btn primary" type="submit">Save item</button><button id="cancelProduct" class="btn secondary" type="button">Cancel</button></div>
+    </form>
+  </div>
+</div>
+<script src="commerce-data.js"></script><script src="admin.js"></script>
+</body></html>

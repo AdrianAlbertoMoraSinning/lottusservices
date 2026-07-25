@@ -6,6 +6,10 @@
   var ordersStorageKey = 'sumaqCommerceOrders';
   var pendingOrderKey = 'sumaqPendingCommerceOrder';
   var rawCatalogs = window.SUMAQ_CATALOGS || {};
+  try {
+    var savedCatalogs = JSON.parse(localStorage.getItem('sumaqCatalogOverrides') || '{}');
+    if (savedCatalogs && Array.isArray(savedCatalogs[commerceMode])) rawCatalogs = Object.assign({}, rawCatalogs, savedCatalogs);
+  } catch (error) { /* use built-in catalogue */ }
   var rawItems = rawCatalogs[commerceMode] || [];
 
   function normalizeItem(item) {
