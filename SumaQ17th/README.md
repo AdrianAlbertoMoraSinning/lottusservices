@@ -44,3 +44,8 @@ The Order Pickup catalog contains the full restaurant menu. Customers select qua
 - DoorDash has been removed because SumaQ does not use that platform.
 - Instagram: https://www.instagram.com/sumaqon17th/
 - Facebook: https://www.facebook.com/sumaqon17th
+
+
+## Favicons and home-screen icons
+
+The project includes a complete favicon package for desktop browsers, iOS/iPadOS home-screen shortcuts, Android/PWA installation and Windows tiles. Files are located in `assets/icons/`, with root-level `favicon.ico`, `site.webmanifest`, and `browserconfig.xml`. All HTML pages include the required metadata.
