@@ -1,5 +1,6 @@
 const ORDER_KEY='sumaqCommerceOrders';
-const CART_KEY='sumaqCart_pickup';
+const pendingMode=JSON.parse(sessionStorage.getItem('sumaqPendingOrder')||'{}').mode||'pickup';
+const CART_KEY='sumaqCart_'+pendingMode;
 const PENDING_KEY='sumaqPendingCommerceOrder';
 const pending=JSON.parse(sessionStorage.getItem(PENDING_KEY)||'null');
 const form=document.getElementById('orderDemoPaymentForm');
@@ -27,5 +28,5 @@ form?.addEventListener('submit',e=>{
   sessionStorage.removeItem(PENDING_KEY);
   const button=form.querySelector('button');button.disabled=true;
   document.getElementById('orderPaymentMsg').textContent='Demo payment approved. Returning to your confirmed pickup order.';
-  setTimeout(()=>{window.location.href=`order-pickup.html?payment=success&order=${encodeURIComponent(completed.id)}`},700);
+  setTimeout(()=>{window.location.href=`${pendingMode==='shop'?'shop.html':'order-pickup.html'}?payment=success&order=${encodeURIComponent(completed.id)}`},700);
 });
