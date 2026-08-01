@@ -23,3 +23,15 @@
 
 /* Official delivery and social connections */
 .social-link{display:inline-flex;align-items:center;gap:8px}.social-icon{width:22px;height:22px;flex:0 0 auto}.social-button{gap:10px}.social-button .social-icon{width:20px;height:20px}.brand-card{transition:transform .18s ease,box-shadow .18s ease}.brand-card:hover,.brand-card:focus-visible{transform:translateY(-4px);box-shadow:0 18px 40px rgba(0,0,0,.2)}
+
+/* Mobile floating reservation button: keep clear of the Jotform chatbot */
+@media (max-width: 600px){
+  .floating-reserve{
+    left:14px;
+    right:auto;
+    bottom:calc(14px + env(safe-area-inset-bottom, 0px));
+    z-index:35;
+    padding:12px 16px;
+    max-width:calc(100vw - 100px);
+  }
+}
