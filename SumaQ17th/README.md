@@ -49,3 +49,7 @@ The Order Pickup catalog contains the full restaurant menu. Customers select qua
 ## Favicons and home-screen icons
 
 The project includes a complete favicon package for desktop browsers, iOS/iPadOS home-screen shortcuts, Android/PWA installation and Windows tiles. Files are located in `assets/icons/`, with root-level `favicon.ico`, `site.webmanifest`, and `browserconfig.xml`. All HTML pages include the required metadata.
+
+## Floating reservation button update (v5)
+- Desktop and mobile: the floating Reserve button is positioned on the lower-left side to avoid overlap with the Jotform chatbot.
+- Reservations page: the floating Reserve button is intentionally hidden because the visitor is already in the reservation flow.
