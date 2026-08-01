@@ -36,3 +36,11 @@ The Order Pickup catalog contains the full restaurant menu. Customers select qua
 ## Version 3.2.1 fix
 - Fixed JavaScript global-name collision that prevented the Order Pickup catalog from rendering.
 - Restored quantity selection, cart totals, GST calculation, demo payment, and paid-order return flow.
+
+## Delivery and social links
+
+- Uber Eats connects directly to the active SumaQ on 17 store page.
+- Skip connects directly to the SumaQ on 17 Calgary restaurant page.
+- DoorDash has been removed because SumaQ does not use that platform.
+- Instagram: https://www.instagram.com/sumaqon17th/
+- Facebook: https://www.facebook.com/sumaqon17th
