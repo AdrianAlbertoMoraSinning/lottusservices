@@ -222,3 +222,54 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+/* Detailed client refinements — August 2026 */
+.reference-hotspot{cursor:pointer;touch-action:manipulation}
+.reference-hotspot::after{content:"";position:absolute;inset:-3px}
+.home-fusion-link{left:83.2%;top:80%;width:11.7%;height:7.6%}
+.home-reservation-link{left:30.2%;top:55.1%;width:19.2%;height:8.2%}
+.home-order-link{left:3.2%;top:78%;width:9.5%;height:8.5%}
+.menu-main-link{left:84.6%;top:65.7%;width:11.9%;height:7.7%}
+.menu-desserts-link{left:5.0%;top:63.4%;width:11.8%;height:7.7%}
+.menu-cocktails-link{left:83.1%;top:51.0%;width:12.1%;height:8.1%}
+
+/* One shared footer throughout the site, matching the supplied reference. */
+.footer-reference{display:grid;grid-template-columns:minmax(220px,1fr) minmax(180px,3fr) minmax(180px,.8fr);gap:2.2rem;align-items:start;background:#5b2f70;color:#fff;border-top:0;padding:42px 6vw 34px;min-height:260px}
+.footer-left{display:flex;align-items:center;gap:48px}.footer-logo-lockup{display:flex;flex-direction:column;align-items:center;font-family:Inter,sans-serif}.footer-logo-mark{font-size:1.35rem;line-height:.86;letter-spacing:.18em;border-left:5px solid #ec4d95;border-right:5px solid #55bdb0;padding:4px 12px 4px 14px}.footer-logo-lockup small{margin-top:8px;font-size:.65rem}.footer-follow{display:flex;flex-direction:column;gap:18px;color:#efe8f2}.footer-social-row{display:flex;gap:18px}.footer-social-row a{color:#fff;display:flex;align-items:center;justify-content:center}.footer-social-row .social-icon{width:42px;height:42px}.footer-rule{height:8px;background:#f89b19;margin-top:2px;width:100%}.footer-nav{display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:6px!important;padding-top:28px}.footer-nav a{color:#fff!important;font-size:.96rem;line-height:1.3;text-decoration:none}.footer-nav a:hover,.footer-nav a:focus-visible{text-decoration:underline}
+
+/* Reservations: preserve all data fields while matching the supplied proportions. */
+.page-reservations .reservation-designer{min-height:auto;align-items:stretch}
+.page-reservations .reservation-photo{min-height:680px}
+.page-reservations .reservation-content{padding:34px clamp(24px,4vw,64px) 44px}
+.page-reservations .reservation-content:before{width:10px}
+.page-reservations .reservation-content .eyebrow{display:none}
+.page-reservations .reservation-content h1{font-size:clamp(2rem,3vw,3.35rem);margin:0 0 18px;text-align:right;font-weight:500}
+.page-reservations .reservation-content .color-note.teal{padding:14px 22px;font-size:.96rem;line-height:1.3;margin-bottom:18px}
+.reservation-reference-form{margin-top:0;padding:0;background:transparent}
+.reservation-reference-form .two,.reservation-reference-form .three{gap:12px}
+.reservation-reference-form label{font-size:.78rem}
+.reservation-reference-form input,.reservation-reference-form select,.reservation-reference-form textarea{min-height:42px;border:1px solid #aaa;background:#fff}
+.reservation-reference-form .payment-box{display:flex;align-items:center;gap:26px;border-left:10px solid #f89b19;background:#f6ead3;padding:20px;margin-top:18px}
+.reservation-reference-form .payment-box.no-pay{border-left-color:#61beb3;background:#e5f4f2}
+.reservation-reference-form .payment-box strong{font-size:1.15rem;color:#111}.reservation-reference-form .payment-box p{margin:5px 0 0;color:#6d625d}
+.reservation-reference-form .btn.full{max-width:180px;margin:18px auto 0;display:block;padding:13px 22px}
+
+/* Private Events typography and balanced 2/1 layout from reference. */
+.page-private-events .event-layout{gap:0;grid-template-columns:1.6fr .84fr;padding:0}
+.page-private-events .event-copy{padding:70px 72px;background:#f3eddf}
+.page-private-events .event-copy .eyebrow{display:none}
+.page-private-events .event-copy h1{font-size:clamp(2.35rem,4vw,4.3rem);font-weight:500;margin-bottom:24px}
+.page-private-events .event-copy p{font-size:1rem;line-height:1.45;max-width:650px}
+.page-private-events .designer-form{padding:28px 30px;background:#fff;margin:0}
+.page-private-events .designer-form label{font-size:.73rem}
+.page-private-events .designer-form input,.page-private-events .designer-form textarea{border:0;border-bottom:1px solid #222;border-radius:0;padding:10px 2px;background:transparent;min-height:38px}
+.page-private-events .designer-form textarea{min-height:92px}
+.page-private-events .designer-form .btn{width:auto;min-width:95px;border-radius:20px;padding:10px 18px}
+
+/* Remove the obsolete DoorDash artwork and correct the embedded delivery copy. */
+.delivery-reference{isolation:isolate}.delivery-copy-mask{position:absolute;z-index:3;left:10.8%;top:54.5%;width:57%;min-height:8%;display:flex;align-items:center;background:#5b2f70;color:#fff;font-size:clamp(.7rem,1.25vw,1.18rem);padding:.5rem 0}.delivery-doordash-mask{position:absolute;z-index:3;left:68%;top:73%;width:22%;height:14%;background:#5b2f70}
+
+@media(max-width:900px){.footer-reference{grid-template-columns:1fr 1.5fr .8fr}.footer-left{gap:24px}.page-private-events .event-copy{padding:46px 30px}}
+@media(max-width:720px){.footer-reference{grid-template-columns:1fr;gap:20px;padding:34px 28px}.footer-left{justify-content:flex-start}.footer-rule{order:2}.footer-nav{order:3;padding-top:0;display:grid!important;grid-template-columns:1fr 1fr!important}.footer-social-row .social-icon{width:36px;height:36px}.delivery-copy-mask,.delivery-doordash-mask{display:block}.delivery-copy-mask{font-size:2.1vw}.page-reservations .reservation-photo{min-height:340px}.page-reservations .reservation-content h1{text-align:left}.page-private-events .event-layout{grid-template-columns:1fr}.page-private-events .designer-form{padding:30px 24px}}
+@media(max-width:480px){.footer-left{align-items:flex-start}.footer-follow{margin-top:10px}.footer-nav{grid-template-columns:1fr!important}.delivery-copy-mask{font-size:2.25vw}}

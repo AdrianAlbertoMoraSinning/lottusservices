@@ -39,3 +39,10 @@ The current card screens are demo flows. The database centralization is real onc
 
 ## Client photography update (August 2026)
 The institutional photographs on Home, Menu, Reservations, Private Events, Delivery, About, Contact and Work With Us were replaced with the exact visual references supplied in `Estructura Web_Sumaq.pptx`. The central Supabase integration, authentication and Netlify data function remain enabled.
+
+
+## Detailed interface refinements (August 2026)
+- Full-button click targets on Home and Menu.
+- Unified reference footer on every public page.
+- Reservations and Private Events refined to supplied layouts.
+- DoorDash visually removed from Delivery; Uber Eats and Skip retained.
