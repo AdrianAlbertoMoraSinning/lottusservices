@@ -36,3 +36,6 @@ Never commit the Supabase service-role key or Stripe secret keys to GitHub. Only
 ## Payments
 
 The current card screens are demo flows. The database centralization is real once configured, but real Stripe payment confirmation still requires Stripe Checkout and a verified webhook.
+
+## Client photography update (August 2026)
+The institutional photographs on Home, Menu, Reservations, Private Events, Delivery, About, Contact and Work With Us were replaced with the exact visual references supplied in `Estructura Web_Sumaq.pptx`. The central Supabase integration, authentication and Netlify data function remain enabled.

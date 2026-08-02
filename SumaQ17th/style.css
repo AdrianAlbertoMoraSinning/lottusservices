@@ -57,3 +57,20 @@
 
 
 
+
+/* Client-approved photography from Estructura Web_Sumaq.pptx */
+.page-index .home-video-fallback img{object-position:center center}
+.page-index .fusion-collage .collage-main{object-position:center center}
+.page-index .fusion-collage .collage-inset{object-position:center center}
+.page-index .celebration-collage .collage-main{object-position:center center}
+.page-index .celebration-collage .collage-inset{object-position:center center}
+.page-index .home-order-collage .collage-main{object-position:center center}
+.page-menu .menu-editorial article:nth-child(1) img{object-position:center center}
+.page-menu .menu-editorial article:nth-child(2) img{object-position:center center}
+.page-menu .menu-editorial article:nth-child(3) img{object-position:center center}
+.page-reservations .reservation-photo img{object-position:center center}
+.page-private-events .event-hero img{object-position:center 45%}
+.page-delivery .delivery-hero img{object-position:center center}
+.page-about .about-grid img{object-position:center center}
+.page-contact .contact-top img,.page-contact .contact-bottom img{object-position:center center}
+.page-work-with-us .work-designer img{object-position:center center}
