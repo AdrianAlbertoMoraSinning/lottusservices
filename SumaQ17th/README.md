@@ -49,3 +49,6 @@ The institutional photographs on Home, Menu, Reservations, Private Events, Deliv
 
 ### Click-area refinement (August 2026)
 The complete graphical Order Now button on Home links to Pickup. The full Uber Eats and Skip logo areas on Delivery are clickable on desktop and mobile.
+
+### Delivery click-target alignment (v16)
+The Uber Eats and Skip interactive areas now match the exact logo bounds in the approved Delivery artwork on desktop and mobile, with no visible focus rectangle or displaced hotspot.

@@ -371,3 +371,39 @@
     height:43%!important;
   }
 }
+
+/* v16: align Delivery click targets exactly with the printed platform logos. */
+.delivery-reference .delivery-uber-link{
+  left:22.05%!important;
+  top:71.25%!important;
+  width:8.45%!important;
+  height:15.25%!important;
+  border-radius:14%!important;
+}
+.delivery-reference .delivery-skip-link{
+  left:46.45%!important;
+  top:71.25%!important;
+  width:8.55%!important;
+  height:15.25%!important;
+  border-radius:14%!important;
+}
+.delivery-reference .delivery-platform-link:hover,
+.delivery-reference .delivery-platform-link:focus,
+.delivery-reference .delivery-platform-link:focus-visible{
+  outline:none!important;
+  box-shadow:none!important;
+}
+@media(max-width:720px){
+  .delivery-reference .delivery-uber-link{
+    left:22.05%!important;
+    top:71.25%!important;
+    width:8.45%!important;
+    height:15.25%!important;
+  }
+  .delivery-reference .delivery-skip-link{
+    left:46.45%!important;
+    top:71.25%!important;
+    width:8.55%!important;
+    height:15.25%!important;
+  }
+}
