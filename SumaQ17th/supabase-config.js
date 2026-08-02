@@ -6,5 +6,5 @@
 */
 window.SUMAQ_SUPABASE = {
   url: 'https://YOUR_PROJECT.supabase.co',
-  anonKey: 'YOUR_SUPABASE_ANON_KEY'
+  anonKey: 'sb_publishable_4B79duvwTmkurN6A-wnP1g_A39s2tU7'
 };
