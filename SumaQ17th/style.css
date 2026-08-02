@@ -316,3 +316,58 @@
     display:block;
   }
 }
+
+
+/* v15: reliable full-logo click targets for Delivery */
+.delivery-reference{position:relative;}
+.delivery-reference .delivery-platform-link{
+  position:absolute!important;
+  display:block!important;
+  z-index:20!important;
+  pointer-events:auto!important;
+  cursor:pointer!important;
+  border-radius:18px;
+  background:transparent;
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:rgba(255,255,255,.18);
+}
+.delivery-reference .delivery-platform-link .delivery-click-fill{
+  position:absolute;
+  inset:0;
+  display:block;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+}
+.delivery-reference .delivery-uber-link{
+  left:16.5%!important;
+  top:29%!important;
+  width:25%!important;
+  height:38%!important;
+}
+.delivery-reference .delivery-skip-link{
+  left:58.5%!important;
+  top:29%!important;
+  width:25%!important;
+  height:38%!important;
+}
+.delivery-reference .delivery-platform-link:hover,
+.delivery-reference .delivery-platform-link:focus-visible{
+  outline:3px solid rgba(255,255,255,.92);
+  outline-offset:3px;
+}
+@media(max-width:720px){
+  .delivery-reference .delivery-platform-link{display:block!important;}
+  .delivery-reference .delivery-uber-link{
+    left:12%!important;
+    top:27%!important;
+    width:31%!important;
+    height:43%!important;
+  }
+  .delivery-reference .delivery-skip-link{
+    left:57%!important;
+    top:27%!important;
+    width:31%!important;
+    height:43%!important;
+  }
+}
