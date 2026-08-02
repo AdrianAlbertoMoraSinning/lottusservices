@@ -273,3 +273,8 @@
 @media(max-width:900px){.footer-reference{grid-template-columns:1fr 1.5fr .8fr}.footer-left{gap:24px}.page-private-events .event-copy{padding:46px 30px}}
 @media(max-width:720px){.footer-reference{grid-template-columns:1fr;gap:20px;padding:34px 28px}.footer-left{justify-content:flex-start}.footer-rule{order:2}.footer-nav{order:3;padding-top:0;display:grid!important;grid-template-columns:1fr 1fr!important}.footer-social-row .social-icon{width:36px;height:36px}.delivery-copy-mask,.delivery-doordash-mask{display:block}.delivery-copy-mask{font-size:2.1vw}.page-reservations .reservation-photo{min-height:340px}.page-reservations .reservation-content h1{text-align:left}.page-private-events .event-layout{grid-template-columns:1fr}.page-private-events .designer-form{padding:30px 24px}}
 @media(max-width:480px){.footer-left{align-items:flex-start}.footer-follow{margin-top:10px}.footer-nav{grid-template-columns:1fr!important}.delivery-copy-mask{font-size:2.25vw}}
+
+/* v13: clickable delivery logos only; clean Contact decorative image */
+.delivery-accessible-actions{display:none!important}
+.delivery-uber-link,.delivery-skip-link{cursor:pointer;z-index:6}
+.page-contact .contact-bottom>img{object-fit:cover;object-position:center center;background:var(--orange)}
