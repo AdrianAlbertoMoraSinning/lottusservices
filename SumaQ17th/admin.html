@@ -27,14 +27,14 @@
 <section class="admin-login card-panel" id="login">
 <p class="eyebrow">Website management</p><h1>Administration</h1>
 <p>Authorized SumaQ staff only.</p>
-<label>Password<input autocomplete="current-password" id="pin" placeholder="Enter password" type="password"/></label>
+<label>Admin email<input autocomplete="username" id="adminEmail" placeholder="name@example.com" type="email" required/></label><label>Password<input autocomplete="current-password" id="pin" placeholder="Enter password" type="password"/></label>
 <button class="btn primary" id="loginBtn" type="button">Open dashboard</button>
 <p aria-live="polite" class="form-message" id="loginMsg"></p>
 </section>
 <section class="hidden admin-dashboard" id="dashboard">
 <div class="admin-heading"><div><p class="eyebrow">SumaQ on 17th</p><h1>Management dashboard</h1><p>Manage customer activity, menu dishes, shop products and sales reports.</p></div><button class="btn secondary" id="logoutBtn" type="button">Log out</button></div>
 <div class="admin-tabs" role="tablist">
-<button class="active" data-tab="reservationsPanel">Reservations</button><button data-tab="eventsPanel">Private Events</button><button data-tab="pickupPanel">Order Pickup Menu</button><button data-tab="shopPanel">Shop Products</button><button data-tab="reportsPanel">Sales Reports</button>
+<button class="active" data-tab="reservationsPanel">Reservations</button><button data-tab="eventsPanel">Private Events</button><button data-tab="ordersPanel">Orders</button><button data-tab="pickupPanel">Order Pickup Menu</button><button data-tab="shopPanel">Shop Products</button><button data-tab="reportsPanel">Sales Reports</button>
 </div>
 <section class="admin-panel active" id="reservationsPanel">
 <div class="panel-title"><div><h2>Reservations</h2><p>Review, update and export reservations saved by the website.</p></div><div><button class="btn secondary" id="exportReservations">Export CSV</button><button class="btn danger" id="clearReservations">Clear all</button></div></div>
@@ -43,6 +43,10 @@
 <section class="admin-panel" id="eventsPanel">
 <div class="panel-title"><div><h2>Private event inquiries</h2><p>Review and update private-event requests.</p></div><div><button class="btn secondary" id="exportEvents">Export CSV</button><button class="btn danger" id="clearEvents">Clear all</button></div></div>
 <div class="table-wrap"><table><thead><tr><th>Created</th><th>Name</th><th>Email</th><th>Phone</th><th>Message</th><th>Status</th><th>Action</th></tr></thead><tbody id="eventsBody"></tbody></table></div>
+</section>
+<section class="admin-panel" id="ordersPanel">
+<div class="panel-title"><div><h2>Central orders</h2><p>Review Pickup and Shop orders submitted from every device.</p></div><div><button class="btn secondary" id="exportOrders">Export CSV</button><button class="btn danger" id="clearOrders">Clean old orders</button></div></div>
+<div class="table-wrap"><table><thead><tr><th>Created</th><th>Order</th><th>Customer</th><th>Type</th><th>Total</th><th>Payment</th><th>Status</th><th>Items</th><th>Action</th></tr></thead><tbody id="ordersBody"></tbody></table></div>
 </section>
 <section class="admin-panel" id="pickupPanel">
 <div class="panel-title"><div><h2>Order Pickup dishes</h2><p>Edit photos, names, categories, descriptions, prices and units, or add new dishes.</p></div><button class="btn primary add-product" data-type="pickup">Add new dish</button></div>
@@ -73,11 +77,11 @@
 <label>Unit / presentation<input id="productUnit" placeholder="plate, jar, 1 kg bag" required=""/></label>
 <label class="full">Description<textarea id="productDescription" required="" rows="4"></textarea></label>
 <label class="full">Image path or URL<input id="productImage" placeholder="assets/photos/image.webp or https://..."/></label>
-<label class="full">Upload image from this device<input accept="image/*" id="productImageFile" type="file"/><small>The image is resized and stored in this browser for the demo dashboard.</small></label>
+<label class="full">Upload image from this device<input accept="image/*" id="productImageFile" type="file"/><small>Images are uploaded to the shared Supabase product-images storage bucket (maximum 2 MB).</small></label>
 <div class="image-preview full"><img alt="Item preview" id="productPreview"/></div>
 <div class="form-actions full"><button class="btn primary" type="submit">Save item</button><button class="btn secondary" id="cancelProduct" type="button">Cancel</button></div>
 </form>
 </div>
 </div>
-<script src="commerce-data.js"></script><script src="admin.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-config.js"></script><script src="central-data.js"></script><script src="admin.js"></script>
 </body></html>

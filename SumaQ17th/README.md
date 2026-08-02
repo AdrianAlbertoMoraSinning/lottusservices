@@ -1,63 +1,38 @@
-# SumaQ on 17th — Website v2
+# SumaQ on 17th — Central Data Edition
 
-Multipage restaurant website with reservations, private-event inquiries, Jotform AI concierge, direct pickup ordering, a separate Latin-market shop, two independent carts, Stripe Checkout functions, admin exports, and sales reports by operation/date/product.
+Complete multipage website ready for GitHub and Netlify. This edition introduces shared data through Supabase Free so updates and customer activity are visible from every device.
 
-## Deploy
-Upload this folder to GitHub and connect the repository to Netlify. Build command can remain empty; publish directory is `.`.
+## Centralized features
 
-## Netlify environment variables
-- `STRIPE_SECRET_KEY`
-- `SITE_URL` (example: `https://yourdomain.ca`)
+- Pickup and Shop catalogues loaded from Supabase.
+- Product names, prices, descriptions, availability and images shared across all devices.
+- Reservations and private-event inquiries stored centrally.
+- Submitted orders and order lines stored centrally.
+- Supabase email/password authentication for Administration.
+- Shared sales reports.
+- Product images uploaded to Supabase Storage.
+- Safe cleanup of old completed/cancelled/archived records.
+- Customer carts remain local only until checkout, which is intentional.
 
-## Catalog editing
-Edit `commerce-data.js`. Pickup and Shop catalogs are deliberately separate. Current products and prices are an initial editable catalog and must be confirmed by the restaurant before live sales.
+## One-time activation required
 
-## Important architecture note
-The current version remains deployable as a static Netlify prototype and stores orders/reservations in browser localStorage. Stripe Checkout is prepared, but production-wide synchronization and reliable cross-device reporting require a central database and a Stripe webhook in the next backend phase.
+The ZIP contains all code, SQL and instructions, but it cannot connect to a project that does not yet exist. Follow `SUPABASE_SETUP.md` after uploading to GitHub.
 
+Required files:
 
-## July 2026 catalog update
-- The pickup catalog now contains the complete menu supplied from the restaurant's Uber Eats listing, organized into Small Plates, Salads, Del Mar, Large Plates, Sides, Drinks and Desserts.
-- Reservation deposits are fixed at CAD 50 for groups over four guests and link to a safe payment demonstration page.
-- The Shop contains an estimated ingredient catalog based on core ingredients used by the menu. Prices are approximate Calgary retail values and must be confirmed before commercial launch.
-- Admin access uses password SumaQ17*123. The plaintext password is not displayed in the interface or source; the static demo compares a SHA-256 hash. For production-grade security, move authentication to Netlify Identity or a server-side authentication provider.
-- Pricing references consulted for estimates included current Walmart Canada, Real Canadian Superstore and Calgary specialty retailer listings in July 2026.
+- `supabase/sumaq-schema-and-seed.sql`
+- `supabase-config.js`
+- `.env.example`
+- `SUPABASE_SETUP.md`
 
+## Netlify
 
-## Reservation booking flow
+Build settings are already in `netlify.toml`. Add `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` as protected Netlify environment variables.
 
-- Parties of 4 guests or fewer are booked immediately when **Book Now** is selected.
-- Parties of more than 4 guests are redirected from **Book Now** to the CAD 50 payment demonstration.
-- After the simulated payment is approved, the reservation is stored as booked and the deposit status is recorded as paid in demo mode.
+## Security
 
-## Pickup payment demonstration
-The Order Pickup catalog contains the full restaurant menu. Customers select quantities, review subtotal, GST and total, then choose **Pay securely**. The project stores the pending order and opens `order-payment.html`, a clearly labelled card-payment demonstration. After simulated approval, the order is marked `Paid (demo)`, the pickup cart is cleared, and the customer returns to `order-pickup.html` with confirmation.
+Never commit the Supabase service-role key or Stripe secret keys to GitHub. Only the public anon key belongs in `supabase-config.js`; Row Level Security limits its access.
 
-## Version 3.2.1 fix
-- Fixed JavaScript global-name collision that prevented the Order Pickup catalog from rendering.
-- Restored quantity selection, cart totals, GST calculation, demo payment, and paid-order return flow.
+## Payments
 
-## Delivery and social links
-
-- Uber Eats connects directly to the active SumaQ on 17 store page.
-- Skip connects directly to the SumaQ on 17 Calgary restaurant page.
-- DoorDash has been removed because SumaQ does not use that platform.
-- Instagram: https://www.instagram.com/sumaqon17th/
-- Facebook: https://www.facebook.com/sumaqon17th
-
-
-## Favicons and home-screen icons
-
-The project includes a complete favicon package for desktop browsers, iOS/iPadOS home-screen shortcuts, Android/PWA installation and Windows tiles. Files are located in `assets/icons/`, with root-level `favicon.ico`, `site.webmanifest`, and `browserconfig.xml`. All HTML pages include the required metadata.
-
-
-
-## Client structure adjustments — August 2026
-- Header logo proportions refined.
-- Main navigation uses “Pickup” and omits Work With Us.
-- Work With Us remains available from the footer.
-- Floating Reserve button removed globally.
-- The chatbot greeting is controlled directly in Jotform; no custom greeting markup or JavaScript override is included.
-- Home rebuilt as a video-ready, layered editorial composition; the supplied image remains the poster/fallback until an approved video file is added.
-- Delivery contains Uber Eats and Skip only; DoorDash is not used.
-- Delivery, Reservations, Private Events and About responsive sizing refined.
+The current card screens are demo flows. The database centralization is real once configured, but real Stripe payment confirmation still requires Stripe Checkout and a verified webhook.
