@@ -61,6 +61,38 @@ function cleanEmail(value) {
   return email;
 }
 
+function normalizeTime(value) {
+  const raw = cleanText(value, 30)
+    .toLowerCase()
+    .replace(/\./g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  const match = raw.match(/^(\d{1,2}):(\d{2})\s*(am|pm)?$/);
+
+  if (!match) {
+    throw new Error('Invalid reservation time.');
+  }
+
+  let hours = Number(match[1]);
+  const minutes = match[2];
+  const period = match[3];
+
+  if (period === 'pm' && hours < 12) {
+    hours += 12;
+  }
+
+  if (period === 'am' && hours === 12) {
+    hours = 0;
+  }
+
+  if (hours > 23 || Number(minutes) > 59) {
+    throw new Error('Invalid reservation time.');
+  }
+
+  return `${String(hours).padStart(2, '0')}:${minutes}:00`;
+}
+
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return {
@@ -90,7 +122,7 @@ exports.handler = async (event) => {
         email: cleanEmail(payload.email),
         phone: cleanText(payload.phone, 40),
         reservation_date: cleanText(payload.date, 10),
-        reservation_time: cleanText(payload.time, 10),
+        reservation_time: normalizeTime(payload.time),
         adults: Number(payload.adults || 0),
         minors: Number(payload.minors || 0),
         party_size: Number(payload.partySize || 0),
