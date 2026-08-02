@@ -74,3 +74,151 @@
 .page-about .about-grid img{object-position:center center}
 .page-contact .contact-top img,.page-contact .contact-bottom img{object-position:center center}
 .page-work-with-us .work-designer img{object-position:center center}
+
+/* Exact client-approved large-slide compositions (August 2026).
+   Small comparison thumbnails from the PowerPoint are intentionally not used. */
+.reference-main {
+  background: #f3eddf;
+  padding: 0;
+}
+.reference-section {
+  position: relative;
+  width: min(100%, 1441px);
+  margin: 0 auto;
+  overflow: hidden;
+  background: #f3eddf;
+}
+.reference-section > img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.reference-hotspot {
+  position: absolute;
+  z-index: 4;
+  display: block;
+  border-radius: 2px;
+  background: transparent;
+}
+.reference-hotspot:focus-visible {
+  outline: 4px solid #fff;
+  box-shadow: 0 0 0 7px #111;
+}
+.reference-mobile-action { display: none; }
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0,0,0,0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+/* Hotspots correspond to the buttons printed in the approved large images. */
+.home-fusion-link { left: 79%; top: 75%; width: 13%; height: 13%; }
+.home-reservation-link { left: 53%; top: 55%; width: 18%; height: 12%; }
+.home-order-link { left: 76%; top: 54%; width: 14%; height: 18%; }
+.menu-main-link { left: 76%; top: 58%; width: 13%; height: 13%; }
+.menu-desserts-link { left: 7%; top: 58%; width: 13%; height: 13%; }
+.menu-cocktails-link { left: 78%; top: 58%; width: 13%; height: 13%; }
+.delivery-uber-link { left: 22%; top: 54%; width: 16%; height: 25%; }
+.delivery-skip-link { left: 42%; top: 54%; width: 16%; height: 25%; }
+.delivery-accessible-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.25rem 1rem 2rem;
+  background: #5a2c70;
+}
+/* Functional Reservations follows the approved slide 9 proportions. */
+.page-reservations .reservation-designer {
+  max-width: 1441px;
+  margin: 0 auto;
+  grid-template-columns: minmax(300px, 34%) minmax(0, 66%);
+  background: #f3eddf;
+}
+.page-reservations .reservation-photo {
+  border-left: 72px solid #f99b15;
+  min-height: 800px;
+}
+.page-reservations .reservation-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.page-reservations .reservation-content {
+  padding: clamp(2rem, 5vw, 5rem) clamp(1.5rem, 5vw, 5rem);
+  background: #f3eddf;
+}
+.page-reservations .reservation-content h1 {
+  text-align: right;
+  font-size: clamp(3rem, 5vw, 5.5rem);
+  margin-bottom: 2rem;
+}
+.page-reservations .reservation-content .color-note.teal {
+  text-align: right;
+  padding: 1.4rem 2rem;
+}
+/* Functional Private Events follows the approved slide 10 composition. */
+.page-private-events .event-hero {
+  width: min(100%, 1441px);
+  margin: 0 auto;
+  height: auto;
+}
+.page-private-events .event-hero img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+.page-private-events .event-layout {
+  width: min(100%, 1441px);
+  margin: 0 auto;
+  grid-template-columns: 2fr 1fr;
+  background: #f3eddf;
+}
+.page-private-events .event-copy {
+  padding: clamp(3rem, 8vw, 8rem) clamp(2rem, 8vw, 7rem);
+}
+.page-private-events .event-copy h1 {
+  font-size: clamp(3rem, 5vw, 5.5rem);
+}
+.page-private-events .designer-form {
+  border-radius: 0;
+  box-shadow: none;
+  background: #fff;
+  padding: clamp(2rem, 4vw, 4rem);
+}
+.about-reference-main .about-reference + .about-reference { margin-top: 0; }
+
+@media (max-width: 720px) {
+  .reference-section {
+    width: 100%;
+  }
+  .reference-hotspot { display: none; }
+  .reference-mobile-action {
+    display: flex;
+    justify-content: center;
+    padding: .8rem 1rem 1.4rem;
+    background: #f3eddf;
+  }
+  .home-reference-main .reference-mobile-action:nth-of-type(2) { background: #f3eddf; }
+  .delivery-accessible-actions { padding-bottom: 1.5rem; }
+  .page-reservations .reservation-designer {
+    grid-template-columns: 1fr;
+  }
+  .page-reservations .reservation-photo {
+    border-left-width: 18px;
+    min-height: 420px;
+  }
+  .page-reservations .reservation-content h1,
+  .page-reservations .reservation-content .color-note.teal {
+    text-align: left;
+  }
+  .page-private-events .event-layout {
+    grid-template-columns: 1fr;
+  }
+}
