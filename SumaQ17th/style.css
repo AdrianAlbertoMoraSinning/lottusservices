@@ -278,3 +278,41 @@
 .delivery-accessible-actions{display:none!important}
 .delivery-uber-link,.delivery-skip-link{cursor:pointer;z-index:6}
 .page-contact .contact-bottom>img{object-fit:cover;object-position:center center;background:var(--orange)}
+
+/* v14: full clickable areas for Home Order Now and Delivery platform logos */
+.home-order-link{
+  left:69.5%;
+  top:49.5%;
+  width:26.5%;
+  height:25.5%;
+  cursor:pointer;
+  z-index:8;
+}
+.delivery-uber-link{
+  left:20.5%;
+  top:34.5%;
+  width:18.5%;
+  height:27%;
+  cursor:pointer;
+  z-index:8;
+}
+.delivery-skip-link{
+  left:66.5%;
+  top:34.5%;
+  width:18.5%;
+  height:27%;
+  cursor:pointer;
+  z-index:8;
+}
+.home-order-link::after,
+.delivery-uber-link::after,
+.delivery-skip-link::after{
+  inset:0;
+}
+@media(max-width:720px){
+  .home-order-link,
+  .delivery-uber-link,
+  .delivery-skip-link{
+    display:block;
+  }
+}

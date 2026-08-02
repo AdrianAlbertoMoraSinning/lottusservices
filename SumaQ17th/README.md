@@ -46,3 +46,6 @@ The institutional photographs on Home, Menu, Reservations, Private Events, Deliv
 - Unified reference footer on every public page.
 - Reservations and Private Events refined to supplied layouts.
 - DoorDash visually removed from Delivery; Uber Eats and Skip retained.
+
+### Click-area refinement (August 2026)
+The complete graphical Order Now button on Home links to Pickup. The full Uber Eats and Skip logo areas on Delivery are clickable on desktop and mobile.
