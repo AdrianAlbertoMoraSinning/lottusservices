@@ -50,9 +50,6 @@ The Order Pickup catalog contains the full restaurant menu. Customers select qua
 
 The project includes a complete favicon package for desktop browsers, iOS/iPadOS home-screen shortcuts, Android/PWA installation and Windows tiles. Files are located in `assets/icons/`, with root-level `favicon.ico`, `site.webmanifest`, and `browserconfig.xml`. All HTML pages include the required metadata.
 
-## Floating reservation button update (v5)
-- Desktop and mobile: the floating Reserve button is positioned on the lower-left side to avoid overlap with the Jotform chatbot.
-- Reservations page: the floating Reserve button is intentionally hidden because the visitor is already in the reservation flow.
 
 
 ## Client structure adjustments — August 2026
@@ -60,7 +57,7 @@ The project includes a complete favicon package for desktop browsers, iOS/iPadOS
 - Main navigation uses “Pickup” and omits Work With Us.
 - Work With Us remains available from the footer.
 - Floating Reserve button removed globally.
-- Dismissible chatbot visibility message added.
+- The chatbot greeting is controlled directly in Jotform; no custom greeting markup or JavaScript override is included.
 - Home rebuilt as a video-ready, layered editorial composition; the supplied image remains the poster/fallback until an approved video file is added.
 - Delivery contains Uber Eats and Skip only; DoorDash is not used.
 - Delivery, Reservations, Private Events and About responsive sizing refined.
