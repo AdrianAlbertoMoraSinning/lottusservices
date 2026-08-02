@@ -1,89 +1,83 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="robots" content="noindex,nofollow">
-  <title>SumaQ Administration</title>
-  <link rel="icon" href="favicon.ico" sizes="any">
-<link rel="icon" type="image/svg+xml" href="assets/icons/safari-pinned-tab.svg">
-<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
-<link rel="manifest" href="site.webmanifest">
-<link rel="mask-icon" href="assets/icons/safari-pinned-tab.svg" color="#47265b">
-<meta name="theme-color" content="#47265b">
-<meta name="msapplication-TileColor" content="#47265b">
-<meta name="msapplication-config" content="browserconfig.xml">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="SumaQ">
-<link rel="stylesheet" href="style.css">
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="noindex,nofollow" name="robots"/>
+<title>SumaQ Administration</title>
+<link href="favicon.ico" rel="icon" sizes="any"/>
+<link href="assets/icons/safari-pinned-tab.svg" rel="icon" type="image/svg+xml"/>
+<link href="assets/icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="assets/icons/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="site.webmanifest" rel="manifest"/>
+<link color="#47265b" href="assets/icons/safari-pinned-tab.svg" rel="mask-icon"/>
+<meta content="#47265b" name="theme-color"/>
+<meta content="#47265b" name="msapplication-TileColor"/>
+<meta content="browserconfig.xml" name="msapplication-config"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="SumaQ" name="apple-mobile-web-app-title"/>
+<link href="style.css" rel="stylesheet"/>
 </head>
 <body class="admin-page">
-<header class="site-header"><a class="brand" href="index.html"><span class="brand-mark">SUMAQ</span><span>SumaQ<br><small>on 17th</small></span></a><nav><a href="about.html">Back to About</a><a href="index.html">Website</a></nav></header>
+<header class="site-header"><a class="brand" href="index.html"><span class="brand-mark">SUMAQ</span><span>SumaQ<br/><small>on 17th</small></span></a><nav><a href="about.html">Back to About</a><a href="index.html">Website</a></nav></header>
 <main class="admin-shell">
-  <section id="login" class="admin-login card-panel">
-    <p class="eyebrow">Website management</p><h1>Administration</h1>
-    <p>Authorized SumaQ staff only.</p>
-    <label>Password<input id="pin" type="password" autocomplete="current-password" placeholder="Enter password"></label>
-    <button id="loginBtn" class="btn primary" type="button">Open dashboard</button>
-    <p id="loginMsg" class="form-message" aria-live="polite"></p>
-  </section>
-
-  <section id="dashboard" class="hidden admin-dashboard">
-    <div class="admin-heading"><div><p class="eyebrow">SumaQ on 17th</p><h1>Management dashboard</h1><p>Manage customer activity, menu dishes, shop products and sales reports.</p></div><button id="logoutBtn" class="btn secondary" type="button">Log out</button></div>
-    <div class="admin-tabs" role="tablist">
-      <button class="active" data-tab="reservationsPanel">Reservations</button><button data-tab="eventsPanel">Private Events</button><button data-tab="pickupPanel">Order Pickup Menu</button><button data-tab="shopPanel">Shop Products</button><button data-tab="reportsPanel">Sales Reports</button>
-    </div>
-
-    <section id="reservationsPanel" class="admin-panel active">
-      <div class="panel-title"><div><h2>Reservations</h2><p>Review, update and export reservations saved by the website.</p></div><div><button id="exportReservations" class="btn secondary">Export CSV</button><button id="clearReservations" class="btn danger">Clear all</button></div></div>
-      <div class="table-wrap"><table><thead><tr><th>Created</th><th>Date / Time</th><th>Guest</th><th>Party</th><th>Contact</th><th>Deposit</th><th>Status</th><th>Notes</th><th>Action</th></tr></thead><tbody id="reservationsBody"></tbody></table></div>
-    </section>
-
-    <section id="eventsPanel" class="admin-panel">
-      <div class="panel-title"><div><h2>Private event inquiries</h2><p>Review and update private-event requests.</p></div><div><button id="exportEvents" class="btn secondary">Export CSV</button><button id="clearEvents" class="btn danger">Clear all</button></div></div>
-      <div class="table-wrap"><table><thead><tr><th>Created</th><th>Name</th><th>Email</th><th>Phone</th><th>Message</th><th>Status</th><th>Action</th></tr></thead><tbody id="eventsBody"></tbody></table></div>
-    </section>
-
-    <section id="pickupPanel" class="admin-panel">
-      <div class="panel-title"><div><h2>Order Pickup dishes</h2><p>Edit photos, names, categories, descriptions, prices and units, or add new dishes.</p></div><button class="btn primary add-product" data-type="pickup">Add new dish</button></div>
-      <div id="pickupEditor" class="catalog-admin-grid"></div>
-    </section>
-
-    <section id="shopPanel" class="admin-panel">
-      <div class="panel-title"><div><h2>Shop ingredients and products</h2><p>Edit the Shop catalogue or add new ingredients and products.</p></div><button class="btn primary add-product" data-type="shop">Add new product</button></div>
-      <div id="shopEditor" class="catalog-admin-grid"></div>
-    </section>
-
-    <section id="reportsPanel" class="admin-panel">
-      <div class="panel-title"><div><h2>Sales reports</h2><p>Filter sales by operation and date range.</p></div><button id="exportCommerce" class="btn secondary">Export CSV</button></div>
-      <div class="report-filters"><label>Operation<select id="reportType"><option value="pickup">Order Pickup</option><option value="shop">Shop</option></select></label><label>From<input id="reportFrom" type="date"></label><label>To<input id="reportTo" type="date"></label><button id="runReport" class="btn primary">Run report</button></div>
-      <div class="metric-grid"><article><small>Orders</small><strong id="metricOrders">0</strong></article><article><small>Gross sales</small><strong id="metricGross">$0.00</strong></article><article><small>GST</small><strong id="metricTax">$0.00</strong></article><article><small>Average order</small><strong id="metricAverage">$0.00</strong></article></div>
-      <div class="table-wrap"><table><thead><tr><th>Item</th><th>Units sold</th><th>Sales</th></tr></thead><tbody id="productSalesBody"></tbody></table></div>
-    </section>
-  </section>
+<section class="admin-login card-panel" id="login">
+<p class="eyebrow">Website management</p><h1>Administration</h1>
+<p>Authorized SumaQ staff only.</p>
+<label>Password<input autocomplete="current-password" id="pin" placeholder="Enter password" type="password"/></label>
+<button class="btn primary" id="loginBtn" type="button">Open dashboard</button>
+<p aria-live="polite" class="form-message" id="loginMsg"></p>
+</section>
+<section class="hidden admin-dashboard" id="dashboard">
+<div class="admin-heading"><div><p class="eyebrow">SumaQ on 17th</p><h1>Management dashboard</h1><p>Manage customer activity, menu dishes, shop products and sales reports.</p></div><button class="btn secondary" id="logoutBtn" type="button">Log out</button></div>
+<div class="admin-tabs" role="tablist">
+<button class="active" data-tab="reservationsPanel">Reservations</button><button data-tab="eventsPanel">Private Events</button><button data-tab="pickupPanel">Order Pickup Menu</button><button data-tab="shopPanel">Shop Products</button><button data-tab="reportsPanel">Sales Reports</button>
+</div>
+<section class="admin-panel active" id="reservationsPanel">
+<div class="panel-title"><div><h2>Reservations</h2><p>Review, update and export reservations saved by the website.</p></div><div><button class="btn secondary" id="exportReservations">Export CSV</button><button class="btn danger" id="clearReservations">Clear all</button></div></div>
+<div class="table-wrap"><table><thead><tr><th>Created</th><th>Date / Time</th><th>Guest</th><th>Party</th><th>Contact</th><th>Deposit</th><th>Status</th><th>Notes</th><th>Action</th></tr></thead><tbody id="reservationsBody"></tbody></table></div>
+</section>
+<section class="admin-panel" id="eventsPanel">
+<div class="panel-title"><div><h2>Private event inquiries</h2><p>Review and update private-event requests.</p></div><div><button class="btn secondary" id="exportEvents">Export CSV</button><button class="btn danger" id="clearEvents">Clear all</button></div></div>
+<div class="table-wrap"><table><thead><tr><th>Created</th><th>Name</th><th>Email</th><th>Phone</th><th>Message</th><th>Status</th><th>Action</th></tr></thead><tbody id="eventsBody"></tbody></table></div>
+</section>
+<section class="admin-panel" id="pickupPanel">
+<div class="panel-title"><div><h2>Order Pickup dishes</h2><p>Edit photos, names, categories, descriptions, prices and units, or add new dishes.</p></div><button class="btn primary add-product" data-type="pickup">Add new dish</button></div>
+<div class="catalog-admin-grid" id="pickupEditor"></div>
+</section>
+<section class="admin-panel" id="shopPanel">
+<div class="panel-title"><div><h2>Shop ingredients and products</h2><p>Edit the Shop catalogue or add new ingredients and products.</p></div><button class="btn primary add-product" data-type="shop">Add new product</button></div>
+<div class="catalog-admin-grid" id="shopEditor"></div>
+</section>
+<section class="admin-panel" id="reportsPanel">
+<div class="panel-title"><div><h2>Sales reports</h2><p>Filter sales by operation and date range.</p></div><button class="btn secondary" id="exportCommerce">Export CSV</button></div>
+<div class="report-filters"><label>Operation<select id="reportType"><option value="pickup">Order Pickup</option><option value="shop">Shop</option></select></label><label>From<input id="reportFrom" type="date"/></label><label>To<input id="reportTo" type="date"/></label><button class="btn primary" id="runReport">Run report</button></div>
+<div class="metric-grid"><article><small>Orders</small><strong id="metricOrders">0</strong></article><article><small>Gross sales</small><strong id="metricGross">$0.00</strong></article><article><small>GST</small><strong id="metricTax">$0.00</strong></article><article><small>Average order</small><strong id="metricAverage">$0.00</strong></article></div>
+<div class="table-wrap"><table><thead><tr><th>Item</th><th>Units sold</th><th>Sales</th></tr></thead><tbody id="productSalesBody"></tbody></table></div>
+</section>
+</section>
 </main>
-
-<div id="productModal" class="admin-modal hidden" role="dialog" aria-modal="true" aria-labelledby="productModalTitle">
-  <div class="admin-modal-card">
-    <button id="closeProductModal" class="modal-close" aria-label="Close">×</button>
-    <h2 id="productModalTitle">Edit item</h2>
-    <form id="productForm" class="admin-form">
-      <input id="productType" type="hidden"><input id="productOriginalId" type="hidden">
-      <label>Item ID<input id="productId" required pattern="[a-z0-9-]+" placeholder="example-item"></label>
-      <label>Name<input id="productName" required></label>
-      <label>Category<input id="productCategory" required></label>
-      <label>Price CAD<input id="productPrice" type="number" min="0" step="0.01" required></label>
-      <label>Unit / presentation<input id="productUnit" required placeholder="plate, jar, 1 kg bag"></label>
-      <label class="full">Description<textarea id="productDescription" rows="4" required></textarea></label>
-      <label class="full">Image path or URL<input id="productImage" placeholder="assets/photos/image.webp or https://..."></label>
-      <label class="full">Upload image from this device<input id="productImageFile" type="file" accept="image/*"><small>The image is resized and stored in this browser for the demo dashboard.</small></label>
-      <div class="image-preview full"><img id="productPreview" alt="Item preview"></div>
-      <div class="form-actions full"><button class="btn primary" type="submit">Save item</button><button id="cancelProduct" class="btn secondary" type="button">Cancel</button></div>
-    </form>
-  </div>
+<div aria-labelledby="productModalTitle" aria-modal="true" class="admin-modal hidden" id="productModal" role="dialog">
+<div class="admin-modal-card">
+<button aria-label="Close" class="modal-close" id="closeProductModal">×</button>
+<h2 id="productModalTitle">Edit item</h2>
+<form class="admin-form" id="productForm">
+<input id="productType" type="hidden"/><input id="productOriginalId" type="hidden"/>
+<label>Item ID<input id="productId" pattern="[a-z0-9-]+" placeholder="example-item" required=""/></label>
+<label>Name<input id="productName" required=""/></label>
+<label>Category<input id="productCategory" required=""/></label>
+<label>Price CAD<input id="productPrice" min="0" required="" step="0.01" type="number"/></label>
+<label>Unit / presentation<input id="productUnit" placeholder="plate, jar, 1 kg bag" required=""/></label>
+<label class="full">Description<textarea id="productDescription" required="" rows="4"></textarea></label>
+<label class="full">Image path or URL<input id="productImage" placeholder="assets/photos/image.webp or https://..."/></label>
+<label class="full">Upload image from this device<input accept="image/*" id="productImageFile" type="file"/><small>The image is resized and stored in this browser for the demo dashboard.</small></label>
+<div class="image-preview full"><img alt="Item preview" id="productPreview"/></div>
+<div class="form-actions full"><button class="btn primary" type="submit">Save item</button><button class="btn secondary" id="cancelProduct" type="button">Cancel</button></div>
+</form>
+</div>
 </div>
 <script src="commerce-data.js"></script><script src="admin.js"></script>
 </body></html>

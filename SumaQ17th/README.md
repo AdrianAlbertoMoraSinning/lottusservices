@@ -53,3 +53,14 @@ The project includes a complete favicon package for desktop browsers, iOS/iPadOS
 ## Floating reservation button update (v5)
 - Desktop and mobile: the floating Reserve button is positioned on the lower-left side to avoid overlap with the Jotform chatbot.
 - Reservations page: the floating Reserve button is intentionally hidden because the visitor is already in the reservation flow.
+
+
+## Client structure adjustments — August 2026
+- Header logo proportions refined.
+- Main navigation uses “Pickup” and omits Work With Us.
+- Work With Us remains available from the footer.
+- Floating Reserve button removed globally.
+- Dismissible chatbot visibility message added.
+- Home rebuilt as a video-ready, layered editorial composition; the supplied image remains the poster/fallback until an approved video file is added.
+- Delivery contains Uber Eats and Skip only; DoorDash is not used.
+- Delivery, Reservations, Private Events and About responsive sizing refined.

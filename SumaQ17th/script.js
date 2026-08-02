@@ -69,3 +69,14 @@ eventForm?.addEventListener('submit',async e=>{e.preventDefault();const inquiry=
 
 
 
+
+// Show a discreet prompt so guests can find the embedded chat assistant.
+const chatNudge=document.querySelector('.chat-nudge');
+if(chatNudge){
+  const dismissed=sessionStorage.getItem('sumaqChatNudgeDismissed')==='1';
+  if(dismissed) chatNudge.remove();
+  else chatNudge.querySelector('.chat-nudge-close')?.addEventListener('click',()=>{
+    sessionStorage.setItem('sumaqChatNudgeDismissed','1');
+    chatNudge.remove();
+  });
+}
