@@ -52,3 +52,6 @@ The complete graphical Order Now button on Home links to Pickup. The full Uber E
 
 ### Delivery click-target alignment (v16)
 The Uber Eats and Skip interactive areas now match the exact logo bounds in the approved Delivery artwork on desktop and mobile, with no visible focus rectangle or displaced hotspot.
+
+## Mobile embedded CTA update (v17)
+On Home and Menu, mobile now uses the clickable calls-to-action printed inside the approved design images. Duplicate black mobile buttons are hidden; desktop behavior is unchanged.

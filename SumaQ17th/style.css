@@ -407,3 +407,40 @@
     height:15.25%!important;
   }
 }
+
+/* v17: mobile uses the CTA buttons printed inside the approved artwork.
+   Hide duplicate black actions and keep proportional hotspots active. */
+@media (max-width:720px){
+  .page-index .reference-mobile-action,
+  .page-menu .reference-mobile-action{
+    display:none!important;
+    padding:0!important;
+    margin:0!important;
+  }
+
+  .page-index .home-reference .reference-hotspot,
+  .page-menu .menu-reference .reference-hotspot{
+    display:block!important;
+    z-index:25!important;
+    pointer-events:auto!important;
+    cursor:pointer!important;
+    touch-action:manipulation;
+    -webkit-tap-highlight-color:rgba(255,255,255,.16);
+  }
+
+  .page-index .home-reference .reference-hotspot::after,
+  .page-menu .menu-reference .reference-hotspot::after{
+    content:"";
+    position:absolute;
+    inset:-6px;
+    pointer-events:auto;
+  }
+
+  .page-index .home-reference .reference-hotspot:focus,
+  .page-index .home-reference .reference-hotspot:focus-visible,
+  .page-menu .menu-reference .reference-hotspot:focus,
+  .page-menu .menu-reference .reference-hotspot:focus-visible{
+    outline:none!important;
+    box-shadow:none!important;
+  }
+}
