@@ -22,12 +22,12 @@
 <link href="style.css" rel="stylesheet"/>
 </head>
 <body class="admin-page">
-<header class="site-header"><a class="brand" href="index.html"><span class="brand-mark">SUMAQ</span><span>SumaQ<br/><small>on 17th</small></span></a><nav><a href="about.html">Back to About</a><a href="index.html">Website</a></nav></header>
+<header class="topbar" id="top"><a aria-label="SumaQ on 17th home" class="brand" href="index.html"><img alt="SumaQ on 17th" src="assets/sumaq-logo-white.png"/></a><button aria-label="Open menu" class="menu-toggle" type="button">☰</button><nav aria-label="Main navigation" class="nav-links"><a href="index.html">Home</a><a href="menu.html">Menu</a><a href="reservations.html">Reservations</a><a href="private-events.html">Private Events</a><a href="order-pickup.html">Pickup</a><a href="shop.html">Shop</a><a href="delivery.html">Delivery</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav></header>
 <main class="admin-shell">
 <section class="admin-login card-panel" id="login">
 <p class="eyebrow">Website management</p><h1>Administration</h1>
 <p>Authorized SumaQ staff only.</p>
-<label>Admin email<input autocomplete="username" id="adminEmail" placeholder="name@example.com" type="email" required/></label><label>Password<input autocomplete="current-password" id="pin" placeholder="Enter password" type="password"/></label>
+<label>Admin email<input autocomplete="username" id="adminEmail" placeholder="name@example.com" required="" type="email"/></label><label>Password<input autocomplete="current-password" id="pin" placeholder="Enter password" type="password"/></label>
 <button class="btn primary" id="loginBtn" type="button">Open dashboard</button>
 <p aria-live="polite" class="form-message" id="loginMsg"></p>
 </section>
