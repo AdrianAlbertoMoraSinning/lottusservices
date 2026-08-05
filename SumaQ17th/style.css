@@ -644,3 +644,166 @@
   .page-reservations .reservation-reference-form{margin-left:-22px!important;width:calc(100% + 22px)!important;padding-left:22px!important}
   .page-reservations .reservation-reference-form .payment-box{width:calc(100% + clamp(24px,4vw,64px))!important}
 }
+
+/* Final focused corrections — footer fidelity and Delivery platform sizing */
+.footer-reference{
+  display:grid!important;
+  grid-template-columns:minmax(150px,220px) minmax(280px,1fr) minmax(180px,235px)!important;
+  grid-template-rows:auto 1fr!important;
+  min-height:220px!important;
+  padding:34px clamp(30px,6vw,110px) 28px!important;
+  gap:12px clamp(34px,5vw,80px)!important;
+  align-items:start!important;
+  background:#5b2f70!important;
+}
+.footer-reference .footer-left{
+  grid-column:1!important;
+  grid-row:1 / span 2!important;
+  min-height:155px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:space-between!important;
+  align-items:flex-start!important;
+}
+.footer-reference .footer-logo-lockup img{
+  width:72px!important;
+  height:98px!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:left top!important;
+}
+.footer-reference .footer-follow{
+  display:flex!important;
+  flex-direction:column!important;
+  gap:10px!important;
+  font-size:1rem!important;
+}
+.footer-reference .footer-social-row{display:flex!important;align-items:center!important;gap:18px!important}
+.footer-reference .footer-social-row .social-icon{width:32px!important;height:32px!important}
+.footer-reference .footer-rule{
+  grid-column:2!important;
+  grid-row:1!important;
+  align-self:start!important;
+  width:100%!important;
+  height:6px!important;
+  margin:8px 0 0!important;
+  background:#f89b19!important;
+}
+.footer-reference .footer-nav{
+  grid-column:3!important;
+  grid-row:1 / span 2!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  gap:5px!important;
+  padding:12px 0 0!important;
+}
+.footer-reference .footer-nav a{font-size:.9rem!important;line-height:1.15!important;white-space:nowrap!important}
+
+.page-delivery .delivery-options{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(190px,250px))!important;
+  justify-content:center!important;
+  align-items:stretch!important;
+  gap:34px!important;
+  margin-top:42px!important;
+}
+.page-delivery .delivery-options a{
+  min-height:185px!important;
+  padding:26px!important;
+  border-radius:20px!important;
+  background:rgba(255,255,255,.08)!important;
+  border:1px solid rgba(255,255,255,.18)!important;
+  box-shadow:0 18px 44px rgba(0,0,0,.18)!important;
+}
+.page-delivery .delivery-options img{
+  width:138px!important;
+  height:138px!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:contain!important;
+}
+
+@media(max-width:760px){
+  .footer-reference{
+    grid-template-columns:90px minmax(110px,1fr) 128px!important;
+    grid-template-rows:auto 1fr!important;
+    min-height:260px!important;
+    padding:28px 24px 26px!important;
+    gap:14px 18px!important;
+  }
+  .footer-reference .footer-left{min-height:205px!important}
+  .footer-reference .footer-logo-lockup img{width:58px!important;height:92px!important}
+  .footer-reference .footer-follow{font-size:.9rem!important;gap:9px!important}
+  .footer-reference .footer-social-row{gap:15px!important}
+  .footer-reference .footer-social-row .social-icon{width:30px!important;height:30px!important}
+  .footer-reference .footer-rule{height:5px!important;margin-top:5px!important}
+  .footer-reference .footer-nav{padding-top:8px!important;gap:3px!important}
+  .footer-reference .footer-nav a{font-size:.78rem!important;line-height:1.13!important}
+
+  .page-delivery .delivery-hero>div{padding:42px 20px 48px!important}
+  .page-delivery .delivery-options{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:16px!important;
+    width:100%!important;
+    margin-top:30px!important;
+  }
+  .page-delivery .delivery-options a{
+    min-height:150px!important;
+    padding:18px!important;
+    border-radius:16px!important;
+  }
+  .page-delivery .delivery-options img{
+    width:min(112px,30vw)!important;
+    height:min(112px,30vw)!important;
+  }
+}
+@media(max-width:390px){
+  .footer-reference{grid-template-columns:76px minmax(82px,1fr) 116px!important;padding-left:16px!important;padding-right:16px!important;gap:12px!important}
+  .footer-reference .footer-nav a{font-size:.72rem!important}
+  .page-delivery .delivery-options{gap:12px!important}
+  .page-delivery .delivery-options a{min-height:132px!important;padding:14px!important}
+  .page-delivery .delivery-options img{width:min(98px,29vw)!important;height:min(98px,29vw)!important}
+}
+
+/* Final mobile checkout scroll correction — Pickup and Shop only. */
+@media(max-width:620px){
+  html:has(body[data-commerce].cart-open){overflow:hidden!important;height:100%!important}
+  body[data-commerce].cart-open{
+    overflow:hidden!important;
+    height:100dvh!important;
+    min-height:100dvh!important;
+    touch-action:none!important;
+  }
+  body[data-commerce] .cart-panel{
+    display:none!important;
+    position:fixed!important;
+    top:68px!important;
+    right:0!important;
+    bottom:0!important;
+    left:0!important;
+    width:100%!important;
+    height:calc(100dvh - 68px)!important;
+    max-height:calc(100dvh - 68px)!important;
+    overflow-x:hidden!important;
+    overflow-y:scroll!important;
+    -webkit-overflow-scrolling:touch!important;
+    overscroll-behavior:contain!important;
+    touch-action:pan-y!important;
+    padding:20px 18px 132px!important;
+    box-sizing:border-box!important;
+    z-index:70!important;
+    background:#fff!important;
+    border-radius:0!important;
+  }
+  body[data-commerce].cart-open .cart-panel{display:block!important}
+  body[data-commerce] .cart-panel .checkout-form{
+    padding-bottom:36px!important;
+  }
+  body[data-commerce] .cart-panel .checkout-form textarea{
+    min-height:100px!important;
+  }
+  body[data-commerce] .mobile-cart-dock{
+    bottom:max(10px,env(safe-area-inset-bottom))!important;
+  }
+}
