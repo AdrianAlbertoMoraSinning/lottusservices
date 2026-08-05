@@ -55,3 +55,11 @@ The Uber Eats and Skip interactive areas now match the exact logo bounds in the 
 
 ## Mobile embedded CTA update (v17)
 On Home and Menu, mobile now uses the clickable calls-to-action printed inside the approved design images. Duplicate black mobile buttons are hidden; desktop behavior is unchanged.
+
+## Final visual fidelity pass — August 2026
+
+- Rebuilt About to match the supplied alternating image/text composition and use all six client photographs.
+- Rebuilt Contact with a complete SVG icon system, daily opening hours, map, address and the supplied basket photograph.
+- Made the Reservations orange rail continuous through the entire section on desktop and mobile.
+- Refined the shared footer proportions, logo, social icons, orange rule, navigation spacing and mobile layout.
+- Preserved the existing Pickup, Shop, Supabase, reservations, administration and chatbot functionality.
