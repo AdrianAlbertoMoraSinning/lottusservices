@@ -5,13 +5,13 @@ const defaults=[
 {id:'pickup',name:'1 Mover + Pickup / Small Delivery',category:'Delivery',description:'Pickup truck service for Marketplace, IKEA, small moves, deliveries and light dump runs. Fuel included within Calgary.',price:75,unit:'hour',minimum:2,image:'assets/rb-moving-truck-team.jpg',active:true},
 {id:'truck2',name:'2 Movers + Moving Box Truck',category:'Moving',description:'Professional two-person crew with box truck. Includes blankets, straps, shrink wrap, tape and dolly.',price:135,unit:'hour',minimum:2,image:'assets/service-box-truck.webp',active:true},
 {id:'helper',name:'Additional Helper',category:'Add-on',description:'Extra labour for heavy or oversized items such as pianos, treadmills, pool tables and saunas.',price:50,unit:'helper/hour',minimum:2,image:'assets/service-heavy-moving.webp',active:true},
-{id:'junk',name:'Dump Run / Junk Removal',category:'Junk Removal',description:'Pickup, loading and disposal support. Landfill charges are added from the official receipt.',price:75,unit:'hour',minimum:2,image:'assets/rb-moving-truck-team.jpg',active:true},
-{id:'packing',name:'Packing & Unpacking Support',category:'Packing',description:'Careful packing, unpacking and organization assistance before or after your move.',price:50,unit:'hour',minimum:2,image:'assets/rb-moving-sofa.jpg',active:true}
+{id:'junk',name:'Dump Run / Junk Removal',category:'Junk Removal',description:'Pickup, loading and disposal support. Landfill charges are added from the official receipt.',price:75,unit:'hour',minimum:2,image:'assets/service-junk-removal.webp',active:true},
+{id:'packing',name:'Packing & Unpacking Support',category:'Packing',description:'Careful packing, unpacking and organization assistance before or after your move.',price:50,unit:'hour',minimum:2,image:'assets/service-packing.webp',active:true}
 ];
 const reviewDefaults=[];
 function read(k,f){try{const v=JSON.parse(localStorage.getItem(k));return v??f}catch{return f}}
 function write(k,v){localStorage.setItem(k,JSON.stringify(v))}
-function services(){let s=read(KEYS.services,null);if(!s){s=defaults;write(KEYS.services,s)}else{let changed=false;s=s.map(item=>{const d=defaults.find(x=>x.id===item.id);if(!d)return item;if(/\.svg(?:$|\?)/i.test(item.image||'')||item.image==='assets/hero-movers-photo.svg'||item.image==='assets/moving-marketing-panel.svg'){changed=true;return {...item,image:d.image}}return item});if(changed)write(KEYS.services,s)}return s}
+function services(){let s=read(KEYS.services,null);if(!s){s=defaults;write(KEYS.services,s)}else{let changed=false;s=s.map(item=>{const d=defaults.find(x=>x.id===item.id);if(!d)return item;if(/\.svg(?:$|\?)/i.test(item.image||'')||item.image==='assets/hero-movers-photo.svg'||item.image==='assets/moving-marketing-panel.svg'||(item.id==='junk'&&item.image==='assets/rb-moving-truck-team.jpg')||(item.id==='packing'&&item.image==='assets/rb-moving-sofa.jpg')){changed=true;return {...item,image:d.image}}return item});if(changed)write(KEYS.services,s)}return s}
 function cart(){return read(KEYS.cart,[])} function saveCart(v){write(KEYS.cart,v)}
 function bookings(){return read(KEYS.bookings,[])} function saveBookings(v){write(KEYS.bookings,v)}
 function reviews(){let r=read(KEYS.reviews,null);if(!r){r=reviewDefaults;write(KEYS.reviews,r)}return r}
