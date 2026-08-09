@@ -1,4 +1,4 @@
 window.RBM_SUPABASE = {
-  url: 'PASTE_SUPABASE_PROJECT_URL_HERE',
-  anonKey: 'PASTE_SUPABASE_ANON_KEY_HERE'
+  url: 'https://smgfwjleymuwhfrxyvlc.supabase.co',
+  anonKey: 'sb_publishable_QB1CSnaIa2rpKW5Z9Gz2cw_LQdusy1-'
 };
