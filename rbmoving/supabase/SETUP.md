@@ -22,3 +22,7 @@ on conflict (user_id) do nothing;
 10. Add authentic Google reviews from Administration. The database supports `google_review_id`, source URL, visibility and sort order for a later API sync.
 
 Stripe is intentionally not activated in this build.
+
+
+## Invoice module upgrade (v9)
+If this RBMOving project was created from an earlier schema version, execute `invoice_upgrade.sql` once in SQL Editor. New projects created from the current `schema.sql` already include the invoice fields and `invoice_items` table.

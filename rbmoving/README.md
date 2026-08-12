@@ -38,3 +38,22 @@ Administration can load authentic Google reviews and choose Visible/Hidden. The 
 ## Payment
 
 Stripe is intentionally excluded. The final-invoice payment screen remains a clearly labeled DEMO.
+
+
+## v9 Invoice module (no Stripe yet)
+
+The Administration dashboard now includes a complete **Invoices** workspace. Administrators can create an invoice from an existing booking or manually, edit service line items/hours/rates, calculate GST and totals, save Draft/Issued/Sent/Paid status, and generate a private public invoice link.
+
+Client invoice links open `invoice.html?token=...` and show client information, service details, hours/quantity, rates, GST, total, invoice number/date/due date and payment status. The page includes **Print / Save PDF** and **Pay Invoice Online**. Payment remains a demo until Stripe is connected.
+
+Administration also provides **Email**, **Text**, and **Copy link** actions. Email/SMS actions open the administrator device's configured email or messaging application with the invoice link prefilled.
+
+### Existing Supabase project: required one-time upgrade
+
+Before using the v9 invoice module on the existing RBMOving Supabase project, run the complete file:
+
+`supabase/invoice_upgrade.sql`
+
+in **Supabase → SQL Editor → New query → Run**. This upgrades the existing `invoices` table, adds `invoice_items`, creates the private public-token invoice function, RLS policy, and grants. It is safe to run once against the current project.
+
+Do not expose a Supabase secret/service-role key in the website. The frontend continues to use only the configured publishable key with RLS.
