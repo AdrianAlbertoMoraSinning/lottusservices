@@ -57,3 +57,7 @@ Before using the v9 invoice module on the existing RBMOving Supabase project, ru
 in **Supabase → SQL Editor → New query → Run**. This upgrades the existing `invoices` table, adds `invoice_items`, creates the private public-token invoice function, RLS policy, and grants. It is safe to run once against the current project.
 
 Do not expose a Supabase secret/service-role key in the website. The frontend continues to use only the configured publishable key with RLS.
+
+## v10 Stripe integration
+
+The demo card-entry simulator has been replaced by Stripe-hosted Checkout. Payment amounts are fetched server-side from the final invoice; the browser cannot choose or alter the amount sent to Stripe. Stripe payment confirmation is processed through a signed webhook, which marks the invoice and linked booking Paid in Supabase. See `STRIPE_SETUP.md` and run `supabase/stripe_upgrade.sql` before activation.
