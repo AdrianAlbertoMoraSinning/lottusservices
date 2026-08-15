@@ -21,5 +21,10 @@
     return request('/auth/v1/token?grant_type=password',{method:'POST',body:{email,password}});
   }
   async function me(token){return request('/auth/v1/user',{token});}
-  window.RBMData={configured,request,rpc,table,signIn,me,config:cfg};
+  async function resetPassword(email,redirectTo){
+    const path=`/auth/v1/recover${redirectTo?`?redirect_to=${encodeURIComponent(redirectTo)}`:''}`;
+    return request(path,{method:'POST',body:{email}});
+  }
+  async function updatePassword(token,password){return request('/auth/v1/user',{method:'PUT',body:{password},token});}
+  window.RBMData={configured,request,rpc,table,signIn,me,resetPassword,updatePassword,config:cfg};
 })();

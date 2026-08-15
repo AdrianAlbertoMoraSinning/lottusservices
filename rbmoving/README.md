@@ -61,3 +61,14 @@ Do not expose a Supabase secret/service-role key in the website. The frontend co
 ## v10 Stripe integration
 
 The demo card-entry simulator has been replaced by Stripe-hosted Checkout. Payment amounts are fetched server-side from the final invoice; the browser cannot choose or alter the amount sent to Stripe. Stripe payment confirmation is processed through a signed webhook, which marks the invoice and linked booking Paid in Supabase. See `STRIPE_SETUP.md` and run `supabase/stripe_upgrade.sql` before activation.
+
+
+## Version 11 – Google Reviews + Admin Access
+- Added server-side Google Business Profile Reviews connector (`netlify/functions/google-reviews.js`).
+- Reviews page automatically switches to live Google reviews once OAuth environment variables are configured.
+- Added rating/review-count summary and Google review links, with Supabase fallback.
+- Added secure administrator password reset/set-password flow through Supabase Auth.
+- Google credentials and refresh tokens remain server-side in Netlify only.
+- Existing booking, invoices, Stripe Checkout, webhooks and Supabase flows are unchanged.
+
+See `GOOGLE_REVIEWS_SETUP.md` for activation steps.

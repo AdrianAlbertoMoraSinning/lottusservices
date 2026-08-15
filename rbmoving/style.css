@@ -446,6 +446,10 @@ cite{
   margin-top:28px;
 }
 
+.google-review-summary{display:flex;align-items:center;justify-content:center;gap:22px;margin:0 auto 30px;padding:22px 28px;max-width:620px;background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow)}
+.google-review-summary>div:first-child{display:flex;align-items:center;gap:12px}.google-rating-number{font-size:2.2rem;font-weight:900;letter-spacing:-.05em}.google-summary-stars{font-size:1.15rem}.google-review-summary strong,.google-review-summary small{display:block}.google-review-summary small{margin-top:4px;color:var(--muted)}
+.review-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}.google-review-card cite{font-style:normal}.review-stars{color:#f4b400;letter-spacing:.08em;margin-bottom:10px}
+
 .cta{
   margin:0 6vw 80px;
   background:var(--dark);
@@ -808,3 +812,5 @@ td{
 .stripe-payment-banner{display:flex;flex-direction:column;gap:.35rem;padding:1rem 1.1rem;margin:0 0 1rem;border:1px solid rgba(31,111,78,.18);border-radius:14px;background:rgba(31,111,78,.06)}
 .stripe-payment-banner strong{font-size:1.05rem}.stripe-payment-banner span{font-size:.92rem;line-height:1.45;color:#48524c}
 .pay-button:disabled{opacity:.65;cursor:wait}
+
+@media (max-width:640px){.google-review-summary{align-items:flex-start;flex-direction:column;gap:10px}.review-actions .btn{width:100%;justify-content:center}}
