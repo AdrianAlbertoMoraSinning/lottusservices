@@ -1265,3 +1265,36 @@ body[data-commerce] .product-modal-close:focus-visible{
   .page-about .about-mosaic{grid-template-columns:1fr!important}
   .page-about .about-mosaic>*{grid-column:1!important}
 }
+
+
+/* Official January 2026 menu sync + menu showcase */
+.menu-showcase-panel{background:#f5eddd;padding:56px clamp(20px,5vw,76px);scroll-margin-top:96px}
+.menu-showcase-panel:nth-of-type(even){background:#efe3ce}
+.menu-showcase-heading{max-width:1180px;margin:0 auto 24px}
+.menu-showcase-heading .eyebrow{color:#9f143c;letter-spacing:.14em;text-transform:uppercase;font-weight:800}
+.menu-showcase-heading h2{font-family:"Playfair Display",serif;font-size:clamp(34px,4vw,54px);margin:6px 0 0;color:#1b1717}
+.menu-showcase-grid{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.menu-showcase-card{margin:0;background:#fff;overflow:hidden;box-shadow:0 8px 24px rgba(40,26,30,.08)}
+.menu-showcase-card img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover}
+.menu-showcase-card h3{margin:0;padding:14px 16px 17px;font:700 18px/1.2 Inter,sans-serif;color:#271d24}
+.product-image-placeholder{width:100%;aspect-ratio:4/3;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#5b326d;color:#fff;letter-spacing:.18em;font-weight:800}
+.product-image-placeholder small{font-weight:500;font-size:10px;letter-spacing:.12em;margin-top:3px}
+.product-modal-image-wrap .product-image-placeholder{height:100%;aspect-ratio:auto;min-height:300px}
+.cart-row .product-image-placeholder{width:70px;height:70px;min-height:0;aspect-ratio:1/1;font-size:10px;flex:none}
+.product-option-note{font-weight:600;color:#553b48;margin-top:8px}
+.product-option-note.compact{font-size:.88rem;line-height:1.35}
+.variant-select-label{display:grid;gap:7px;font-weight:700;min-width:210px}
+.variant-select-label select{min-height:48px;border:1px solid #cabec3;background:#fff;padding:0 12px;font:600 15px Inter,sans-serif;color:#241d20}
+@media(max-width:850px){.menu-showcase-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.menu-showcase-panel{padding:38px 16px}.menu-showcase-card h3{font-size:15px;padding:11px 12px 14px}.variant-select-label{min-width:0;width:100%}}
+
+
+/* Product placeholders follow the exact geometry of real dish photos. */
+body[data-commerce] .product-card>.product-image-placeholder{width:100%;aspect-ratio:4/3;min-height:0}
+body[data-commerce] .product-modal-image-wrap>.product-image-placeholder{width:100%!important;height:100%!important;min-height:0!important;aspect-ratio:auto!important}
+body[data-commerce] .cart-row>.product-image-placeholder{width:54px!important;height:54px!important;min-height:0!important;aspect-ratio:1/1!important;border-radius:10px!important}
+.variant-select-label{margin:6px 0 16px}
+@media(max-width:620px){
+ body[data-commerce] .product-card>.product-image-placeholder{grid-column:2!important;grid-row:1!important;width:104px!important;height:104px!important;aspect-ratio:1/1!important}
+ body[data-commerce] .product-modal-image-wrap>.product-image-placeholder{height:100%!important;min-height:0!important}
+}
+@media(max-width:520px){body[data-commerce] .cart-row>.product-image-placeholder{width:46px!important;height:46px!important}}
