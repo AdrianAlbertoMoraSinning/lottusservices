@@ -12,9 +12,9 @@ Version initiale consolidée, adaptée de l’architecture RB Moving sans conser
 - Positionnement : logistique et entretien
 
 ## IMPORTANT avant mise en production
-1. Créer un NOUVEAU projet Supabase pour Groupe VGC.
+1. Projet Supabase Groupe VGC créé.
 2. Exécuter `supabase/schema.sql`.
-3. Remplir `supabase-config.js` avec l’URL et la clé publique anon du NOUVEAU projet.
+3. `supabase-config.js` est déjà configuré avec l’URL et la clé publique Publishable du projet Groupe VGC.
 4. Ne jamais réutiliser les identifiants Supabase de RB Moving.
 5. Configurer le domaine final dans Netlify lorsque le client le fournira.
 6. Stripe est conservé comme architecture optionnelle, mais ne doit pas être activé avant configuration du compte VGC.

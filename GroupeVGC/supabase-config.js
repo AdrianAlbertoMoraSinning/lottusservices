@@ -1,4 +1,4 @@
 window.RBM_SUPABASE = {
-  url: 'PASTE_NEW_VGC_SUPABASE_URL_HERE',
-  anonKey: 'PASTE_NEW_VGC_SUPABASE_ANON_KEY_HERE'
+  url: 'https://aqzfttzgmtbfijxjlpsx.supabase.co',
+  anonKey: 'sb_publishable_JF9vXl1bbtp7yDF1nS_rFw_60aa8VYI'
 };
