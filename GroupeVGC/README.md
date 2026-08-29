@@ -1,6 +1,6 @@
 # Groupe VGC Inc. — Portail Web (Québec)
 
-Version initiale consolidée, adaptée de l’architecture RB Moving sans conserver sa connexion de production.
+Version initiale consolidée du portail Groupe VGC Inc., avec une base de données Supabase indépendante.
 
 ## Identité confirmée
 - Groupe VGC Inc.

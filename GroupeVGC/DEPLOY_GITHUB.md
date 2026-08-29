@@ -1,7 +1,32 @@
-# Déploiement GitHub / Netlify
+# Déploiement — Groupe VGC Inc.
 
-Pour une première installation, téléversez **tout le contenu de ce dossier** à la racine du nouveau dépôt GitHub de Groupe VGC.
+## GitHub
+Le projet est hébergé dans le dépôt `lottusservices`, dossier :
 
-Pour une mise à jour ultérieure uniquement visuelle/publicitaire, les dossiers `supabase/`, `netlify/functions/` et les fichiers de configuration backend n’ont généralement pas besoin d’être retéléversés sauf si la mise à jour les modifie.
+`GroupeVGC`
 
-Avant d’activer les réservations : configurez le nouveau Supabase VGC dans `supabase-config.js`.
+## Netlify
+Lors de la création du site depuis GitHub :
+
+- Repository: `AdrianAlbertoMoraSinning/lottusservices`
+- Branch: `main`
+- Base directory: `GroupeVGC`
+- Build command: laisser vide
+- Publish directory: `.`
+- Functions directory: `netlify/functions`
+
+Le fichier `netlify.toml` inclus est déjà configuré pour fonctionner avec cette base directory.
+
+## Supabase
+Projet connecté :
+
+`https://aqzfttzgmtbfijxjlpsx.supabase.co`
+
+Le fichier `supabase-config.js` contient uniquement la clé publique Publishable. La clé secrète Supabase ne doit jamais être placée dans GitHub ni dans le code navigateur.
+
+## Mise à jour GitHub pour cette version
+Remplacer dans `GroupeVGC` :
+- `netlify.toml`
+- `DEPLOY_GITHUB.md`
+
+Si `supabase-config.js` n'a pas encore été remplacé par la version connectée, le remplacer également.
