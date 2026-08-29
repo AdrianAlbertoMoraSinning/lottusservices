@@ -2,7 +2,8 @@ const ALLOWED_ACTIONS = new Set([
   'create-reservation',
   'create-event',
   'create-order',
-  'complete-demo-order'
+  'complete-demo-order',
+  'ensure-menu-jan-2026'
 ]);
 
 function env(name) {
@@ -11,14 +12,14 @@ function env(name) {
   return value;
 }
 
-async function request(path, { method = 'GET', body } = {}) {
+async function request(path, { method = 'GET', body, prefer = 'return=representation' } = {}) {
   const url = env('SUPABASE_URL').replace(/\/$/, '') + '/rest/v1/' + path;
   const response = await fetch(url, {
     method,
     headers: {
       apikey: env('SUPABASE_SERVICE_ROLE_KEY'),
       'Content-Type': 'application/json',
-      Prefer: 'return=representation'
+      Prefer: prefer
     },
     body: body ? JSON.stringify(body) : undefined
   });
@@ -39,6 +40,31 @@ function cleanEmail(value) {
   const email = cleanText(value, 254);
   if (!/^\S+@\S+\.\S+$/.test(email)) throw new Error('A valid email is required.');
   return email;
+}
+
+
+const OFFICIAL_MENU = require('../../assets/data/official-menu-jan-2026.json');
+const OFFICIAL_MENU_SENTINEL = '__sumaq_menu_jan_2026_v1__';
+async function ensureOfficialMenuCatalog(){
+  const marker = await request(`menu_items?slug=eq.${OFFICIAL_MENU_SENTINEL}&select=slug&limit=1`);
+  if (Array.isArray(marker) && marker.length) return {alreadySynced:true,version:OFFICIAL_MENU.version};
+  const now = new Date().toISOString();
+  await request('menu_items?active=eq.true',{method:'PATCH',body:{active:false,updated_at:now}});
+  const rows=(OFFICIAL_MENU.food||[]).map(item=>({
+    slug:item.id,
+    name:item.name,
+    category:item.category,
+    description:[item.description,item.optionText].filter(Boolean).join(' '),
+    price:Number(item.price||0),
+    unit:item.unit||'unit',
+    image_url:item.image||'',
+    active:true,
+    sort_order:Number(item.sortOrder||0),
+    updated_at:now
+  }));
+  if(rows.length)await request('menu_items?on_conflict=slug',{method:'POST',body:rows,prefer:'resolution=merge-duplicates,return=representation'});
+  await request('menu_items?on_conflict=slug',{method:'POST',body:{slug:OFFICIAL_MENU_SENTINEL,name:'SumaQ menu January 2026 sync marker',category:'__system',description:OFFICIAL_MENU.version,price:0,unit:'system',image_url:'',active:false,sort_order:99999,updated_at:now},prefer:'resolution=merge-duplicates,return=representation'});
+  return {alreadySynced:false,version:OFFICIAL_MENU.version,items:rows.length};
 }
 
 function normalizeTime(value) {
@@ -66,6 +92,10 @@ exports.handler = async (event) => {
     const { action, payload = {} } = JSON.parse(event.body || '{}');
     if (!ALLOWED_ACTIONS.has(action)) throw new Error('Unsupported action.');
     let data;
+
+    if (action === 'ensure-menu-jan-2026') {
+      data = await ensureOfficialMenuCatalog();
+    }
 
     if (action === 'create-reservation') {
       const row = {
