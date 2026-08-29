@@ -1,0 +1,22 @@
+(function(){
+const defaults=[
+{id:'logistique',name:'Logistique et transport',category:'Logistique',description:'Coordination, transport local et soutien logistique selon votre mandat.',price:0,unit:'heure',minimum:1,image:'assets/rb-moving-truck-team.jpg',active:true,sort_order:10},
+{id:'livraison',name:'Livraison locale',category:'Livraison',description:'Ramassage et livraison de biens à Montréal et dans les environs.',price:0,unit:'heure',minimum:1,image:'assets/service-box-truck.webp',active:true,sort_order:20},
+{id:'manutention',name:'Manutention et aide au chargement',category:'Manutention',description:'Aide pour charger, décharger, déplacer et organiser des biens.',price:0,unit:'heure',minimum:1,image:'assets/service-heavy-moving.webp',active:true,sort_order:30},
+{id:'demenagement',name:'Déménagement léger',category:'Transport',description:'Soutien pour petits déménagements et déplacements d’articles.',price:0,unit:'heure',minimum:1,image:'assets/rb-moving-sofa.jpg',active:true,sort_order:40},
+{id:'debarras',name:'Débarras et transport vers l’écocentre',category:'Débarras',description:'Collecte, chargement et transport selon les conditions du mandat.',price:0,unit:'heure',minimum:1,image:'assets/service-junk-removal.webp',active:true,sort_order:50},
+{id:'entretien',name:'Entretien et soutien sur place',category:'Entretien',description:'Services d’entretien et aide générale sur place, selon les besoins confirmés.',price:0,unit:'heure',minimum:1,image:'assets/service-packing.webp',active:true,sort_order:60}
+];
+let servicesCache=null,settingsCache={gst_rate:5,business_hours:'24/7'};
+function money(n){return new Intl.NumberFormat('fr-CA',{style:'currency',currency:'CAD'}).format(Number(n||0))}
+function escapeHtml(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+async function getSettings(){if(!window.RBMData?.configured())return settingsCache;try{const a=await RBMData.table.get('settings','id=eq.1&select=*');if(a?.[0])settingsCache=a[0]}catch(e){}return settingsCache}
+async function getServices({includeInactive=false}={}){if(servicesCache&&!includeInactive)return servicesCache;if(!window.RBMData?.configured())return defaults.filter(x=>includeInactive||x.active);try{const rows=await RBMData.table.get('services',`select=id,name,category,description,price,unit,minimum,image,active,sort_order&order=sort_order.asc${includeInactive?'':'&active=eq.true'}`);if(!includeInactive)servicesCache=rows;return rows}catch(e){return defaults.filter(x=>includeInactive||x.active)}}
+async function getReviews(){if(!window.RBMData?.configured())return [];try{return await RBMData.table.get('reviews','select=*&visible=eq.true&order=sort_order.asc,review_date.desc')}catch(e){return []}}
+function totals(items,gst=5){const priced=items.filter(i=>Number(i.price)>0);const subtotal=priced.reduce((s,i)=>s+Number(i.price)*Number(i.qty),0),gstAmount=subtotal*gst/100;return{subtotal,gst:gstAmount,total:subtotal+gstAmount,gstRate:gst}}
+async function renderDynamicServices(){const grid=document.getElementById('dynamicServiceGrid');if(!grid)return;const rows=await getServices();grid.innerHTML=rows.map(s=>`<article class="service-card"><img src="${escapeHtml(s.image)}" alt="${escapeHtml(s.name)}"><div class="service-card-body"><span class="badge">${escapeHtml(s.category)}</span><h3>${escapeHtml(s.name)}</h3><p>${escapeHtml(s.description)}</p><strong class="quote-label">Sur devis</strong></div></article>`).join('')}
+async function renderDynamicRates(){const grid=document.getElementById('dynamicRateGrid');if(!grid)return;const rows=await getServices();grid.innerHTML=rows.map(s=>`<article class="rate-card"><h3>${escapeHtml(s.name)}</h3><div class="price">Sur devis</div><p>${escapeHtml(s.description)}</p></article>`).join('')}
+async function renderReviews(){const el=document.getElementById('reviewGrid');if(!el)return;const rows=await getReviews();if(!rows.length)return;el.innerHTML=rows.map(r=>`<blockquote><div class="review-stars">${'★'.repeat(Math.max(1,Math.min(5,Number(r.rating)||5)))}</div>“${escapeHtml(r.review_text)}”<cite>${escapeHtml(r.author)} · ${escapeHtml(r.source||'Google')}</cite></blockquote>`).join('')}
+window.RBM={defaults,money,escapeHtml,getServices,getReviews,getSettings,totals,renderDynamicServices,renderDynamicRates,renderReviews};
+document.addEventListener('DOMContentLoaded',async()=>{await getSettings();await Promise.all([renderDynamicServices(),renderDynamicRates(),renderReviews()])});
+})();
