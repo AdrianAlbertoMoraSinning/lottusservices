@@ -5,8 +5,20 @@ let reservations=[],events=[],catalogs={pickup:[],shop:[]},allOrders=[],reportRo
 function msg(text,error=false){$('loginMsg').textContent=text;$('loginMsg').classList.toggle('error',error)}
 function download(name,text){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:'text/csv'}));a.download=name;a.click();URL.revokeObjectURL(a.href)}
 function csv(v){return `"${String(v??'').replaceAll('"','""')}"`}
-async function openDashboard(){$('login').classList.add('hidden');$('dashboard').classList.remove('hidden');await refreshAll()}
-$('loginBtn').onclick=async()=>{try{msg('Signing in…');await SumaQData.signIn($('adminEmail').value.trim(),$('pin').value);msg('');await openDashboard()}catch(e){msg(e.message,true)}};
+function showLogin(message=''){
+  $('dashboard').classList.add('hidden');
+  $('login').classList.remove('hidden');
+  if(message)msg(message,true);
+}
+async function openDashboard(){$('login').classList.add('hidden');$('dashboard').classList.remove('hidden');return refreshAll()}
+$('loginBtn').onclick=async()=>{
+  try{
+    msg('Signing in…');
+    await SumaQData.signIn($('adminEmail').value.trim(),$('pin').value);
+    msg('');
+    await openDashboard();
+  }catch(e){showLogin(e.message)}
+};
 $('pin').addEventListener('keydown',e=>{if(e.key==='Enter')$('loginBtn').click()});
 $('logoutBtn').onclick=async()=>{await SumaQData.signOut();location.reload()};
 document.querySelectorAll('.admin-tabs button').forEach(btn=>btn.onclick=()=>{document.querySelectorAll('.admin-tabs button').forEach(b=>b.classList.toggle('active',b===btn));document.querySelectorAll('.admin-panel').forEach(p=>p.classList.toggle('active',p.id===btn.dataset.tab))});
@@ -15,7 +27,25 @@ function renderReservations(){$('reservationsBody').innerHTML=reservations.lengt
 function renderEvents(){$('eventsBody').innerHTML=events.length?events.map(r=>`<tr><td>${esc(fmt(r.created_at))}<br><small>${esc(r.id)}</small></td><td>${esc(r.first_name+' '+(r.last_name||''))}</td><td>${esc(r.email)}</td><td>${esc(r.phone)}</td><td>${esc(r.message)}</td><td>${statusSelect('private_event_inquiries',r.id,r.status,['New','Contacted','Quoted','Booked','Closed','Cancelled','Archived'])}</td><td><button class="mini-btn delete-record" data-table="private_event_inquiries" data-id="${r.id}">Delete</button></td></tr>`).join(''):'<tr><td colspan="7">No central private-event inquiries yet.</td></tr>'}
 function renderOrders(){$('ordersBody').innerHTML=allOrders.length?allOrders.map(o=>`<tr><td>${esc(fmt(o.created_at))}</td><td>${esc(o.public_id)}</td><td>${esc(o.customer_name)}<br><small>${esc(o.email)}</small></td><td>${esc(o.order_type)}</td><td>${money(o.total)}</td><td>${esc(o.payment_status)}</td><td>${statusSelect('orders',o.id,o.status,['Awaiting payment','Confirmed','Preparing','Ready','Completed','Cancelled','Archived'])}</td><td>${(o.order_items||[]).map(i=>`${i.quantity} × ${esc(i.product_name)}`).join('<br>')}</td><td><button class="mini-btn delete-record" data-table="orders" data-id="${o.id}">Delete</button></td></tr>`).join(''):'<tr><td colspan="9">No central orders yet.</td></tr>'}
 function renderCatalog(type){const root=$(type==='pickup'?'pickupEditor':'shopEditor');root.innerHTML=catalogs[type].map((i,index)=>`<article class="admin-product-card"><img src="${esc(i.image)}" alt=""><div><span class="eyebrow">${esc(i.category)}</span><h3>${esc(i.name)}</h3><p>${esc(i.description)}</p><strong>${money(i.price)} · ${esc(i.unit)}</strong><div class="admin-card-actions"><button class="mini-btn edit-product" data-type="${type}" data-index="${index}">Edit</button><button class="mini-btn danger delete-product" data-type="${type}" data-id="${esc(i.id)}">Delete</button></div></div></article>`).join('')||'<p>No products found.</p>'}
-async function refreshAll(){try{[$('reservationsBody'),$('eventsBody')].forEach(x=>x.innerHTML='<tr><td colspan="9">Loading central data…</td></tr>');[reservations,events,catalogs.pickup,catalogs.shop,allOrders]=await Promise.all([SumaQData.getRows('reservations'),SumaQData.getRows('private_event_inquiries'),SumaQData.adminCatalog('pickup'),SumaQData.adminCatalog('shop'),SumaQData.orders()]);renderReservations();renderEvents();renderOrders();renderCatalog('pickup');renderCatalog('shop');runReport()}catch(e){alert('Central data error: '+e.message)}}
+async function loadCentralData(){
+  [reservations,events,catalogs.pickup,catalogs.shop,allOrders]=await Promise.all([SumaQData.getRows('reservations'),SumaQData.getRows('private_event_inquiries'),SumaQData.adminCatalog('pickup'),SumaQData.adminCatalog('shop'),SumaQData.orders()]);
+}
+async function refreshAll(){
+  try{
+    [$('reservationsBody'),$('eventsBody')].forEach(x=>x.innerHTML='<tr><td colspan="9">Loading central data…</td></tr>');
+    await SumaQData.withAuthRetry(loadCentralData);
+    renderReservations();renderEvents();renderOrders();renderCatalog('pickup');renderCatalog('shop');runReport();
+    return true;
+  }catch(e){
+    if(SumaQData.jwtIssuedAtFuture(e)||/refresh token|session.*renew|invalid.*token|jwt/i.test(String(e&&e.message||''))){
+      await SumaQData.clearInvalidSession();
+      showLogin('Your saved admin session is no longer valid. Please sign in again.');
+      return false;
+    }
+    alert('Central data error: '+e.message);
+    return false;
+  }
+}
 document.addEventListener('change',async e=>{if(!e.target.matches('.record-status'))return;try{await SumaQData.updateRow(e.target.dataset.table,e.target.dataset.id,{status:e.target.value})}catch(err){alert(err.message);refreshAll()}});
 document.addEventListener('click',async e=>{const del=e.target.closest('.delete-record');if(del&&confirm('Permanently delete this central record?')){try{await SumaQData.deleteRow(del.dataset.table,del.dataset.id);await refreshAll()}catch(err){alert(err.message)}}});
 $('clearReservations').onclick=async()=>{if(confirm('Delete all completed, cancelled and archived reservations older than one year?')){const d=new Date();d.setFullYear(d.getFullYear()-1);await SumaQData.deleteOlder('reservations',d.toISOString(),['Completed','Cancelled','Archived']);await refreshAll()}};
@@ -34,5 +64,15 @@ form.onsubmit=async e=>{e.preventDefault();const type=$('productType').value,ori
 function dateEdge(id,end){const v=$(id).value;if(!v)return null;const d=new Date(v+'T00:00:00');if(end)d.setHours(23,59,59,999);return d}
 function runReport(){const type=$('reportType').value,from=dateEdge('reportFrom'),to=dateEdge('reportTo',true);const orders=allOrders.filter(o=>o.order_type===type&&(!from||new Date(o.created_at)>=from)&&(!to||new Date(o.created_at)<=to));const gross=orders.reduce((s,o)=>s+Number(o.total||0),0),tax=orders.reduce((s,o)=>s+Number(o.tax||0),0);$('metricOrders').textContent=orders.length;$('metricGross').textContent=money(gross);$('metricTax').textContent=money(tax);$('metricAverage').textContent=money(orders.length?gross/orders.length:0);const map={};orders.forEach(o=>(o.order_items||[]).forEach(i=>{const k=i.product_name;if(!map[k])map[k]={name:k,qty:0,sales:0};map[k].qty+=Number(i.quantity);map[k].sales+=Number(i.line_total)}));reportRows=Object.values(map).sort((a,b)=>b.sales-a.sales);$('productSalesBody').innerHTML=reportRows.length?reportRows.map(r=>`<tr><td>${esc(r.name)}</td><td>${r.qty}</td><td>${money(r.sales)}</td></tr>`).join(''):'<tr><td colspan="3">No sales for this selection.</td></tr>'}
 $('runReport').onclick=runReport;$('exportCommerce').onclick=()=>download(`sumaq-${$('reportType').value}-sales.csv`,['Item,Units Sold,Sales CAD',...reportRows.map(r=>[r.name,r.qty,r.sales.toFixed(2)].map(csv).join(','))].join('\n'));
-(async()=>{if(!SumaQData.configured){msg('Supabase is not configured. Complete supabase-config.js first.',true);return}if(await SumaQData.session())openDashboard()})();
+(async()=>{
+  if(!SumaQData.configured){msg('Supabase is not configured. Complete supabase-config.js first.',true);return}
+  try{
+    const active=await SumaQData.ensureFreshSession();
+    if(active)await openDashboard();
+    else showLogin();
+  }catch(error){
+    await SumaQData.clearInvalidSession();
+    showLogin('Your saved admin session could not be renewed. Please sign in again.');
+  }
+})();
 }());
