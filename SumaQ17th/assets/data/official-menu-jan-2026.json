@@ -1,0 +1,503 @@
+{
+  "version": "jan-2026-v1",
+  "source": "MENU jan-2026.pdf",
+  "food": [
+    {
+      "id": "causita-sumaq",
+      "name": "Causita Sumaq",
+      "category": "Small Plates",
+      "description": "Chilled golden Yukon potato, ají amarillo and avocado.",
+      "price": 16,
+      "unit": "order",
+      "image": "assets/menu-1920/causita-sumaq.webp",
+      "optionText": "Option: shrimp or jalea.",
+      "sortOrder": 10
+    },
+    {
+      "id": "empanada",
+      "name": "Empanada",
+      "category": "Small Plates",
+      "description": "Flaky pastry dough.",
+      "price": 8,
+      "unit": "unit",
+      "image": "assets/menu-1920/empanadas.webp",
+      "optionText": "Option: chicken, beef, ají de gallina or veggie.",
+      "sortOrder": 20
+    },
+    {
+      "id": "tacos-sumaq",
+      "name": "Tacos Sumaq",
+      "category": "Small Plates",
+      "description": "Corn tortillas, sarza criolla, tartar sauce and ají amarillo.",
+      "price": 14,
+      "unit": "order",
+      "image": "assets/menu-1920/tacos-sumaq.webp",
+      "optionText": "Option: jalea, pork belly or mushroom.",
+      "sortOrder": 30
+    },
+    {
+      "id": "camarones-crocantes",
+      "name": "Camarones Crocantes",
+      "category": "Small Plates",
+      "description": "Ebi furai with rocoto and maracuyá sauce.",
+      "price": 12,
+      "unit": "order",
+      "image": "assets/menu-1920/camarones-crocantes.webp",
+      "sortOrder": 40
+    },
+    {
+      "id": "pork-belly-ceviche",
+      "name": "Pork Belly Ceviche",
+      "category": "Small Plates",
+      "description": "Crispy cassava, pork belly, leche de tigre and acevichada sauce.",
+      "price": 15,
+      "unit": "order",
+      "image": "assets/menu-1920/pork-ceviche.webp",
+      "sortOrder": 50
+    },
+    {
+      "id": "patacones-acevichados",
+      "name": "Patacones Acevichados",
+      "category": "Small Plates",
+      "description": "Crispy fried green plantain, red onion, cilantro, Peruvian chili, lime juice and leche de tigre.",
+      "price": 18,
+      "unit": "order",
+      "image": "assets/menu-1920/patacones.webp",
+      "optionText": "Meat option: fish or shrimp.",
+      "sortOrder": 60
+    },
+    {
+      "id": "ceviche-clasico",
+      "name": "Ceviche Clásico",
+      "category": "Ceviches",
+      "description": "Peru’s national dish: lime juice, red onions, cilantro, rocoto, sweet potato, Peruvian canchita and corn (choclo).",
+      "price": 24,
+      "unit": "order",
+      "image": "assets/menu-1920/ceviche-clasico.webp",
+      "optionText": "Mild, medium or spicy.",
+      "variants": [
+        {
+          "id": "white-fish",
+          "label": "White fish",
+          "price": 24
+        },
+        {
+          "id": "tuna",
+          "label": "Tuna",
+          "price": 30
+        },
+        {
+          "id": "mushroom",
+          "label": "Mushroom",
+          "price": 21
+        }
+      ],
+      "sortOrder": 100
+    },
+    {
+      "id": "ceviche-sumaq",
+      "name": "Ceviche Sumaq",
+      "category": "Ceviches",
+      "description": "Fish, octopus, shrimp, leche de tigre, onion, cilantro, sweet potato, Peruvian corn, canchita and plantain chips (chifles).",
+      "price": 33,
+      "unit": "order",
+      "image": "assets/menu-1920/ceviche-sumaq.webp",
+      "optionText": "Mild, medium or spicy.",
+      "variants": [
+        {
+          "id": "white-fish",
+          "label": "White fish",
+          "price": 33
+        },
+        {
+          "id": "tuna",
+          "label": "Tuna",
+          "price": 39
+        }
+      ],
+      "sortOrder": 110
+    },
+    {
+      "id": "oro-del-norte",
+      "name": "Oro del Norte",
+      "category": "Ceviches",
+      "description": "Peruvian hangover cure: ají amarillo ceviche, shrimp, canchita and corn.",
+      "price": 19.5,
+      "unit": "order",
+      "image": "assets/menu-1920/oro-del-norte.webp",
+      "sortOrder": 120
+    },
+    {
+      "id": "tiradito",
+      "name": "Tiradito",
+      "category": "Ceviches",
+      "description": "Fish, ají amarillo sauce, avocado squares, canchita, onions and cilantro.",
+      "price": 23,
+      "unit": "order",
+      "image": "assets/menu-1920/tiradito.webp",
+      "variants": [
+        {
+          "id": "white-fish",
+          "label": "White fish",
+          "price": 23
+        },
+        {
+          "id": "tuna",
+          "label": "Tuna",
+          "price": 29
+        }
+      ],
+      "sortOrder": 130
+    },
+    {
+      "id": "peruvian-street-ceviche-jalea",
+      "name": "Peruvian Street Ceviche + Jalea",
+      "category": "Ceviches",
+      "description": "Lime juice, red onions, cilantro, rocoto, sweet potato, Peruvian canchita and corn (choclo), served with fried seafood.",
+      "price": 28,
+      "unit": "order",
+      "image": "assets/menu-1920/peruvian-street-ceviche.webp",
+      "optionText": "Mild, medium or spicy.",
+      "variants": [
+        {
+          "id": "white-fish",
+          "label": "White fish",
+          "price": 28
+        },
+        {
+          "id": "tuna",
+          "label": "Tuna",
+          "price": 34
+        }
+      ],
+      "sortOrder": 140
+    },
+    {
+      "id": "asumare-causita",
+      "name": "Asumare Causita",
+      "category": "Ceviches",
+      "description": "Chilled golden Yukon potato with ceviche.",
+      "price": 28,
+      "unit": "order",
+      "image": "assets/menu-1920/asu-mare-causita.webp",
+      "optionText": "Mild, medium or spicy.",
+      "sortOrder": 150
+    },
+    {
+      "id": "seco-norteno",
+      "name": "Seco Norteño",
+      "category": "Large Plates",
+      "description": "Cilantro-braised short ribs, tacu-tacu (canario beans purée and white rice), norteño-based cream and sarza criolla.",
+      "price": 45,
+      "unit": "plate",
+      "image": "assets/menu-1920/seco-norteno.webp",
+      "sortOrder": 200
+    },
+    {
+      "id": "tallarines-abuela",
+      "name": "Tallarines de la Abuela",
+      "category": "Large Plates",
+      "description": "Peruvian pesto fettuccine with anticuchera sauce, chimichurri and feta cheese.",
+      "price": 38,
+      "unit": "plate",
+      "image": "assets/menu-1920/tallarines-de-la-abuela.webp",
+      "variants": [
+        {
+          "id": "churrasco",
+          "label": "Churrasco (beef)",
+          "price": 38
+        },
+        {
+          "id": "suprema",
+          "label": "Suprema (chicken)",
+          "price": 32
+        }
+      ],
+      "sortOrder": 210
+    },
+    {
+      "id": "lomo-saltado",
+      "name": "Lomo Saltado",
+      "category": "Large Plates",
+      "description": "AAA beef tenderloin strips stir-fried with onions, tomatoes and cilantro, with crispy fries or baby potatoes and a side of garlic rice.",
+      "price": 35,
+      "unit": "plate",
+      "image": "assets/menu-1920/lomo-saltado.webp",
+      "optionText": "Add: fried egg $4 or fried plantain $4. Additions can be requested in the order notes.",
+      "sortOrder": 220
+    },
+    {
+      "id": "anticuchos",
+      "name": "Anticuchos",
+      "category": "Large Plates",
+      "description": "Beef heart skewers grilled with baby potatoes, sweet potatoes, chimichurri and green aioli.",
+      "price": 28,
+      "unit": "plate",
+      "image": "assets/menu-1920/anticucho.webp",
+      "sortOrder": 230
+    },
+    {
+      "id": "loaded-peruvian-churrasco",
+      "name": "Loaded Peruvian Churrasco",
+      "category": "Large Plates",
+      "description": "Strip loin, plantain, fried egg, beans and salad.",
+      "price": 43,
+      "unit": "plate",
+      "image": "assets/menu-1920/loaded-peruvian-churrasco.webp",
+      "optionText": "Option: French fries, native potatoes or rice.",
+      "sortOrder": 240
+    },
+    {
+      "id": "pollo-brasa",
+      "name": "Pollo Brasa",
+      "category": "Large Plates",
+      "description": "Chicken marinated in a blend of Peruvian spices, served with salad and crispy potatoes or French fries.",
+      "price": 36,
+      "unit": "order",
+      "image": "assets/menu-1920/pollo-a-la-brasa.webp",
+      "variants": [
+        {
+          "id": "half",
+          "label": "Half",
+          "price": 36
+        },
+        {
+          "id": "whole",
+          "label": "Whole",
+          "price": 55
+        }
+      ],
+      "sortOrder": 250
+    },
+    {
+      "id": "inka-chicken-gold",
+      "name": "Inka Chicken Gold Experience",
+      "category": "Large Plates",
+      "description": "Chicken marinated in a blend of Peruvian spices, with rice and Peruvian corn, canario beans, plantain and house sauces.",
+      "price": 48,
+      "unit": "order",
+      "image": "assets/menu-1920/inka-chicken-gold.webp",
+      "variants": [
+        {
+          "id": "half",
+          "label": "Half",
+          "price": 48
+        },
+        {
+          "id": "whole",
+          "label": "Whole",
+          "price": 68
+        }
+      ],
+      "sortOrder": 260
+    },
+    {
+      "id": "violetas-shrimp",
+      "name": "Violeta’s Heavenly Shrimp",
+      "category": "Large Plates",
+      "description": "A special family recipe: shrimp, spicy sauce, ají amarillo, herbs and spices, served with a side of garlic rice.",
+      "price": 29,
+      "unit": "plate",
+      "image": "assets/menu-1920/violeta-shrimp.webp",
+      "sortOrder": 270
+    },
+    {
+      "id": "aji-gallina",
+      "name": "Ají de Gallina",
+      "category": "Large Plates",
+      "description": "Ají amarillo-based cream and chicken stew served with boiled egg, corn and rice.",
+      "price": 25,
+      "unit": "plate",
+      "image": "assets/menu-1920/aji-de-gallina.webp",
+      "sortOrder": 280
+    },
+    {
+      "id": "adobo-cerdo",
+      "name": "Adobo de Cerdo",
+      "category": "Large Plates",
+      "description": "Panceta, ají panca, chicha de jora and Peruvian spices, with glazed sweet potato and rice.",
+      "price": 29,
+      "unit": "plate",
+      "image": "assets/menu-1920/adobo.webp",
+      "sortOrder": 290
+    },
+    {
+      "id": "jalea",
+      "name": "Jalea",
+      "category": "Large Plates",
+      "description": "Fried seafood platter with crispy calamari, fish and shrimp, served with yuca fries and bold house sauces.",
+      "price": 29,
+      "unit": "plate",
+      "image": "",
+      "sortOrder": 300
+    },
+    {
+      "id": "chaufa-aeropuerto",
+      "name": "Chaufa Aeropuerto",
+      "category": "Large Plates",
+      "description": "Fried rice, Chinese bean sprouts and Asian noodles, topped with a shrimp omelet and crispy wontons.",
+      "price": 27,
+      "unit": "plate",
+      "image": "assets/menu-1920/chaufa.webp",
+      "variants": [
+        {
+          "id": "chicken",
+          "label": "Chicken",
+          "price": 27
+        },
+        {
+          "id": "pork-belly",
+          "label": "Pork belly",
+          "price": 29
+        }
+      ],
+      "sortOrder": 310
+    },
+    {
+      "id": "inca-salad",
+      "name": "Inca Salad",
+      "category": "Salads",
+      "description": "Quinoa, cherry tomatoes, avocado, radish, palm hearts and passion fruit dressing.",
+      "price": 15,
+      "unit": "salad",
+      "image": "assets/menu-1920/inka-salad.webp",
+      "optionText": "Add: chicken $6, shrimp $7 or eggplant milanesa $5. Additions can be requested in the order notes.",
+      "sortOrder": 400
+    },
+    {
+      "id": "costa-verde-salad",
+      "name": "Costa Verde Salad",
+      "category": "Salads",
+      "description": "Mixed greens, avocado, cherry tomatoes, cucumber, red onion, Peruvian corn, toasted corn, beets and house vinaigrette.",
+      "price": 15,
+      "unit": "salad",
+      "image": "assets/menu-1920/ensalada-verde.webp",
+      "optionText": "Add: chicken $6, shrimp $7 or eggplant milanesa $5. Additions can be requested in the order notes.",
+      "sortOrder": 410
+    },
+    {
+      "id": "white-rice",
+      "name": "Arroz",
+      "category": "Sides",
+      "description": "White rice with Peruvian corn.",
+      "price": 6,
+      "unit": "side",
+      "image": "",
+      "sortOrder": 500
+    },
+    {
+      "id": "papas-nativas-fries",
+      "name": "Papas Nativas | French Fries",
+      "category": "Sides",
+      "description": "Native baby potatoes or French fries.",
+      "price": 6,
+      "unit": "side",
+      "image": "",
+      "sortOrder": 510
+    },
+    {
+      "id": "fried-yuca",
+      "name": "Fried Yuca",
+      "category": "Sides",
+      "description": "Cassava fries.",
+      "price": 6,
+      "unit": "side",
+      "image": "",
+      "sortOrder": 520
+    },
+    {
+      "id": "platano-maduro",
+      "name": "Plátano Maduro",
+      "category": "Sides",
+      "description": "Fried plantain with cheese.",
+      "price": 7,
+      "unit": "side",
+      "image": "",
+      "sortOrder": 530
+    },
+    {
+      "id": "aji-aioli",
+      "name": "Ají Amarillo Aioli (Mild)",
+      "category": "Sides",
+      "description": "Ají amarillo and huacatay.",
+      "price": 3.5,
+      "unit": "side",
+      "image": "",
+      "sortOrder": 540
+    },
+    {
+      "id": "rocoto-aioli",
+      "name": "Rocoto Aioli (Medium)",
+      "category": "Sides",
+      "description": "Rocoto pepper and mayo aioli.",
+      "price": 3.5,
+      "unit": "side",
+      "image": "",
+      "sortOrder": 550
+    },
+    {
+      "id": "street-heat",
+      "name": "Street Heat (Spicy)",
+      "category": "Sides",
+      "description": "Rocoto pepper, red onion and green onion.",
+      "price": 4,
+      "unit": "side",
+      "image": "",
+      "sortOrder": 560
+    }
+  ],
+  "showcase": {
+    "desserts": [
+      {
+        "name": "Torta Chocolate",
+        "image": "assets/menu-1920/torta-chocolate.webp"
+      },
+      {
+        "name": "Picarones",
+        "image": "assets/menu-1920/picarones.webp"
+      },
+      {
+        "name": "Picardía",
+        "image": "assets/menu-1920/picardia.webp"
+      },
+      {
+        "name": "Pie de Limón",
+        "image": "assets/menu-1920/pie-de-limon.webp"
+      }
+    ],
+    "cocktails": [
+      {
+        "name": "Aperol",
+        "image": "assets/menu-1920/aperol.webp"
+      },
+      {
+        "name": "Pisco Sour",
+        "image": "assets/menu-1920/pisco-sour.webp"
+      },
+      {
+        "name": "Pisco Sour Clásico",
+        "image": "assets/menu-1920/pisco-sour-clasico.webp"
+      },
+      {
+        "name": "Old Fashioned",
+        "image": "assets/menu-1920/old-fashioned.webp"
+      },
+      {
+        "name": "Margaritas",
+        "image": "assets/menu-1920/margaritas.webp"
+      },
+      {
+        "name": "Secreto",
+        "image": "assets/menu-1920/secreto.webp"
+      },
+      {
+        "name": "Ekeko",
+        "image": "assets/menu-1920/ekeko.webp"
+      },
+      {
+        "name": "Chilcanos",
+        "image": "assets/menu-1920/chilcanos.webp"
+      }
+    ]
+  }
+}
