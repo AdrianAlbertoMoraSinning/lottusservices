@@ -1298,3 +1298,116 @@ body[data-commerce] .cart-row>.product-image-placeholder{width:54px!important;he
  body[data-commerce] .product-modal-image-wrap>.product-image-placeholder{height:100%!important;min-height:0!important}
 }
 @media(max-width:520px){body[data-commerce] .cart-row>.product-image-placeholder{width:46px!important;height:46px!important}}
+
+/* ================================================================
+   CLIENT ADJUSTMENT ROUND — 2026-08-31
+   Scope: Home spacing/photo, Menu->Pickup categories, compact footer,
+   full-width colour bands, Reservations rail/mobile cleanup, About sizing.
+   ================================================================ */
+
+/* 1–2 HOME: consistent breathing space + fuller high-resolution take-home photo. */
+.page-index .home-reference-final{background:var(--sumaq-cream,#f4edde)!important}
+.page-index .home-reference-final>section{margin:0 0 22px!important}
+.page-index .home-reference-final>section:last-child{margin-bottom:0!important}
+.page-index .home-at-home-reference{background:var(--sumaq-cream,#f4edde)!important;overflow:hidden!important}
+.page-index .home-at-home-reference>img{object-position:center center!important}
+@media(min-width:901px){
+  .page-index .home-at-home-reference{min-height:0!important;height:auto!important;aspect-ratio:2.22/1!important}
+  .page-index .home-at-home-reference>img{object-fit:cover!important;object-position:center 48%!important}
+}
+@media(max-width:900px){
+  .page-index .home-reference-final>section{margin-bottom:16px!important}
+  .page-index .home-at-home-reference{min-height:0!important;aspect-ratio:1.52/1!important}
+  .page-index .home-at-home-reference>img{object-fit:cover!important;object-position:center center!important}
+}
+
+/* 6 FOOTER: same logo/icon/font sizes, substantially less unused vertical space. */
+.footer-reference{
+  display:grid!important;
+  grid-template-columns:190px 190px minmax(0,1fr)!important;
+  grid-template-rows:7px auto!important;
+  column-gap:30px!important;row-gap:10px!important;
+  min-height:0!important;padding:20px clamp(28px,5vw,82px) 18px!important;
+  align-items:start!important
+}
+.footer-reference .footer-left{display:contents!important}
+.footer-reference .footer-logo-lockup{grid-column:1!important;grid-row:1/3!important;margin:0!important;padding:0!important;align-self:start!important}
+.footer-reference .footer-rule{grid-column:2/4!important;grid-row:1!important;width:100%!important;height:7px!important;margin:0!important;align-self:start!important}
+.footer-reference .footer-follow{grid-column:2!important;grid-row:2!important;margin:5px 0 0!important;padding:0!important;align-self:start!important}
+.footer-reference .footer-nav{
+  grid-column:3!important;grid-row:2!important;display:flex!important;flex-direction:row!important;
+  flex-wrap:wrap!important;justify-content:flex-end!important;align-items:center!important;
+  gap:9px 18px!important;margin:5px 0 0!important;padding:0!important;align-self:start!important
+}
+.footer-reference .footer-nav a{white-space:nowrap!important}
+@media(max-width:760px){
+  .footer-reference{grid-template-columns:112px minmax(0,1fr)!important;grid-template-rows:5px auto auto!important;column-gap:18px!important;row-gap:8px!important;padding:16px 18px 15px!important}
+  .footer-reference .footer-logo-lockup{grid-column:1!important;grid-row:1/4!important}
+  .footer-reference .footer-rule{grid-column:2!important;grid-row:1!important;height:5px!important}
+  .footer-reference .footer-follow{grid-column:2!important;grid-row:2!important;margin:2px 0 0!important}
+  .footer-reference .footer-nav{grid-column:2!important;grid-row:3!important;justify-content:flex-start!important;gap:6px 12px!important;margin:0!important}
+}
+@media(max-width:430px){
+  .footer-reference{grid-template-columns:94px minmax(0,1fr)!important;padding:14px 14px 13px!important;column-gap:14px!important}
+  .footer-reference .footer-nav{gap:5px 9px!important}
+}
+
+/* 7 MENU/RESERVATIONS: colour containers finish flush with the right edge. */
+@media(min-width:761px){
+  .page-menu .menu-ref-section:not(.reverse){padding-right:0!important}
+  .page-menu .menu-ref-section:not(.reverse) .menu-ref-copy{padding-right:0!important}
+  .page-menu .menu-ref-section:not(.reverse) .menu-colour-strip{width:100%!important;margin-right:0!important;border-radius:0!important}
+  .page-menu .menu-ref-section.reverse .menu-colour-strip{border-radius:0!important}
+}
+@media(max-width:760px){
+  .page-menu .menu-ref-section{padding-right:0!important}
+  .page-menu .menu-ref-copy,.page-menu .menu-ref-section.reverse .menu-ref-copy{padding-right:0!important;width:100%!important}
+  .page-menu .menu-colour-strip{width:calc(100% + 18px)!important;margin-right:-18px!important;border-radius:0!important}
+}
+.page-reservations .reservation-designer{max-width:none!important;width:100%!important;margin:0!important}
+.page-reservations .reservation-content{max-width:none!important;width:100%!important;margin:0!important;padding-right:0!important}
+.page-reservations .reservation-content .color-note.teal{width:100%!important;max-width:none!important;margin-right:0!important;border-radius:0!important}
+
+/* 8 RESERVATIONS: orange rail consumes the former beige left gutter. */
+.page-reservations .reservation-designer{padding-left:72px!important;border-left:0!important}
+.page-reservations .reservation-designer::before{left:0!important;width:72px!important}
+@media(max-width:980px){
+  .page-reservations .reservation-designer{padding-left:42px!important}
+  .page-reservations .reservation-designer::before{width:42px!important}
+}
+@media(max-width:600px){
+  .page-reservations .reservation-designer{padding-left:34px!important}
+  .page-reservations .reservation-designer::before{width:34px!important}
+}
+
+/* 9 RESERVATIONS mobile: remove the isolated beige tail above the footer. */
+@media(max-width:760px){
+  .page-reservations main{padding-bottom:0!important;margin-bottom:0!important;background:var(--sumaq-cream,#f4edde)!important}
+  .page-reservations .reservation-designer{padding-bottom:0!important;margin-bottom:0!important}
+  .page-reservations .reservation-content{padding-bottom:0!important;margin-bottom:0!important}
+  .page-reservations .reservation-reference-form{margin-bottom:0!important}
+}
+
+/* 10–11 ABOUT: shallower consistent modules, undistorted photos, larger body copy,
+   and principal/display titles at 75% of the previous scale. */
+.page-about .about-title-band h1{font-size:clamp(1.5rem,2.25vw,2.625rem)!important}
+.page-about .about-divider h2{font-size:clamp(1.16rem,1.725vw,1.99rem)!important}
+@media(min-width:761px){
+  .page-about .about-cell{min-height:0!important;height:clamp(220px,23vw,315px)!important;overflow:hidden!important}
+  .page-about .about-cell.image img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important}
+  .page-about .about-cell.copy{padding:clamp(22px,2.8vw,42px)!important}
+  .page-about .about-cell.copy p{font-size:clamp(1.35rem,1.53vw,1.575rem)!important;line-height:1.34!important}
+  .page-about .about-divider{min-height:86px!important;padding:18px 24px!important}
+  .page-about .about-divider.closing{min-height:100px!important}
+}
+@media(max-width:760px){
+  .page-about .about-title-band{min-height:88px!important;padding:20px 18px!important}
+  .page-about .about-title-band h1{font-size:1.69rem!important}
+  .page-about .about-cell.image{min-height:0!important;height:250px!important;overflow:hidden!important}
+  .page-about .about-cell.image img{width:100%!important;height:100%!important;object-fit:cover!important}
+  .page-about .about-cell.copy{min-height:0!important;height:auto!important;padding:28px 22px!important}
+  .page-about .about-cell.copy p{font-size:1.35rem!important;line-height:1.36!important}
+  .page-about .about-divider{min-height:82px!important;padding:18px!important}
+  .page-about .about-divider h2{font-size:1.24rem!important}
+  .page-about .about-divider.closing{min-height:92px!important}
+}
