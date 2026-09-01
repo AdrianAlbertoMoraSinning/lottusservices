@@ -44,7 +44,7 @@ function cleanEmail(value) {
 
 
 const OFFICIAL_MENU = require('../../assets/data/official-menu-jan-2026.json');
-const OFFICIAL_MENU_SENTINEL = '__sumaq_menu_jan_2026_v1__';
+const OFFICIAL_MENU_SENTINEL = '__sumaq_menu_aug_31_2026_v2__';
 async function ensureOfficialMenuCatalog(){
   const marker = await request(`menu_items?slug=eq.${OFFICIAL_MENU_SENTINEL}&select=slug&limit=1`);
   if (Array.isArray(marker) && marker.length) return {alreadySynced:true,version:OFFICIAL_MENU.version};
