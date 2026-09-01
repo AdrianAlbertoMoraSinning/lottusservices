@@ -1,6 +1,6 @@
 {
-  "version": "jan-2026-v1",
-  "source": "MENU jan-2026.pdf",
+  "version": "2026-08-31-client-round-2",
+  "source": "MENU jan-2026.pdf + client-provided dessert/cocktail photo set; dessert/cocktail pricing includes public/current references and client-confirmation tier where no supplied price was available.",
   "food": [
     {
       "id": "causita-sumaq",
@@ -444,6 +444,126 @@
       "unit": "side",
       "image": "",
       "sortOrder": 560
+    },
+    {
+      "id": "torta-chocolate",
+      "name": "Torta Chocolate",
+      "category": "Desserts",
+      "description": "SumaQ chocolate cake.",
+      "price": 14,
+      "unit": "dessert",
+      "image": "assets/menu-1920/torta-chocolate.webp",
+      "sortOrder": 600
+    },
+    {
+      "id": "picarones",
+      "name": "Picarones",
+      "category": "Desserts",
+      "description": "Peruvian doughnuts with a crisp exterior and soft centre.",
+      "price": 15,
+      "unit": "dessert",
+      "image": "assets/menu-1920/picarones.webp",
+      "sortOrder": 610
+    },
+    {
+      "id": "picardia",
+      "name": "Picardía",
+      "category": "Desserts",
+      "description": "Picarones served as a SumaQ dessert presentation.",
+      "price": 15,
+      "unit": "dessert",
+      "image": "assets/menu-1920/picardia.webp",
+      "sortOrder": 620
+    },
+    {
+      "id": "pie-de-limon",
+      "name": "Pie de Limón",
+      "category": "Desserts",
+      "description": "Peruvian-style lime pie.",
+      "price": 14,
+      "unit": "dessert",
+      "image": "assets/menu-1920/pie-de-limon.webp",
+      "sortOrder": 630
+    },
+    {
+      "id": "aperol",
+      "name": "Aperol",
+      "category": "Cocktails",
+      "description": "Aperol-based cocktail.",
+      "price": 16,
+      "unit": "cocktail",
+      "image": "assets/menu-1920/aperol.webp",
+      "sortOrder": 700
+    },
+    {
+      "id": "pisco-sour",
+      "name": "Pisco Sour",
+      "category": "Cocktails",
+      "description": "Peru’s iconic pisco cocktail.",
+      "price": 16,
+      "unit": "cocktail",
+      "image": "assets/menu-1920/pisco-sour.webp",
+      "sortOrder": 710
+    },
+    {
+      "id": "pisco-sour-clasico",
+      "name": "Pisco Sour Clásico",
+      "category": "Cocktails",
+      "description": "Classic Pisco Sour.",
+      "price": 16,
+      "unit": "cocktail",
+      "image": "assets/menu-1920/pisco-sour-clasico.webp",
+      "sortOrder": 720
+    },
+    {
+      "id": "old-fashioned",
+      "name": "Old Fashioned",
+      "category": "Cocktails",
+      "description": "Classic Old Fashioned cocktail.",
+      "price": 18,
+      "unit": "cocktail",
+      "image": "assets/menu-1920/old-fashioned.webp",
+      "sortOrder": 730
+    },
+    {
+      "id": "margaritas",
+      "name": "Margaritas",
+      "category": "Cocktails",
+      "description": "SumaQ margarita selection.",
+      "price": 16,
+      "unit": "cocktail",
+      "image": "assets/menu-1920/margaritas.webp",
+      "sortOrder": 740
+    },
+    {
+      "id": "secreto",
+      "name": "Secreto",
+      "category": "Cocktails",
+      "description": "SumaQ signature cocktail.",
+      "price": 18,
+      "unit": "cocktail",
+      "image": "assets/menu-1920/secreto.webp",
+      "sortOrder": 750
+    },
+    {
+      "id": "ekeko",
+      "name": "Ekeko",
+      "category": "Cocktails",
+      "description": "SumaQ signature cocktail with banana, lime, pineapple, maple and Aperol.",
+      "price": 18,
+      "unit": "cocktail",
+      "image": "assets/menu-1920/ekeko.webp",
+      "sortOrder": 760
+    },
+    {
+      "id": "chilcanos",
+      "name": "Chilcanos",
+      "category": "Cocktails",
+      "description": "Refreshing Peruvian pisco cocktail.",
+      "price": 16,
+      "unit": "cocktail",
+      "image": "assets/menu-1920/chilcanos.webp",
+      "sortOrder": 770
     }
   ],
   "showcase": {
