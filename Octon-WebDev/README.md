@@ -1,65 +1,51 @@
-# Octon v1.2 — Integrated Live Research, Code Health & Runtime Review
+# Octon v1.3 — Mission Control
 
-Octon is Lottus' supervised Web Development AI Agent.
+Octon v1.3 is a complete consolidated upgrade of the v1.2 package supplied by the user.
 
-## v1.2 changes the dashboard itself
+## What changed
 
-`Run PLEASE review` now orchestrates the actual live engines instead of a demo baseline:
+- Repository selector: Octon can review any repository visible to its primary GitHub credential.
+- Secure external-repository flow through a **GitHub App**. The external owner authorizes Octon inside GitHub and chooses the exact repositories Octon may read.
+- No external owner is asked to send Octon a password or Personal Access Token.
+- Real visual progress while Octon works.
+- Code Health is now **chunked**: the dashboard first maps the repository, then scans code/text files in batches and displays `files reviewed / planned code files / total repository files`.
+- The browser orchestrates review stages independently instead of relying on one long `live-review` Netlify Function.
+- The prior `Unexpected token '<'` failure is handled safely: every API response is read as text first, and HTML/non-JSON Netlify error pages are reported as an explicit component error rather than crashing the entire dashboard.
+- More elaborate Mission Control visual design.
+- Runtime and portal fetching now reject local/private network destinations to reduce SSRF risk.
 
-- GitHub read-only repository inspection;
-- source-code health / bug-risk review;
-- production runtime smoke verification;
-- portal/SEO/security-header snapshot;
-- Google PageSpeed Insights / Lighthouse categories;
-- current technical standards research;
-- current market and competitor research;
-- regulatory/compliance issue spotting by jurisdiction;
-- traceable findings with evidence, severity, operational impact, commercial impact, recommendation, affected files when known, proposed fix, tests, rollback, confidence and sources.
+## Review pipeline
 
-The dashboard visibly reports **Octon v1.2**.
+1. Repository map
+2. Code Health
+3. Runtime
+4. Portal / SEO / security headers
+5. Performance & accessibility
+6. Current technical standards research
+7. Market & competition research
+8. Regulatory issue spotting
 
-## Safety rule
+## Safety
 
-Keep `OCTON_GITHUB_WRITE_ENABLED=false`.
+Keep:
 
-Octon may research, audit, diagnose, recommend, generate code and tests autonomously. Commit/push remains blocked until an exact change hash is approved and the global write switch is deliberately enabled later.
+`OCTON_GITHUB_WRITE_ENABLED=false`
 
-## Required Netlify environment variables
+External GitHub App installations are intentionally **read-only** (`contents:read`, `metadata:read`). External authorization does not give Octon write permission.
 
-Already required:
+## Existing Netlify variables
+
 - `GITHUB_TOKEN`
 - `OCTON_APPROVAL_SECRET`
 - `OCTON_GITHUB_WRITE_ENABLED=false`
-
-For live web research:
 - `OPENAI_API_KEY`
+- optional `GOOGLE_PAGESPEED_API_KEY`
 - recommended `OCTON_RESEARCH_MODEL=gpt-5.6-terra`
 
-Optional for frequent PageSpeed automation:
-- `GOOGLE_PAGESPEED_API_KEY`
+## New variables for external GitHub owners
 
-PLEASE defaults are built in, but can be overridden:
-- `OCTON_GITHUB_OWNER=AdrianAlbertoMoraSinning`
-- `OCTON_GITHUB_REPO=Please`
-- `OCTON_GITHUB_BRANCH=main`
-- `OCTON_PORTAL_URL=https://pleasewebportal.netlify.app/`
-- `OCTON_PORTAL_MARKET=Calgary and surrounding areas, Alberta, Canada`
-- `OCTON_PORTAL_JURISDICTION=Alberta, Canada`
+- `GITHUB_APP_ID`
+- `GITHUB_APP_PRIVATE_KEY`
+- `OCTON_GITHUB_APP_SLUG`
 
-## Main endpoints
-- `/api/github-read`
-- `/api/code-health`
-- `/api/runtime-health`
-- `/api/portal-snapshot`
-- `/api/pagespeed-audit`
-- `/api/research-review`
-- `/api/live-review`
-- `/api/change-hash`
-- `/api/approval-token`
-- `/api/github-write`
-
-## Important limitations
-
-Static analysis is heuristic. Runtime smoke checks do not exercise authenticated workflows. The next testing layer should add controlled synthetic end-to-end tests with dedicated test accounts and non-production transaction modes.
-
-Regulatory findings are issue spotting for human/legal review, not a legal compliance certification.
+See `docs/GITHUB_APP_EXTERNAL_ACCESS.md`.
