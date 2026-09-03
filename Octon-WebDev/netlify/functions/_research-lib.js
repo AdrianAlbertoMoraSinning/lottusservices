@@ -91,6 +91,9 @@ function normalizeFinding(f, dimension, inheritedSources=[]) {
     tests: Array.isArray(f?.tests) ? f.tests.slice(0,20) : [],
     rollback: f?.rollback ?? null,
     confidence: Number.isFinite(Number(f?.confidence)) ? Math.max(0,Math.min(1,Number(f.confidence))) : null,
+    verificationStatus: String(f?.verificationStatus || f?.verification_status || "needs_verification"),
+    fingerprint: f?.fingerprint || `${dimension}|${String(f?.title || "Untitled finding").toLowerCase()}`,
+    occurrences: Number(f?.occurrences || 1),
     requiresHumanReview: Boolean(f?.requiresHumanReview ?? dimension === "compliance"),
     sources: (Array.isArray(f?.sources) && f.sources.length ? f.sources : inheritedSources).slice(0,20)
   };

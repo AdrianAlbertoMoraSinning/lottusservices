@@ -59,6 +59,26 @@
     "sources": {
       "type": "array",
       "items": {}
+    },
+    "fingerprint": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "verificationStatus": {
+      "enum": [
+        "confirmed",
+        "probable",
+        "needs_verification"
+      ]
+    },
+    "occurrences": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1
     }
   }
 }

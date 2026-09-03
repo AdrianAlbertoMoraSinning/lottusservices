@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Octon supervised Web Development AI Agent">
-<title>Octon v1.3 · Mission Control</title>
+<title>Octon v1.4 · Mission Control</title>
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 <div class="ambient one"></div><div class="ambient two"></div>
 <div class="app-shell">
 <header class="topbar">
-  <a class="brand" href="#overview"><span class="brand-mark">O</span><span><b>Octon</b><small>WebDev AI Agent · v1.3</small></span></a>
+  <a class="brand" href="#overview"><span class="brand-mark">O</span><span><b>Octon</b><small>WebDev AI Agent · v1.4</small></span></a>
   <nav><a href="#overview">Mission Control</a><a href="#findings">Findings</a><a href="#portfolio">Portals</a><a href="#governance">Governance</a></nav>
   <span class="safety">READ ONLY · approval gate active</span>
 </header>
@@ -36,7 +36,7 @@
 <section class="target-card">
   <div class="target-title">
     <div><span class="kicker">REVIEW TARGET</span><h2>Choose what Octon will inspect</h2></div>
-    <span id="authBadge" class="badge neutral">Primary GitHub connection</span>
+    <div class="target-badges"><span id="researchCapability" class="badge neutral">Checking AI research…</span><span id="authBadge" class="badge neutral">Primary GitHub connection</span></div>
   </div>
   <div class="target-grid">
     <label><span>Repository</span><select id="repoSelect"><option>Loading repositories…</option></select></label>
@@ -74,10 +74,21 @@
   </div>
 </section>
 
+<section class="diagnostic-summary">
+  <div class="panel-head"><div><span class="kicker">DIAGNOSTIC QUALITY</span><h2>Unique issues, not duplicated noise</h2></div><span id="summaryRaw" class="badge neutral">0 raw detections consolidated</span></div>
+  <div class="summary-grid">
+    <article><span>Unique findings</span><strong id="summaryUnique">0</strong><small>After fingerprint consolidation</small></article>
+    <article><span>Confirmed</span><strong id="summaryConfirmed">0</strong><small>Evidence directly observed</small></article>
+    <article><span>Probable</span><strong id="summaryProbable">0</strong><small>Strong signal; deployment context may matter</small></article>
+    <article><span>Needs verification</span><strong id="summaryVerify">0</strong><small>Human validation before action</small></article>
+    <article><span>Critical / High</span><strong id="summaryPriority">0</strong><small>Prioritized unique issues</small></article>
+  </div>
+</section>
+
 <section id="findings" class="findings-panel">
   <div class="panel-head">
-    <div><span class="kicker">TRACEABLE FINDINGS</span><h2>Evidence → impact → recommendation → test → rollback</h2></div>
-    <select id="severityFilter"><option value="">All severity</option><option value="critical">Critical</option><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option><option value="info">Info</option></select>
+    <div><span class="kicker">TRACEABLE FINDINGS</span><h2>Evidence → confidence → impact → recommendation → test → rollback</h2></div>
+    <div class="finding-filters"><select id="statusFilter"><option value="">All evidence status</option><option value="confirmed">Confirmed</option><option value="probable">Probable</option><option value="needs_verification">Needs verification</option></select><select id="severityFilter"><option value="">All severity</option><option value="critical">Critical</option><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option><option value="info">Info</option></select></div>
   </div>
   <div id="findingsList" class="empty-state"><strong>No simulated findings.</strong><span>Run a review and Octon will show only evidence-backed results.</span></div>
 </section>
@@ -94,7 +105,7 @@
   <div class="governance-grid"><span><b>Research</b>Autonomous</span><span><b>Audit</b>Autonomous</span><span><b>Code proposal</b>Autonomous</span><span><b>Commit / push</b>Approval required</span><span><b>External repositories</b>Owner grants read access</span><span><b>Legal findings</b>Human review required</span></div>
 </section>
 </main>
-<footer>Octon v1.3 · Mission Control · READ ONLY safe state</footer>
+<footer>Octon v1.4 · Mission Control · READ ONLY safe state</footer>
 </div>
 
 <div id="externalModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="externalTitle">

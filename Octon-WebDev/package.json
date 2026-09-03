@@ -1,8 +1,8 @@
 {
   "name": "octon-webdev",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "private": true,
-  "description": "Octon supervised Web Development AI Agent with repository selection, live progress and secure external GitHub App authorization",
+  "description": "Octon supervised Web Development AI Agent with diagnostic consolidation, evidence confidence, capability-aware review stages, repository selection, live progress and external GitHub App authorization",
   "scripts": {
     "check": "node scripts/check.mjs",
     "dev": "netlify dev"

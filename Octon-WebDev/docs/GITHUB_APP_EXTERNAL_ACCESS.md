@@ -1,47 +1,35 @@
-# Secure external GitHub repository authorization
+# GitHub App external repository authorization
 
-Octon v1.3 supports repository review for platforms owned by other GitHub accounts through a GitHub App.
+Octon can review repositories owned by other GitHub accounts through a GitHub App. The repository owner authorizes the App directly in GitHub and chooses which repositories the installation may access. Octon does not ask the owner for a GitHub password or Personal Access Token.
 
-## Why a GitHub App
+## Recommended GitHub App configuration
 
-The repository owner authorizes access directly in GitHub. They choose the account and repositories that the App may access, and can revoke the installation later. Octon does not request the owner's GitHub password or a personal access token.
-
-## Register the Octon GitHub App
-
-In GitHub Developer Settings create a GitHub App named, for example, `Octon WebDev Review`.
-
-Recommended configuration:
-
-- Public: enabled if unrelated GitHub owners should be able to install it.
+- Public: enabled only if unrelated GitHub owners should be able to install it.
 - Repository permissions:
   - Contents: **Read-only**
-  - Metadata: **Read-only**
-- No write repository permissions.
+  - Metadata: GitHub mandatory read access
+- All other repository, organization, account, and enterprise permissions: No access unless a future feature explicitly requires them.
 - Setup URL: `https://octon-webdev.netlify.app/`
-- Redirect on update: recommended.
-- Webhooks: not required for v1.3.
+- Redirect on update: recommended during testing.
+- Webhooks: not required for v1.4; disable unless a webhook handler is intentionally implemented.
 
-After creating the App, configure these in Netlify:
-
+Netlify variables:
 - `GITHUB_APP_ID`
-- `GITHUB_APP_PRIVATE_KEY` — store the private key only in Netlify environment variables. Do not commit it.
-- `OCTON_GITHUB_APP_SLUG` — the slug shown in the GitHub App public/install URL.
+- `GITHUB_APP_PRIVATE_KEY` — secret; never commit or paste into chat/logs
+- `OCTON_GITHUB_APP_SLUG`
 
 ## Owner workflow
 
-1. In Octon click **Evaluate another GitHub owner's platform**.
-2. Click **Authorize securely on GitHub**.
-3. GitHub shows the owner the account and repository-access selection.
-4. The owner grants access only to the repository/repositories they want Octon to evaluate.
-5. GitHub returns the browser to Octon with an installation identifier.
-6. Octon validates that installation with the GitHub App credentials and retrieves only repositories available to the installation.
-7. Authorized repositories appear in Octon's repository selector as **external authorized**.
-8. The owner can revoke the GitHub App from GitHub at any time.
+1. In Octon choose **Evaluate another GitHub owner's platform**.
+2. Open the GitHub authorization page.
+3. The owner chooses the account and repository access in GitHub.
+4. GitHub redirects to Octon's setup URL with an installation identifier.
+5. Octon validates that the identifier refers to a real installation of this GitHub App and then requests a short-lived installation token with read-only permissions.
+6. Repositories available to that installation appear as **external authorized**.
+7. The owner can revoke the installation in GitHub at any time.
 
-## Important security note
+## Important security boundary before public third-party rollout
 
-GitHub warns that an `installation_id` present in a setup URL must not simply be trusted. Octon therefore validates the installation server-side against GitHub before listing any repositories or creating an installation access token.
+GitHub explicitly warns that a setup URL's `installation_id` can be spoofed and should not, by itself, be treated as proof of the installing user's identity. Server-side validation proves that the installation exists for the Octon App, but it does **not** prove that the current browser/user is the owner of that installation.
 
-## Organization-owned repositories
-
-If a user does not have permission to install the GitHub App on an organization, GitHub's own installation flow can require/request authorization from the organization owner according to that organization's GitHub App access policy.
+Therefore v1.4's external-installation flow is appropriate for controlled testing, but **public customer onboarding should not be considered fully hardened yet**. Before broad third-party rollout, add authenticated user/session binding (for example GitHub user authorization/OAuth and verification that the installation belongs to the authenticated user), plus application authentication and rate limits around review endpoints.

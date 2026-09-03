@@ -1,4 +1,4 @@
-# Netlify setup for Octon v1.3
+# Netlify setup for Octon v1.4
 
 The Netlify site must keep **Base directory = `Octon-WebDev`** because Octon lives inside the `lottusservices` monorepo.
 
@@ -7,28 +7,35 @@ Publish directory: `.`
 Functions directory: `netlify/functions`  
 Production branch: `main`
 
-Environment variables:
+Core environment variables:
 - `GITHUB_TOKEN`
-- `OCTON_APPROVAL_SECRET`
+- `OCTON_APPROVAL_SECRET` (required later for signed change approvals)
 - `OCTON_GITHUB_WRITE_ENABLED=false`
-- `OPENAI_API_KEY` (required for live web research)
-- `OCTON_RESEARCH_MODEL=gpt-5.6-terra` (recommended)
-- `GOOGLE_PAGESPEED_API_KEY` (optional but recommended for frequent automated PageSpeed requests)
+- `OPENAI_API_KEY` — optional; leave empty while testing the free/read-only review path
+- `OCTON_RESEARCH_MODEL` — configure explicitly only when API research is enabled
+- `GOOGLE_PAGESPEED_API_KEY` — optional
+
+GitHub App variables:
+- `GITHUB_APP_ID`
+- `GITHUB_APP_PRIVATE_KEY`
+- `OCTON_GITHUB_APP_SLUG`
 
 After deployment:
-1. Load `/` and confirm header says **Octon v1.3**.
-2. Click **Test GitHub read-only**.
-3. Click **Run PLEASE review**.
-4. Confirm the component panel shows Code health and Runtime, not a baseline-only message.
-5. Confirm findings are evidence-based. If a connector is not configured, its component must show ERROR/PARTIAL rather than inventing findings.
-6. Confirm Write access remains OFF.
+1. Load `/` and confirm the header says **Octon v1.4**.
+2. Verify repository read-only access.
+3. Run a review.
+4. Confirm Code Health displays file-level progress.
+5. Confirm repeated asset findings are consolidated into unique issues with multiple affected files.
+6. Confirm `sms:`, `tel:` and `mailto:` links are not reported as missing repository files.
+7. With `OPENAI_API_KEY` empty, confirm stages 06–08 show **N/A**, not ERROR, and the review score is not reduced for those skipped modules.
+8. Confirm Write access remains OFF.
 
+## GitHub App
 
-## v1.3 additional setup
-
-To enable external GitHub owners:
-- Create a public GitHub App with Contents read-only and Metadata read-only.
-- Set its Setup URL to `https://octon-webdev.netlify.app/`.
-- Add `GITHUB_APP_ID`, `GITHUB_APP_PRIVATE_KEY` and `OCTON_GITHUB_APP_SLUG` in Netlify.
-
-The dashboard still works with the primary `GITHUB_TOKEN` if the GitHub App is not configured; only external-owner authorization remains disabled.
+Recommended GitHub App repository permissions:
+- Contents: **Read-only**
+- Metadata: GitHub mandatory read permission
+- Everything else: No access
+- Webhooks: not required; disable unless Octon later implements and validates a webhook workflow.
+- Setup URL: `https://octon-webdev.netlify.app/`
+- Redirect on update: useful while testing repository selection changes.

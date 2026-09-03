@@ -4,20 +4,22 @@ import {execFileSync} from "node:child_process";
 const root=path.resolve(import.meta.dirname,"..");
 const required=[
  "index.html","assets/app.js","assets/style.css","netlify.toml",
- "netlify/functions/_github-app-lib.js","netlify/functions/_github-lib.js","netlify/functions/_url-safety.js",
- "netlify/functions/github-repositories.js","netlify/functions/github-app-config.js","netlify/functions/github-installation-verify.js",
+ "netlify/functions/_github-app-lib.js","netlify/functions/_github-lib.js","netlify/functions/_url-safety.js","netlify/functions/_code-health-lib.js",
+ "netlify/functions/capabilities.js","netlify/functions/github-repositories.js","netlify/functions/github-app-config.js","netlify/functions/github-installation-verify.js",
  "netlify/functions/github-read.js","netlify/functions/code-health-plan.js","netlify/functions/code-health-batch.js",
  "netlify/functions/runtime-health.js","netlify/functions/portal-snapshot.js","netlify/functions/pagespeed-audit.js",
- "netlify/functions/research-review.js"
+ "netlify/functions/research-review.js","scripts/test-diagnostics.mjs"
 ];
 for(const f of required){if(!fs.existsSync(path.join(root,f)))throw new Error(`Missing ${f}`)}
 const funcs=fs.readdirSync(path.join(root,"netlify/functions")).filter(x=>x.endsWith(".js"));
 for(const f of funcs)execFileSync(process.execPath,["--check",path.join(root,"netlify/functions",f)],{stdio:"pipe"});
 execFileSync(process.execPath,["--check",path.join(root,"assets/app.js")],{stdio:"pipe"});
+execFileSync(process.execPath,[path.join(root,"scripts/test-diagnostics.mjs")],{stdio:"inherit"});
 const html=fs.readFileSync(path.join(root,"index.html"),"utf8");
-for(const marker of ["Octon v1.3","repoSelect","progressPct","externalAccess","Run selected review"]){
+for(const marker of ["Octon v1.4","repoSelect","progressPct","externalAccess","Run selected review","DIAGNOSTIC QUALITY","statusFilter"]){
   if(!html.includes(marker))throw new Error(`Missing UI marker: ${marker}`);
 }
 const app=fs.readFileSync(path.join(root,"assets/app.js"),"utf8");
 if(app.includes("response.json()"))throw new Error("Unsafe direct response.json() parsing remains in app.js");
-console.log(`Octon v1.3 verification passed: ${funcs.length} Netlify functions syntax-checked.`);
+if(!app.includes("OPENAI_API_KEY is not configured") && !app.includes("AI research stages were marked N/A"))throw new Error("Missing research N/A handling marker");
+console.log(`Octon v1.4 verification passed: ${funcs.length} Netlify functions syntax-checked.`);
