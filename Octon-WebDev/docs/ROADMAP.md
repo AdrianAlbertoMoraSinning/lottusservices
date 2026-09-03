@@ -1,19 +1,25 @@
 # Octon roadmap
 
-## v1.0 — Control plane (this ZIP)
+## v1.0 — Control plane
 Dashboard, portal registry, baseline audit endpoint, signed per-change approvals, guarded GitHub writer, Supabase control schema, safety documentation.
 
-## v1.1 — Live technical audit
-Repository read connector; HTML/CSS/JS dependency inspection; broken-link checks; Core Web Vitals/Lighthouse ingestion; security-header checks; accessibility checks; SEO metadata/schema checks; deployment health.
+## v1.1 — Live repository connector
+Read-only GitHub inspection, repository metadata, bounded file inventory and live connection verification.
 
-## v1.2 — Market intelligence
-Competitor registry by portal; recurring feature/offer/pricing/UX research; opportunity scoring; positioning recommendations; conversion funnel benchmarking.
+## v1.2 — Code Health
+Chunked source inspection, dependency/reference checks, safe repository mapping and diagnostic findings.
 
-## v1.3 — Regulatory & standards watch
-Jurisdiction-aware sources, dated evidence and change tracking for privacy, accessibility, e-commerce, industry-specific rules and technical standards. Legal findings remain recommendations for professional review where appropriate.
+## v1.3 — Mission Control
+Repository selector, live pipeline progress, external GitHub App read-only authorization, runtime/SEO/performance/research stages.
 
-## v1.4 — AI change studio
-Generate patches in a staging branch, run tests, display before/after diff and screenshots, calculate risk, request approval, commit only approved changes.
+## v1.4 — Diagnostic Quality
+Finding consolidation, evidence confidence, credential redaction, URI-scheme awareness, improved path handling, capability preflight and coverage-aware scoring.
 
-## v1.5 — Continuous verified improvement
-Scheduled audits, regression detection, post-deploy verification, rollback proposals and portfolio-level executive dashboard.
+## v1.5 — Verification Engine
+Production verification of static breakage signals, false-positive clearing, verified-in-production status, favicon/manifest verification, production evidence and verification-aware scoring.
+
+## v1.6 — Change Studio
+Generate proposed patches, tests, risk assessment, rollback plan and exact before/after diff. No repository write without Adrian's explicit approval of the exact change hash.
+
+## v1.7 — Continuous verified improvement
+Scheduled read-only audits, regression detection, post-deploy verification, portfolio-level trend reporting and approval-gated improvement queue.

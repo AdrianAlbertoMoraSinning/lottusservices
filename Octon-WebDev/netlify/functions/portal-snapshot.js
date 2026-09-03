@@ -8,7 +8,7 @@ exports.handler=async function(event){
   const target=String(b.url||process.env.OCTON_PORTAL_URL||"").trim();
   if(!target)return jsonResponse(400,{ok:false,error:"Portal URL is required."});
   try{await assertPublicUrl(target)}catch(err){return jsonResponse(400,{ok:false,error:err.message})}
-  const start=Date.now(),r=await safeFetch(target,{headers:{"user-agent":"Octon-Portal-Snapshot/1.4"}}),html=await r.text(),h=Object.fromEntries(r.headers.entries());
+  const start=Date.now(),r=await safeFetch(target,{headers:{"user-agent":"Octon-Portal-Snapshot/1.5"}}),html=await r.text(),h=Object.fromEntries(r.headers.entries());
   const title=(html.match(/<title[^>]*>([\s\S]*?)<\/title>/i)||[])[1]?.replace(/\s+/g," ").trim()||null;
   const h1=[...html.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)].map(x=>x[1].replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim()).filter(Boolean);
   const imgs=[...html.matchAll(/<img\b[^>]*>/gi)].map(x=>x[0]),findings=[];
@@ -18,7 +18,7 @@ exports.handler=async function(event){
   if(!h1.length)add("medium","seo","Missing H1","No H1 detected.","Add one primary page heading.");
   const missingAlt=imgs.filter(x=>!/\balt\s*=/i.test(x)).length;if(missingAlt)add("medium","accessibility","Images missing alt",`${missingAlt}/${imgs.length} image(s) lack alt.`,"Add alt attributes.");
   for(const name of ["strict-transport-security","content-security-policy","x-content-type-options","referrer-policy","permissions-policy"])if(!h[name])add("medium","security",`Missing ${name} header`,"Header not present on main response.","Add an appropriate response header and regression test it.");
-  return jsonResponse(200,{ok:r.ok,mode:"READ_ONLY",engine:"Octon Portal Snapshot v1.4",status:r.status,finalUrl:r.url,responseMs:Date.now()-start,bytes:Buffer.byteLength(html),
+  return jsonResponse(200,{ok:r.ok,mode:"READ_ONLY",engine:"Octon Portal Snapshot v1.5",status:r.status,finalUrl:r.url,responseMs:Date.now()-start,bytes:Buffer.byteLength(html),
     seo:{title,description:meta(html,"description"),robots:meta(html,"robots"),h1:h1.slice(0,10)},structure:{images:imgs.length,missingAlt,scripts:(html.match(/<script\b/gi)||[]).length,forms:(html.match(/<form\b/gi)||[]).length},
     securityHeaders:Object.fromEntries(["strict-transport-security","content-security-policy","x-content-type-options","referrer-policy","permissions-policy"].map(k=>[k,h[k]||null])),findings,generatedAt:new Date().toISOString()});
 };

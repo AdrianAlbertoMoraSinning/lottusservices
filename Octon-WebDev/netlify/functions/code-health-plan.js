@@ -15,7 +15,7 @@ exports.handler=async function(event){
       .filter(x=>/^netlify\/functions\/[^/]+\.(?:js|mjs|cjs)$/i.test(x.path))
       .map(x=>x.path.split("/").pop().replace(/\.(?:js|mjs|cjs)$/i,""));
     return jsonResponse(200,{
-      ok:true,mode:"READ_ONLY",engine:"Octon Code Health Planner v1.4",
+      ok:true,mode:"READ_ONLY",engine:"Octon Code Health Planner v1.5",
       repository:`${owner}/${repo}`,owner,repo,branch,installationId:installationId||null,
       commit:branchMeta.commit.sha,
       filesInRepository:blobs.length,

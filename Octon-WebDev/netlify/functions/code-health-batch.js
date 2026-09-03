@@ -40,7 +40,7 @@ exports.handler=async function(event){
     });
 
     return jsonResponse(200,{
-      ok:true,mode:"READ_ONLY",engine:"Octon Code Health Batch v1.4",
+      ok:true,mode:"READ_ONLY",engine:"Octon Code Health Batch v1.5",
       scanned,requested:files.length,errors,scannedBytes:bytes,findings,generatedAt:new Date().toISOString()
     });
   }catch(err){return jsonResponse(500,{ok:false,error:err.message,mode:"READ_ONLY"})}

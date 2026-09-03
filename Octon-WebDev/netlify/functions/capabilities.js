@@ -6,9 +6,10 @@ exports.handler=async function(event){
   if(event.httpMethod!=="GET")return jsonResponse(405,{ok:false,error:"Method not allowed"});
   return jsonResponse(200,{
     ok:true,
-    version:"1.4",
+    version:"1.5",
     mode:"READ_ONLY",
     capabilities:{
+      productionVerification:true,
       githubAppConfigured:appConfigured(),
       openAIConfigured:Boolean(process.env.OPENAI_API_KEY),
       researchModel:process.env.OPENAI_API_KEY?(process.env.OCTON_RESEARCH_MODEL||null):null,

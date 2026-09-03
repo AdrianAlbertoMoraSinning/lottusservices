@@ -4,14 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Octon supervised Web Development AI Agent">
-<title>Octon v1.4 · Mission Control</title>
+<title>Octon v1.5 · Verification Engine</title>
+<meta name="theme-color" content="#07111f">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 <div class="ambient one"></div><div class="ambient two"></div>
 <div class="app-shell">
 <header class="topbar">
-  <a class="brand" href="#overview"><span class="brand-mark">O</span><span><b>Octon</b><small>WebDev AI Agent · v1.4</small></span></a>
+  <a class="brand" href="#overview"><span class="brand-mark"><img src="assets/octon-mark.svg" alt=""></span><span><b>Octon</b><small>WebDev AI Agent · v1.5</small></span></a>
   <nav><a href="#overview">Mission Control</a><a href="#findings">Findings</a><a href="#portfolio">Portals</a><a href="#governance">Governance</a></nav>
   <span class="safety">READ ONLY · approval gate active</span>
 </header>
@@ -21,7 +27,7 @@
   <div class="hero-copy">
     <span class="kicker">AUTONOMOUS REVIEW · HUMAN-CONTROLLED CHANGE</span>
     <h1>See what your platform is <em>really</em> doing.</h1>
-    <p>Octon reviews source code, production behavior, performance, accessibility, SEO, security, market positioning and regulatory signals—then turns evidence into an actionable improvement path.</p>
+    <p>Octon reviews source code, verifies production behavior before penalizing suspected breakage, and then evaluates performance, accessibility, SEO, security, market positioning and regulatory signals—turning evidence into an actionable improvement path.</p>
     <div class="hero-actions">
       <button id="runReview" class="btn btn-primary">Run selected review</button>
       <button id="testGithub" class="btn btn-ghost">Verify repository access</button>
@@ -65,12 +71,13 @@
   <div class="stage-grid">
     <article data-stage="repository"><i>01</i><div><b>Repository map</b><span>Tree, branch, file inventory</span></div><em>WAITING</em></article>
     <article data-stage="code"><i>02</i><div><b>Code health</b><span>Chunked source inspection</span></div><em>WAITING</em></article>
-    <article data-stage="runtime"><i>03</i><div><b>Runtime</b><span>Production availability</span></div><em>WAITING</em></article>
-    <article data-stage="seo"><i>04</i><div><b>Portal / SEO</b><span>Structure & security headers</span></div><em>WAITING</em></article>
-    <article data-stage="speed"><i>05</i><div><b>Performance</b><span>PageSpeed / accessibility</span></div><em>WAITING</em></article>
-    <article data-stage="technical"><i>06</i><div><b>Technical research</b><span>Current standards & practices</span></div><em>WAITING</em></article>
-    <article data-stage="market"><i>07</i><div><b>Market & competition</b><span>Conversion & differentiation</span></div><em>WAITING</em></article>
-    <article data-stage="regulatory"><i>08</i><div><b>Regulatory research</b><span>Jurisdiction issue spotting</span></div><em>WAITING</em></article>
+    <article data-stage="verification"><i>03</i><div><b>Production verification</b><span>Assets, routes, favicons & functions</span></div><em>WAITING</em></article>
+    <article data-stage="runtime"><i>04</i><div><b>Runtime</b><span>Production availability</span></div><em>WAITING</em></article>
+    <article data-stage="seo"><i>05</i><div><b>Portal / SEO</b><span>Structure & security headers</span></div><em>WAITING</em></article>
+    <article data-stage="speed"><i>06</i><div><b>Performance</b><span>PageSpeed / accessibility</span></div><em>WAITING</em></article>
+    <article data-stage="technical"><i>07</i><div><b>Technical research</b><span>Current standards & practices</span></div><em>WAITING</em></article>
+    <article data-stage="market"><i>08</i><div><b>Market & competition</b><span>Conversion & differentiation</span></div><em>WAITING</em></article>
+    <article data-stage="regulatory"><i>09</i><div><b>Regulatory research</b><span>Jurisdiction issue spotting</span></div><em>WAITING</em></article>
   </div>
 </section>
 
@@ -78,17 +85,19 @@
   <div class="panel-head"><div><span class="kicker">DIAGNOSTIC QUALITY</span><h2>Unique issues, not duplicated noise</h2></div><span id="summaryRaw" class="badge neutral">0 raw detections consolidated</span></div>
   <div class="summary-grid">
     <article><span>Unique findings</span><strong id="summaryUnique">0</strong><small>After fingerprint consolidation</small></article>
+    <article><span>Verified in production</span><strong id="summaryProduction">0</strong><small>Issue reproduced on the deployed portal</small></article>
     <article><span>Confirmed</span><strong id="summaryConfirmed">0</strong><small>Evidence directly observed</small></article>
     <article><span>Probable</span><strong id="summaryProbable">0</strong><small>Strong signal; deployment context may matter</small></article>
-    <article><span>Needs verification</span><strong id="summaryVerify">0</strong><small>Human validation before action</small></article>
-    <article><span>Critical / High</span><strong id="summaryPriority">0</strong><small>Prioritized unique issues</small></article>
+    <article><span>Needs verification</span><strong id="summaryVerify">0</strong><small>Insufficient evidence for automatic action</small></article>
+    <article><span>Cleared by production</span><strong id="summaryCleared">0</strong><small>Static warnings removed after live verification</small></article>
+    <article><span>Critical / High</span><strong id="summaryPriority">0</strong><small>Prioritized active issues</small></article>
   </div>
 </section>
 
 <section id="findings" class="findings-panel">
   <div class="panel-head">
     <div><span class="kicker">TRACEABLE FINDINGS</span><h2>Evidence → confidence → impact → recommendation → test → rollback</h2></div>
-    <div class="finding-filters"><select id="statusFilter"><option value="">All evidence status</option><option value="confirmed">Confirmed</option><option value="probable">Probable</option><option value="needs_verification">Needs verification</option></select><select id="severityFilter"><option value="">All severity</option><option value="critical">Critical</option><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option><option value="info">Info</option></select></div>
+    <div class="finding-filters"><select id="statusFilter"><option value="">All evidence status</option><option value="verified_in_production">Verified in production</option><option value="confirmed">Confirmed</option><option value="probable">Probable</option><option value="needs_verification">Needs verification</option></select><select id="severityFilter"><option value="">All severity</option><option value="critical">Critical</option><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option><option value="info">Info</option></select></div>
   </div>
   <div id="findingsList" class="empty-state"><strong>No simulated findings.</strong><span>Run a review and Octon will show only evidence-backed results.</span></div>
 </section>
@@ -105,7 +114,7 @@
   <div class="governance-grid"><span><b>Research</b>Autonomous</span><span><b>Audit</b>Autonomous</span><span><b>Code proposal</b>Autonomous</span><span><b>Commit / push</b>Approval required</span><span><b>External repositories</b>Owner grants read access</span><span><b>Legal findings</b>Human review required</span></div>
 </section>
 </main>
-<footer>Octon v1.4 · Mission Control · READ ONLY safe state</footer>
+<footer>Octon v1.5 · Verification Engine · READ ONLY safe state</footer>
 </div>
 
 <div id="externalModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="externalTitle">

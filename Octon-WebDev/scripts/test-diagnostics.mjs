@@ -27,4 +27,4 @@ assert(credential,"strong credential pattern should be detected");
 assert(!JSON.stringify(credential).includes(secret),"credential value must never be returned in finding evidence");
 assert(credential.verificationStatus==="needs_verification","credential finding must require verification before action");
 
-console.log("Octon v1.4 diagnostic self-tests passed.");
+console.log("Octon v1.5 diagnostic self-tests passed.");

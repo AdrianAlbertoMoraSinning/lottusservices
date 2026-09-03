@@ -29,6 +29,6 @@ exports.handler=async function(event){
     jurisdiction:b.jurisdiction||process.env.OCTON_PORTAL_JURISDICTION||"Alberta, Canada"};
   try{
     const res=await webResearch(prompt(kind,c)),p=res.parsed||{},findings=(p.findings||[]).map(f=>normalizeFinding(f,kind,res.sources));
-    return jsonResponse(200,{ok:true,mode:"READ_ONLY",engine:"Octon Live Web Research v1.4",kind,portal:c,summary:p.summary||res.text.slice(0,1500),findings,sources:res.sources,coverage:p.coverage||[],limitations:p.limitations||[],generatedAt:new Date().toISOString()});
+    return jsonResponse(200,{ok:true,mode:"READ_ONLY",engine:"Octon Live Web Research v1.5",kind,portal:c,summary:p.summary||res.text.slice(0,1500),findings,sources:res.sources,coverage:p.coverage||[],limitations:p.limitations||[],generatedAt:new Date().toISOString()});
   }catch(err){return jsonResponse(500,{ok:false,mode:"READ_ONLY",kind,error:err.message})}
 };

@@ -68,6 +68,7 @@
     },
     "verificationStatus": {
       "enum": [
+        "verified_in_production",
         "confirmed",
         "probable",
         "needs_verification"
@@ -79,6 +80,18 @@
         "null"
       ],
       "minimum": 1
+    },
+    "verificationTarget": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "productionVerification": {
+      "type": [
+        "object",
+        "null"
+      ]
     }
   }
 }

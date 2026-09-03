@@ -4,7 +4,7 @@ const {safeFetch,assertPublicUrl}=require("./_url-safety");
 async function timed(url,timeout=12000){
   const c=new AbortController(),started=Date.now(),t=setTimeout(()=>c.abort(),timeout);
   try{
-    const r=await safeFetch(url,{signal:c.signal,headers:{"user-agent":"Octon-Runtime-Health/1.4"}});
+    const r=await safeFetch(url,{signal:c.signal,headers:{"user-agent":"Octon-Runtime-Health/1.5"}});
     const text=await r.text();
     return{ok:r.ok,status:r.status,ms:Date.now()-started,url:r.url,headers:Object.fromEntries(r.headers.entries()),bytes:Buffer.byteLength(text),text}
   }finally{clearTimeout(t)}
@@ -31,5 +31,5 @@ exports.handler=async function(event){
       if(r.ms>2500)findings.push({id:`runtime-${findings.length+1}`,severity:"medium",dimension:"performance",title:"Slow production response",evidence:`${p}: ${r.ms} ms`,operationalImpact:"Slower user interaction.",commercialImpact:"May reduce conversion.",recommendation:"Profile server/function/network path.",affectedFiles:[],proposedFix:null,tests:[`Response time for ${p} below agreed threshold`],rollback:"Revert the performance-impacting change.",confidence:.9,requiresHumanReview:false,sources:[]});
     }catch(err){results.push({path:p,ok:false,error:err.message});findings.push({id:`runtime-${findings.length+1}`,severity:"critical",dimension:"runtime",title:"Runtime check failed",evidence:`${p}: ${err.message}`,operationalImpact:"Route could not be verified.",commercialImpact:null,recommendation:"Check DNS, TLS, routing and deployment availability.",affectedFiles:[],proposedFix:null,tests:[`GET ${p}`],rollback:null,confidence:.85,requiresHumanReview:false,sources:[]})}
   }
-  return jsonResponse(200,{ok:results.every(x=>x.ok),mode:"READ_ONLY",engine:"Octon Runtime Health v1.4",target:origin,routesChecked:results.length,results,findings,generatedAt:new Date().toISOString()});
+  return jsonResponse(200,{ok:results.every(x=>x.ok),mode:"READ_ONLY",engine:"Octon Runtime Health v1.5",target:origin,routesChecked:results.length,results,findings,generatedAt:new Date().toISOString()});
 };

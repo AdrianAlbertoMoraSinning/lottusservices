@@ -1,6 +1,6 @@
 const pathPosix = require("path").posix;
 
-const STATUS_RANK = { confirmed: 3, probable: 2, needs_verification: 1 };
+const STATUS_RANK = { verified_in_production: 4, confirmed: 3, probable: 2, needs_verification: 1 };
 
 function verificationStatus(confidence, preferred) {
   if (preferred && STATUS_RANK[preferred]) return preferred;
@@ -31,7 +31,9 @@ function add(out, severity, dimension, title, file, evidence, recommendation, ex
     verificationStatus: verificationStatus(confidence, extra.verificationStatus),
     requiresHumanReview: Boolean(extra.requiresHumanReview),
     occurrences: Number(extra.occurrences || 1),
-    sources: []
+    sources: [],
+    verificationTarget: extra.verificationTarget || null,
+    productionVerification: extra.productionVerification || null
   });
 }
 
@@ -156,7 +158,7 @@ function analyze(path, text, treeSet, fnNames, out) {
         add(out, "high", "frontend", "Possible broken local reference", path,
           `${ref} → ${resolved} was not found in the repository tree.`,
           "Confirm the deployed path. If it is not generated at build time, correct the reference or restore the missing asset.",
-          { confidence: 0.88, verificationStatus: "probable", fingerprint: `broken-ref|${resolved}` });
+          { confidence: 0.88, verificationStatus: "probable", fingerprint: `broken-ref|${resolved}`, verificationTarget: { type: "local_reference", sourcePath: path, sourceRef: ref, resolvedPath: resolved } });
       }
     }
   }
@@ -166,7 +168,7 @@ function analyze(path, text, treeSet, fnNames, out) {
       add(out, "high", "integration", "Referenced Netlify Function not found", path,
         `Static endpoint /.netlify/functions/${fnName} is referenced but no matching function file was detected.`,
         "Confirm whether the function is generated elsewhere. Otherwise restore/create the function or update the endpoint reference.",
-        { confidence: 0.9, verificationStatus: "probable", fingerprint: `missing-netlify-fn|${fnName}` });
+        { confidence: 0.9, verificationStatus: "probable", fingerprint: `missing-netlify-fn|${fnName}`, verificationTarget: { type: "netlify_function", name: fnName, path: `/.netlify/functions/${fnName}` } });
     }
   }
 }

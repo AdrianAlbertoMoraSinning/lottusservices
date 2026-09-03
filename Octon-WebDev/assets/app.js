@@ -1,11 +1,11 @@
 const $=s=>document.querySelector(s);
 let allFindings=[], primaryRepos=[], externalRepos=[], activeInstallationId=null;
-let repoMeta=null, totalUnits=8, completedUnits=0, codeCandidates=0, codeScanned=0, rawDetections=0;
+let repoMeta=null, totalUnits=9, completedUnits=0, codeCandidates=0, codeScanned=0, rawDetections=0, productionCleared=0;
 let capabilities={openAIConfigured:false}, execution={};
 
 const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const severityRank={critical:5,high:4,medium:3,low:2,info:1};
-const statusRank={confirmed:3,probable:2,needs_verification:1};
+const statusRank={verified_in_production:4,confirmed:3,probable:2,needs_verification:1};
 
 async function fetchJson(url,options={}){
   const r=await fetch(url,{...options,headers:{accept:"application/json",...(options.headers||{})}});
@@ -116,7 +116,7 @@ async function verifySelected(){
 }
 
 function statusFor(f){
-  if(["confirmed","probable","needs_verification"].includes(f?.verificationStatus))return f.verificationStatus;
+  if(["verified_in_production","confirmed","probable","needs_verification"].includes(f?.verificationStatus))return f.verificationStatus;
   const c=Number(f?.confidence);
   if(Number.isFinite(c)&&c>=.92)return "confirmed";
   if(Number.isFinite(c)&&c>=.72)return "probable";
@@ -148,19 +148,50 @@ function mergeFinding(incoming){
   if(Number(f.confidence)>Number(existing.confidence||0))existing.confidence=f.confidence;
 }
 function normalizeFindings(list){for(const f of list||[])mergeFinding(f);updateSummary()}
+function applyProductionVerification(result){
+  const cleared=new Set((result?.cleared||[]).map(x=>x.fingerprint).filter(Boolean));
+  if(cleared.size){
+    allFindings=allFindings.filter(f=>!cleared.has(f.fingerprint));
+    productionCleared+=cleared.size;
+  }
+  const verified=new Map((result?.verified||[]).map(f=>[f.fingerprint,f]));
+  const inconclusive=new Map((result?.inconclusive||[]).map(x=>[x.fingerprint,x]));
+  for(const f of allFindings){
+    const v=verified.get(f.fingerprint);
+    if(v){
+      f.verificationStatus="verified_in_production";
+      f.confidence=Math.max(Number(f.confidence||0),Number(v.confidence||.99));
+      f.productionVerification=v.productionVerification||null;
+      const note=v.productionVerification?.reason?`Production verification: ${v.productionVerification.reason}`:"Issue reproduced in production.";
+      f.evidenceExamples=[...new Set([...(f.evidenceExamples||[]),note])].slice(0,4);
+    }else{
+      const inc=inconclusive.get(f.fingerprint);
+      if(inc&&f.verificationTarget){
+        f.verificationStatus="needs_verification";
+        f.productionVerification={decision:"inconclusive",url:inc.url||null,status:inc.status??null,contentType:inc.contentType||null,reason:inc.reason||"Production verification was inconclusive.",checkedAt:inc.checkedAt||new Date().toISOString()};
+        f.evidenceExamples=[...new Set([...(f.evidenceExamples||[]),`Production verification inconclusive: ${inc.reason||"unknown reason"}`])].slice(0,4);
+      }
+    }
+  }
+  normalizeFindings(result?.productionFindings||[]);
+  updateSummary();render();
+}
 function sortedFindings(rows){
   return [...rows].sort((a,b)=>(severityRank[b.severity]||0)-(severityRank[a.severity]||0)||(statusRank[b.verificationStatus]||0)-(statusRank[a.verificationStatus]||0)||String(a.title).localeCompare(String(b.title)));
 }
 function updateSummary(){
   const nonInfo=allFindings.filter(f=>f.severity!=="info");
+  const production=nonInfo.filter(f=>f.verificationStatus==="verified_in_production").length;
   const confirmed=nonInfo.filter(f=>f.verificationStatus==="confirmed").length;
   const probable=nonInfo.filter(f=>f.verificationStatus==="probable").length;
   const verify=nonInfo.filter(f=>f.verificationStatus==="needs_verification").length;
   const priority=nonInfo.filter(f=>["critical","high"].includes(f.severity)).length;
   $("#summaryUnique").textContent=nonInfo.length;
+  $("#summaryProduction").textContent=production;
   $("#summaryConfirmed").textContent=confirmed;
   $("#summaryProbable").textContent=probable;
   $("#summaryVerify").textContent=verify;
+  $("#summaryCleared").textContent=productionCleared;
   $("#summaryPriority").textContent=priority;
   $("#summaryRaw").textContent=`${rawDetections} raw detection${rawDetections===1?"":"s"} consolidated`;
   $("#openFindings").textContent=nonInfo.length;
@@ -182,15 +213,17 @@ function render(){
     const rb=typeof f.rollback==="string"?f.rollback:JSON.stringify(f.rollback||"Not defined yet");
     const confidence=Number.isFinite(Number(f.confidence))?`${Math.round(Number(f.confidence)*100)}% confidence`:"confidence not scored";
     const occurrences=Number(f.occurrences||1);
-    return `<article class="finding"><div class="finding-head"><span class="pill ${esc(f.severity)}">${esc(f.severity)}</span><span class="pill">${esc(f.dimension)}</span><span class="pill status ${esc(f.verificationStatus)}">${esc(String(f.verificationStatus).replace("_"," "))}</span><span class="pill">${esc(confidence)}</span>${occurrences>1?`<span class="pill">${occurrences} detections</span>`:""}${f.requiresHumanReview?'<span class="pill">human review</span>':''}</div><h3>${esc(f.title)}</h3>
+    const pv=f.productionVerification;
+    const productionEvidence=pv?`<div class="production-evidence"><b>Production verification</b><span>${esc(pv.decision||f.verificationStatus)}${pv.status?` · HTTP ${esc(pv.status)}`:""}</span>${pv.url?`<code>${esc(pv.url)}</code>`:""}${pv.reason?`<small>${esc(pv.reason)}</small>`:""}</div>`:"";
+    return `<article class="finding"><div class="finding-head"><span class="pill ${esc(f.severity)}">${esc(f.severity)}</span><span class="pill">${esc(f.dimension)}</span><span class="pill status ${esc(f.verificationStatus)}">${esc(String(f.verificationStatus).replaceAll("_"," "))}</span><span class="pill">${esc(confidence)}</span>${occurrences>1?`<span class="pill">${occurrences} detections</span>`:""}${f.requiresHumanReview?'<span class="pill">human review</span>':''}</div><h3>${esc(f.title)}</h3>
     <div class="finding-grid"><div><b>Evidence</b>${esc(ev)}</div><div><b>Operational impact</b>${esc(op)}</div><div><b>Commercial impact</b>${esc(ci)}</div><div><b>Recommendation</b>${esc(rec)}</div><div><b>Proposed fix</b>${esc(fix)}</div><div><b>Tests / rollback</b>${esc(JSON.stringify(f.tests||[]))}<br>${esc(rb)}</div></div>
-    <div class="files"><b>Affected files:</b> ${esc(files)}</div>${sources?`<div class="sources"><b>Sources:</b> ${sources}</div>`:""}</article>`;
+    ${productionEvidence}<div class="files"><b>Affected files:</b> ${esc(files)}</div>${sources?`<div class="sources"><b>Sources:</b> ${sources}</div>`:""}</article>`;
   }).join("");
 }
 function scoreReview(pageSpeed){
   const weights={critical:12,high:6,medium:2.5,low:.5,info:0};
-  const multipliers={confirmed:1,probable:.72,needs_verification:.38};
-  const penalty=allFindings.reduce((n,f)=>n+(weights[f.severity]||0)*(multipliers[f.verificationStatus]||.5),0);
+  const multipliers={verified_in_production:1,confirmed:1,probable:.55,needs_verification:.18};
+  const penalty=allFindings.reduce((n,f)=>n+(weights[f.severity]||0)*(multipliers[f.verificationStatus]??.18),0);
   const evidenceScore=Math.max(35,Math.round(100-Math.min(65,penalty)));
   const psi=[];
   for(const r of pageSpeed?.results||[])if(r.ok)for(const v of Object.values(r.scores||{}))if(Number.isFinite(v))psi.push(v);
@@ -212,7 +245,7 @@ function executionCounts(){
 
 async function runReview(){
   const repo=selected();if(!repo)return;
-  $("#runReview").disabled=true;allFindings=[];rawDetections=0;render();updateSummary();completedUnits=0;totalUnits=8;codeCandidates=0;codeScanned=0;repoMeta=null;resetStages();
+  $("#runReview").disabled=true;allFindings=[];rawDetections=0;productionCleared=0;render();updateSummary();completedUnits=0;totalUnits=9;codeCandidates=0;codeScanned=0;repoMeta=null;resetStages();
   await loadCapabilities();
   setProgress(1,"STARTING",`Preparing ${repo.owner}/${repo.repo}`);$("#runState").textContent="Starting integrated review…";
 
@@ -236,10 +269,20 @@ async function runReview(){
       codeScanned+=d.scanned||0;normalizeFindings(d.findings||[]);
       $("#codeFiles").textContent=codeScanned;$("#codeFilesNote").textContent=`${codeScanned} / ${codeCandidates} planned · ${plan.filesInRepository} total repo files`;
       const codeFraction=codeCandidates?codeScanned/codeCandidates:1;
-      setProgress(12.5+12.5*codeFraction,"CODE SCAN",`${codeScanned} / ${codeCandidates} code/text files reviewed · ${plan.filesInRepository} total repository files`);
+      setProgress(11.1+11.1*codeFraction,"CODE SCAN",`${codeScanned} / ${codeCandidates} code/text files reviewed · ${plan.filesInRepository} total repository files`);
     }
     finishStage("code","live","LIVE");
   }catch(e){finishStage("code","error","ERROR");$("#connectionState").textContent=`Code Health error: ${e.message}`}
+
+  if(portalUrl){
+    await safeStep("verification","Verifying static findings against production…",async()=>{
+      const verifiable=allFindings.filter(f=>f.verificationTarget).slice(0,80);
+      const d=await fetchJson("/api/verification-engine",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({url:portalUrl,findings:verifiable})});
+      applyProductionVerification(d);
+      $("#connectionState").textContent=`Production verification: ${d.verified?.length||0} issue(s) reproduced · ${d.cleared?.length||0} static warning(s) cleared · ${d.inconclusive?.length||0} inconclusive.`;
+      return d;
+    });
+  }else skipStage("verification","NO URL");
 
   let pageSpeed=null;
   if(portalUrl){

@@ -1,0 +1,77 @@
+OCTON v1.5 — EXACT GITHUB UPLOAD INSTRUCTIONS
+================================================
+
+SOURCE
+This v1.5 package was built from the user-uploaded 2026-09-02 Octon-WebDev.zip, confirmed as Octon v1.4.
+
+TARGET REPOSITORY
+AdrianAlbertoMoraSinning/lottusservices
+
+TARGET FOLDER
+Octon-WebDev/
+
+CRITICAL FOLDER RULE
+Open lottusservices/Octon-WebDev in GitHub FIRST, then upload the files/folders below preserving their relative paths.
+Do NOT upload the outer Octon-WebDev folder inside the existing Octon-WebDev folder, or you will create Octon-WebDev/Octon-WebDev and Netlify will keep serving the older code.
+
+SAFE STATE
+- Keep OCTON_GITHUB_WRITE_ENABLED=false.
+- OPENAI_API_KEY is NOT required for v1.5 Verification Engine.
+- Netlify Base directory must remain Octon-WebDev.
+- Publish directory must remain .
+- Functions directory must remain netlify/functions.
+
+EXACT FILES TO UPLOAD / REPLACE
+  README.md
+  UPLOAD_INSTRUCTIONS.txt
+  UPLOAD_ONLY_V1_5_VERIFICATION_ENGINE.txt
+  assets/app.js
+  assets/apple-touch-icon.png
+  assets/favicon-16x16.png
+  assets/favicon-32x32.png
+  assets/favicon.svg
+  assets/icon-192.png
+  assets/icon-512.png
+  assets/octon-mark.svg
+  assets/style.css
+  config/governance.json
+  config/portals.json
+  data/state.json
+  docs/ENV.example
+  docs/NETLIFY_SETUP.md
+  docs/ROADMAP.md
+  docs/V1_5_VERIFICATION_ENGINE.md
+  index.html
+  netlify/functions/_code-health-lib.js
+  netlify/functions/_verification-lib.js
+  netlify/functions/capabilities.js
+  netlify/functions/code-health-batch.js
+  netlify/functions/code-health-plan.js
+  netlify/functions/code-health.js
+  netlify/functions/live-review.js
+  netlify/functions/pagespeed-audit.js
+  netlify/functions/portal-snapshot.js
+  netlify/functions/research-review.js
+  netlify/functions/runtime-health.js
+  netlify/functions/verification-engine.js
+  package.json
+  schemas/finding.schema.json
+  scripts/check.mjs
+  scripts/test-diagnostics.mjs
+  scripts/test-verification.mjs
+  site.webmanifest
+
+TOTAL CHANGED/NEW FILES: 38
+This is below GitHub's 100-file manual upload limit.
+
+FILES NOT REQUIRED FOR THIS UPDATE
+Every file not listed above is unchanged from the v1.4 baseline and does not need to be uploaded manually. The full ZIP still includes the complete consolidated project.
+
+POST-UPLOAD CHECK
+1. package.json must show version 1.5.0.
+2. index.html must show Octon v1.5 and Production verification stage 03.
+3. New function netlify/functions/verification-engine.js must exist.
+4. New helper netlify/functions/_verification-lib.js must exist.
+5. Netlify should deploy from main.
+6. Production header/footer should read Octon v1.5.
+7. Running a review should show Production verification and the counters Verified in production / Cleared by production.

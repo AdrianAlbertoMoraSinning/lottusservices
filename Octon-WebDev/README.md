@@ -1,43 +1,51 @@
-# Octon v1.4 — Diagnostic Quality
+# Octon v1.5 — Verification Engine
 
-Octon v1.4 builds on the v1.3 Mission Control architecture and focuses on **signal quality**: fewer false positives, consolidated findings, clearer evidence confidence, and capability-aware scoring.
+Octon v1.5 builds on v1.4 Diagnostic Quality and adds a **production verification layer** between static source-code findings and final scoring. The goal is simple: do not penalize a portal for a suspected broken asset, route, favicon, or Netlify Function until Octon has attempted to verify what production is actually serving.
 
-## What changed in v1.4
+## What changed in v1.5
 
-- **Unique finding consolidation.** Repeated detections are grouped by fingerprint and their affected files/occurrences are aggregated.
-- **Evidence status.** Findings are classified as `confirmed`, `probable`, or `needs_verification`.
-- **Credential findings are redacted.** Octon never returns the detected credential value in finding evidence. Strong known-token patterns and generic sensitive assignments are treated differently; both require verification before rotation or removal.
-- **URI-scheme awareness.** `sms:`, `tel:`, `mailto:`, `data:`, `blob:`, `javascript:` and any other explicit URI scheme are no longer treated as repository files.
-- **Improved relative-path resolution** for local HTML assets.
-- **Dynamic Netlify Function references** such as template literals are no longer reported as missing static functions.
-- **Capability preflight.** If `OPENAI_API_KEY` is absent, Technical Research, Market & Competition, and Regulatory Research are marked **N/A**, not ERROR.
-- **Coverage-aware score.** Optional modules that are not configured do not reduce the portal score.
-- **Diagnostic summary.** Mission Control shows unique findings, confirmed/probable/needs-verification counts, priority issues, and raw detections consolidated.
-- **Live GitHub App permission display.** The external-access modal attempts to read the App's actual permissions from GitHub rather than showing a hard-coded expected permission list.
-- Existing v1.3 repository selector, 0–100% progress, chunked Code Health, GitHub App read-only access, safe HTML/non-JSON API parsing, SSRF protections, and approval-gated write architecture remain in place.
+- **Production Verification Engine.** Static findings that expose a verifiable target are checked against the selected production URL.
+- **False-positive clearing.** If a supposedly missing asset, route, or Netlify Function is reachable in production, that finding is removed from the active finding set before scoring.
+- **Verified in production status.** When production returns a definitive missing response (`404`/`410`) for a suspected broken target, the finding is promoted to `verified_in_production`.
+- **Inconclusive verification handling.** Ambiguous responses do not become confirmed failures; they remain `needs_verification`.
+- **Favicon verification.** The verification pass inspects the live document for declared icons/manifest and checks whether declared favicon assets are reachable.
+- **Verification-aware scoring.** `verified_in_production` and `confirmed` findings receive full weight, `probable` receives partial weight, and `needs_verification` receives minimal weight. N/A modules do not reduce the score.
+- **Traceable production evidence.** Verified findings record target URL, response status, timestamp, and verification decision.
+- **Mission Control v1.5 UI.** Dashboard now displays verified-in-production and cleared-by-production counts and adds Production verification as a distinct pipeline stage.
+- **Updated Octon identity.** New Octon mark plus SVG/PNG favicons, Apple touch icon, PWA icons, and web manifest.
+- Existing v1.4 consolidation, evidence confidence, credential redaction, URI-scheme awareness, capability preflight, repository selector, GitHub App read-only access, SSRF protections, chunked scanning, and approval-gated write architecture remain intact.
 
 ## Review pipeline
 
 1. Repository map
 2. Code Health
-3. Runtime
-4. Portal / SEO / security headers
-5. Performance & accessibility
-6. Current technical standards research — N/A when OpenAI API is not configured
-7. Market & competition research — N/A when OpenAI API is not configured
-8. Regulatory issue spotting — N/A when OpenAI API is not configured
+3. Production verification
+4. Runtime
+5. Portal / SEO / security headers
+6. Performance & accessibility
+7. Current technical standards research — N/A when OpenAI API is not configured
+8. Market & competition research — N/A when OpenAI API is not configured
+9. Regulatory issue spotting — N/A when OpenAI API is not configured
+
+## Verification semantics
+
+- `verified_in_production`: the suspected issue was directly reproduced in production.
+- `confirmed`: directly observed evidence that does not require a live target check.
+- `probable`: strong static/runtime signal, but deployment context can still matter.
+- `needs_verification`: insufficient evidence for automatic action.
+- `cleared by production`: not an active finding; the deployed target exists, so the static warning is removed before scoring.
 
 ## Safety
 
 Keep `OCTON_GITHUB_WRITE_ENABLED=false`.
 
-GitHub App repository access is intentionally read-only (`contents:read`, with GitHub's mandatory metadata read access). External authorization does not give Octon write permission.
+GitHub repository access remains read-only (`contents:read`, plus GitHub metadata read access). Production verification performs read-only HTTP requests against the selected public portal URL. GitHub commit/push remains blocked unless the global write switch is deliberately enabled later **and** an exact approved change hash is presented.
 
-Credential findings are **diagnostic signals only**. Never rotate/delete a credential solely because a pattern matched; first verify the finding and determine whether the value is active.
+Credential findings remain diagnostic signals only and are never exposed with the detected secret value. Production verification does not attempt to validate credentials.
 
 ## OpenAI API
 
-`OPENAI_API_KEY` is optional in v1.4. Without it, stages 06–08 are N/A and the rest of the review runs normally. Do not configure a billable API key until Octon's public access controls and usage limits meet the intended deployment model.
+`OPENAI_API_KEY` remains optional. Without it, research stages 07–09 are N/A and do not reduce the score. The Verification Engine does not require OpenAI.
 
 ## GitHub App variables
 
@@ -45,4 +53,11 @@ Credential findings are **diagnostic signals only**. Never rotate/delete a crede
 - `GITHUB_APP_PRIVATE_KEY`
 - `OCTON_GITHUB_APP_SLUG`
 
-See `docs/GITHUB_APP_EXTERNAL_ACCESS.md` and `docs/V1_4_DIAGNOSTIC_QUALITY.md`.
+## Production verification controls
+
+Optional environment variables:
+
+- `OCTON_VERIFY_MAX_TARGETS` — maximum static targets verified per review (default 40; capped at 80).
+- `OCTON_VERIFY_TIMEOUT_MS` — per-target request timeout (default 7000 ms; capped at 15000 ms).
+
+See `docs/V1_5_VERIFICATION_ENGINE.md`, `docs/GITHUB_APP_EXTERNAL_ACCESS.md`, and `UPLOAD_INSTRUCTIONS.txt`.

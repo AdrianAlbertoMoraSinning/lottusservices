@@ -24,5 +24,5 @@ exports.handler=async function(event){
         opportunities:Object.values(a).filter(x=>x?.details?.type==="opportunity").map(x=>({id:x.id,title:x.title,displayValue:x.displayValue||null,savingsMs:x.details?.overallSavingsMs??null,score:x.score??null})).sort((a,b)=>(b.savingsMs||0)-(a.savingsMs||0)).slice(0,20)});
     }catch(err){results.push({strategy,ok:false,error:err.message})}
   }
-  return jsonResponse(200,{ok:results.some(x=>x.ok),mode:"READ_ONLY",engine:"Octon PageSpeed Live Audit v1.4",target:u.toString(),results,generatedAt:new Date().toISOString()});
+  return jsonResponse(200,{ok:results.some(x=>x.ok),mode:"READ_ONLY",engine:"Octon PageSpeed Live Audit v1.5",target:u.toString(),results,generatedAt:new Date().toISOString()});
 };

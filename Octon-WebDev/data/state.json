@@ -1,5 +1,5 @@
 {
-  "version": "1.4",
+  "version": "1.5",
   "demoFindings": [],
-  "note": "v1.4 does not substitute demo findings for failed live connectors; optional unconfigured research stages are N/A."
+  "note": "v1.5 verifies production-checkable findings before scoring them, clears false positives when the deployed target exists, and keeps optional unconfigured research stages N/A."
 }

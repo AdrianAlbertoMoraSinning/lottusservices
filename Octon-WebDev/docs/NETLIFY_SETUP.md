@@ -1,4 +1,4 @@
-# Netlify setup for Octon v1.4
+# Netlify setup for Octon v1.5
 
 The Netlify site must keep **Base directory = `Octon-WebDev`** because Octon lives inside the `lottusservices` monorepo.
 
@@ -21,14 +21,15 @@ GitHub App variables:
 - `OCTON_GITHUB_APP_SLUG`
 
 After deployment:
-1. Load `/` and confirm the header says **Octon v1.4**.
+1. Load `/` and confirm the header says **Octon v1.5**.
 2. Verify repository read-only access.
 3. Run a review.
 4. Confirm Code Health displays file-level progress.
 5. Confirm repeated asset findings are consolidated into unique issues with multiple affected files.
 6. Confirm `sms:`, `tel:` and `mailto:` links are not reported as missing repository files.
-7. With `OPENAI_API_KEY` empty, confirm stages 06–08 show **N/A**, not ERROR, and the review score is not reduced for those skipped modules.
-8. Confirm Write access remains OFF.
+7. Confirm Production verification runs as stage 03 and reports reproduced / cleared / inconclusive targets.
+8. With `OPENAI_API_KEY` empty, confirm stages 07–09 show **N/A**, not ERROR, and the review score is not reduced for those skipped modules.
+9. Confirm Write access remains OFF.
 
 ## GitHub App
 
