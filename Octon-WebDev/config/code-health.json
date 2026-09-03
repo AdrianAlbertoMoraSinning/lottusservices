@@ -1,0 +1,27 @@
+{
+  "version": "1.2",
+  "codeHealth": {
+    "enabled": true,
+    "mode": "READ_ONLY",
+    "maxFiles": 220,
+    "dimensions": [
+      "syntax-and-structure",
+      "broken-local-references",
+      "frontend-integrity",
+      "netlify-function-wiring",
+      "security-smells",
+      "exception-handling",
+      "test-presence",
+      "accessibility-basics",
+      "production-runtime"
+    ]
+  },
+  "governance": {
+    "mayAutoResearch": true,
+    "mayAutoAudit": true,
+    "mayGenerateFixes": true,
+    "mayCommitWithoutApproval": false,
+    "mayPushWithoutApproval": false,
+    "writeSwitchMustRemainOff": true
+  }
+}

@@ -1,0 +1,18 @@
+OCTON v1.2 — FILES TO ADD/REPLACE IN GitHub
+
+Upload these paths inside `Octon-WebDev/`:
+
+netlify/functions/code-health.js
+netlify/functions/runtime-health.js
+config/code-health.json
+docs/CODE_HEALTH_ENGINE.md
+README_V1_2_CODE_HEALTH.md
+
+No SQL migration is required for this module.
+Do NOT enable OCTON_GITHUB_WRITE_ENABLED yet.
+
+After Netlify deploy:
+1. Open /.netlify/functions/code-health
+2. Open /.netlify/functions/runtime-health
+3. Confirm both return mode: READ_ONLY
+4. Review findings before building the auto-fix proposal layer.
