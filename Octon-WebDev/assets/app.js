@@ -1,47 +1,45 @@
-const $ = (s) => document.querySelector(s);
-const $$ = (s) => [...document.querySelectorAll(s)];
-const toast = (msg) => { const el=$('#toast'); el.textContent=msg; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),2600); };
-
-$$('.nav').forEach(btn=>btn.addEventListener('click',()=>{
-  $$('.nav').forEach(x=>x.classList.remove('active')); btn.classList.add('active');
-  $$('.view').forEach(x=>x.classList.remove('active-view')); $('#'+btn.dataset.view).classList.add('active-view');
-}));
-
-async function loadData(){
-  const [portals, findings] = await Promise.all([
-    fetch('/config/portals.json').then(r=>r.json()),
-    fetch('/data/demo-findings.json').then(r=>r.json())
-  ]);
-  $('#portalCount').textContent=portals.length;
-  $('#findingCount').textContent=findings.length;
-  $('#portalTable').innerHTML=portals.map(p=>`<div class="portal-row"><div><strong>${p.name}</strong><div class="muted">${p.publicUrl}</div></div><div>${p.hosting} + ${p.database}</div><div><span class="badge">${p.status}</span></div><div>${p.approvalPolicy}</div></div>`).join('');
-  $('#findingList').innerHTML=findings.map(f=>`<div class="finding-row"><div><strong>${f.title}</strong><div class="muted">${f.category} · ${f.id}</div></div><div><span class="badge sev-${f.severity}">${f.severity}</span></div><div>${f.impact} impact</div><div class="muted">${f.summary}</div></div>`).join('');
+const $=s=>document.querySelector(s);
+let allFindings=[];
+const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function setComponent(key,status){const el=document.querySelector(`[data-key="${key}"]`);if(!el)return;el.classList.remove("live","error","partial");el.classList.add(status==="LIVE"?"live":status==="ERROR"?"error":"partial");}
+function render(){
+  const filter=$("#severityFilter").value;const rows=allFindings.filter(f=>!filter||f.severity===filter);
+  if(!rows.length){$("#findingsList").innerHTML='<div class="findings-empty">No findings match this filter.</div>';return}
+  $("#findingsList").innerHTML=rows.map(f=>{
+    const src=(f.sources||[]).slice(0,4).map(s=>`<a href="${esc(s.url||s)}" target="_blank" rel="noopener noreferrer">${esc(s.title||s.url||s)}</a>`).join("");
+    const files=(f.affectedFiles||[]).join(", ")||f.file||"Not determined";
+    return `<article class="finding"><div class="finding-head"><span class="pill ${esc(f.severity)}">${esc(f.severity)}</span><span class="pill">${esc(f.dimension)}</span>${f.requiresHumanReview?'<span class="pill">human review</span>':''}</div>
+      <h3>${esc(f.title)}</h3><div class="finding-grid"><div><b>Evidence</b>${esc(typeof f.evidence==="string"?f.evidence:JSON.stringify(f.evidence||""))}</div>
+      <div><b>Operational impact</b>${esc(typeof f.operationalImpact==="string"?f.operationalImpact:JSON.stringify(f.operationalImpact||"Not quantified"))}</div>
+      <div><b>Commercial impact</b>${esc(typeof f.commercialImpact==="string"?f.commercialImpact:JSON.stringify(f.commercialImpact||"Not quantified"))}</div>
+      <div><b>Recommendation</b>${esc(typeof f.recommendation==="string"?f.recommendation:JSON.stringify(f.recommendation||""))}</div>
+      <div><b>Proposed fix</b>${esc(typeof f.proposedFix==="string"?f.proposedFix:JSON.stringify(f.proposedFix||"To be designed from this finding"))}</div>
+      <div><b>Tests / rollback</b>${esc(JSON.stringify(f.tests||[]))}<br>${esc(typeof f.rollback==="string"?f.rollback:JSON.stringify(f.rollback||"Not defined yet"))}</div></div>
+      <div class="files"><b>Affected files:</b> ${esc(files)}</div>${src?`<div class="sources"><b>Sources:</b> ${src}</div>`:""}</article>`;
+  }).join("");
 }
+$("#severityFilter").addEventListener("change",render);
 
-$('#runAudit').addEventListener('click', async ()=>{
-  const btn=$('#runAudit'); btn.disabled=true; btn.textContent='Reviewing…';
-  try{
-    const res=await fetch('/api/audit',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({portalId:'please'})});
-    const data=await res.json();
-    if(!res.ok) throw new Error(data.error||'Audit failed');
-    $('#score').textContent=data.score;
-    toast(data.mode==='baseline'?'Baseline audit complete. Live research connectors are next.':'Live audit complete.');
-  }catch(e){toast(e.message)}finally{btn.disabled=false;btn.textContent='Run PLEASE review'}
+$("#testGithub").addEventListener("click",async()=>{
+  const b=$("#testGithub");b.disabled=true;$("#githubState").textContent="Testing GitHub read-only…";
+  try{const r=await fetch("/api/github-read");const d=await r.json();if(!r.ok)throw new Error(d.error||`HTTP ${r.status}`);
+    $("#githubState").textContent=`GitHub connected: ${d.repository} · ${d.files} files · READ ONLY`;
+    $("#writeState").textContent=d.writeEnabled?"ON":"OFF";
+  }catch(e){$("#githubState").textContent=`GitHub test failed: ${e.message}`}finally{b.disabled=false}
 });
 
-loadData().catch(()=>toast('Could not load local Octon registry.'));
-
-
-const githubBtn = $('#testGithub');
-if(githubBtn){
-  githubBtn.addEventListener('click', async ()=>{
-    githubBtn.disabled=true; const old=githubBtn.textContent; githubBtn.textContent='Connecting…';
-    try{
-      const res=await fetch('/api/github-read',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({portalId:'please'})});
-      const data=await res.json();
-      if(!res.ok) throw new Error(data.detail||data.error||'GitHub read test failed');
-      toast(`GitHub connected: ${data.repository} · ${data.fileCount} files · READ ONLY`);
-      console.info('Octon GitHub read-only inspection',data);
-    }catch(e){toast(e.message)}finally{githubBtn.disabled=false;githubBtn.textContent=old;}
-  });
-}
+$("#runReview").addEventListener("click",async()=>{
+  const b=$("#runReview");b.disabled=true;$("#runState").textContent="Running integrated live review…";$("#findingNote").textContent="Analyzing repository + production + live research";
+  document.querySelectorAll(".components div").forEach(x=>{x.classList.remove("live","error","partial")});
+  try{
+    const r=await fetch("/api/live-review",{method:"POST",headers:{"content-type":"application/json"},body:"{}"});const d=await r.json();if(!r.ok)throw new Error(d.error||`HTTP ${r.status}`);
+    $("#score").textContent=d.score;$("#scoreNote").textContent=`Evidence-based · ${new Date(d.generatedAt).toLocaleString()}`;
+    allFindings=d.findings||[];$("#openFindings").textContent=d.openFindings??allFindings.length;$("#findingNote").textContent="Live findings from the latest integrated review";
+    $("#writeState").textContent=d.governance?.githubWriteEnabled?"ON":"OFF";
+    for(const [k,v] of Object.entries(d.componentStatus||{}))setComponent(k,v);
+    const gh=d.components?.github;if(gh?.ok)$("#githubState").textContent=`GitHub connected: ${gh.repository} · ${gh.files} files · READ ONLY`;
+    $("#runState").textContent=`Complete · ${allFindings.length} finding(s)`;
+    render();
+  }catch(e){$("#runState").textContent=`Review failed: ${e.message}`;$("#findingNote").textContent="See error above; no demo result substituted."}
+  finally{b.disabled=false}
+});

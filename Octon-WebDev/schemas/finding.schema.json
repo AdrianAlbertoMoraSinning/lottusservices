@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Octon Traceable Finding",
+  "type": "object",
+  "required": [
+    "id",
+    "dimension",
+    "severity",
+    "title",
+    "evidence",
+    "recommendation"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "dimension": {
+      "type": "string"
+    },
+    "severity": {
+      "enum": [
+        "critical",
+        "high",
+        "medium",
+        "low",
+        "info"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "evidence": {},
+    "operationalImpact": {},
+    "commercialImpact": {},
+    "recommendation": {},
+    "affectedFiles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "proposedFix": {},
+    "tests": {
+      "type": "array",
+      "items": {}
+    },
+    "rollback": {},
+    "confidence": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 1
+    },
+    "requiresHumanReview": {
+      "type": "boolean"
+    },
+    "sources": {
+      "type": "array",
+      "items": {}
+    }
+  }
+}

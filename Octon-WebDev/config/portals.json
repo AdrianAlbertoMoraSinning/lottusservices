@@ -1,23 +1,47 @@
-[
-  {
-    "id":"please","name":"P.L.E.A.S.E.","status":"pilot","jurisdiction":["Canada","Alberta"],"publicUrl":"https://pleasewebportal.netlify.app/","repo":"Please","hosting":"Netlify","database":"Supabase","focus":["conversion","UX","performance","security","privacy","accessibility","SEO","competitive-positioning"],"approvalPolicy":"human-per-change"
-  },
-  {
-    "id":"kineticaplus","name":"KineticaPlus","status":"registered","jurisdiction":["Canada","Alberta"],"publicUrl":"","repo":"KineticaPlus","hosting":"Netlify","database":"Supabase","focus":["booking","payments","practitioner-workflows","conversion","privacy","security"],"approvalPolicy":"human-per-change"
-  },
-  {
-    "id":"groupe-vgc","name":"Groupe VGC","status":"registered","jurisdiction":["Canada","Quebec"],"publicUrl":"","repo":"GroupeVGC","hosting":"Netlify","database":"Supabase","focus":["booking","local-SEO","conversion","bilingual-readiness","privacy","accessibility"],"approvalPolicy":"human-per-change"
-  },
-  {
-    "id":"cal-15","name":"CAL 1.5","status":"registered","jurisdiction":["Canada"],"publicUrl":"","repo":"","hosting":"Netlify","database":"Supabase-per-client","focus":["accounting-controls","data-custody","security","privacy","auditability","availability"],"approvalPolicy":"human-per-change"
-  },
-  {
-    "id":"sumaq17","name":"SumaQ on 17th","status":"registered","jurisdiction":["Canada","Alberta"],"publicUrl":"https://sumaq17.com/","repo":"","hosting":"Netlify","database":"Supabase","focus":["reservations","mobile-UX","conversion","visual-quality","SEO"],"approvalPolicy":"human-per-change"
-  },
-  {
-    "id":"rowshan","name":"Rowshan Moving Company","status":"registered","jurisdiction":["Canada"],"publicUrl":"","repo":"rowshanglobal","hosting":"Netlify","database":"Supabase","focus":["booking","reviews","local-SEO","conversion","performance"],"approvalPolicy":"human-per-change"
-  },
-  {
-    "id":"lottus","name":"Lottus Services","status":"registered","jurisdiction":["Canada","Alberta"],"publicUrl":"https://lottusservices.ca/","repo":"lottusservices","hosting":"Netlify","database":"","focus":["lead-generation","local-SEO","conversion","performance","competitive-positioning"],"approvalPolicy":"human-per-change"
-  }
-]
+{
+  "version": "1.2",
+  "activePilot": "please",
+  "portals": [
+    {
+      "id": "please",
+      "name": "P.L.E.A.S.E.",
+      "status": "ACTIVE_PILOT",
+      "repository": "AdrianAlbertoMoraSinning/Please",
+      "branch": "main",
+      "url": "https://pleasewebportal.netlify.app/",
+      "market": "Calgary and surrounding areas, Alberta, Canada",
+      "jurisdiction": "Alberta, Canada",
+      "business": "multi-service local services marketplace and operations portal"
+    },
+    {
+      "id": "kinetica",
+      "name": "KineticaPlus",
+      "status": "REGISTERED"
+    },
+    {
+      "id": "vgc",
+      "name": "Groupe VGC",
+      "status": "REGISTERED"
+    },
+    {
+      "id": "sumaq",
+      "name": "SumaQ on 17th",
+      "status": "REGISTERED"
+    },
+    {
+      "id": "rowshan",
+      "name": "Rowshan Moving",
+      "status": "REGISTERED"
+    },
+    {
+      "id": "strata",
+      "name": "Strata Drilling",
+      "status": "REGISTERED"
+    },
+    {
+      "id": "lottus",
+      "name": "Lottus Services",
+      "status": "REGISTERED"
+    }
+  ]
+}

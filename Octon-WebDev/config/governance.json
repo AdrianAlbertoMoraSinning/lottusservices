@@ -1,0 +1,18 @@
+{
+  "version": "1.2",
+  "rules": {
+    "autonomousResearch": true,
+    "autonomousAudit": true,
+    "autonomousRecommendation": true,
+    "autonomousCodeGeneration": true,
+    "autonomousTesting": true,
+    "githubCommitPushRequiresExactApproval": true,
+    "productionWritesRequireExactApproval": true,
+    "legalComplianceFindingsRequireHumanReview": true,
+    "useRealCustomerTransactionsForTesting": false,
+    "useCustomerPrivateDataForExternalResearch": false
+  },
+  "requiredSafeState": {
+    "OCTON_GITHUB_WRITE_ENABLED": "false"
+  }
+}

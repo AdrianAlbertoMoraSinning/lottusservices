@@ -1,60 +1,65 @@
-# Octon v1.1
+# Octon v1.2 — Integrated Live Research, Code Health & Runtime Review
 
-**Octon** is Lottus' supervised Web Development AI Agent: a control center for continuously reviewing and improving web portals while keeping final production authority with Adrian.
+Octon is Lottus' supervised Web Development AI Agent.
 
-## What this ZIP already contains
+## v1.2 changes the dashboard itself
 
-- Responsive Octon dashboard.
-- Registry for PLEASE plus the currently known Lottus web-development portfolio.
-- PLEASE configured as the first pilot.
-- Baseline multi-dimension audit endpoint.
-- Finding queue and governance model.
-- Signed, expiring approval tokens bound to an exact code-change hash.
-- GitHub file writer that refuses to run unless BOTH the global write switch is enabled and a matching approval exists.
-- Supabase schema for audit history, findings, changes, approvals and deployments.
-- Netlify configuration and environment template.
-- Architecture, GitHub setup and roadmap documentation.
+`Run PLEASE review` now orchestrates the actual live engines instead of a demo baseline:
 
-## Important v1.0 distinction
+- GitHub read-only repository inspection;
+- source-code health / bug-risk review;
+- production runtime smoke verification;
+- portal/SEO/security-header snapshot;
+- Google PageSpeed Insights / Lighthouse categories;
+- current technical standards research;
+- current market and competitor research;
+- regulatory/compliance issue spotting by jurisdiction;
+- traceable findings with evidence, severity, operational impact, commercial impact, recommendation, affected files when known, proposed fix, tests, rollback, confidence and sources.
 
-The control plane and GitHub safety mechanism are implemented. Live autonomous web/repository/market/legal research is the next connector layer and is intentionally not faked in this release. The dashboard labels the first review as a baseline until those connectors are configured.
+The dashboard visibly reports **Octon v1.2**.
 
-## Deploy to GitHub / Netlify
+## Safety rule
 
-1. Create a new GitHub repository named `Octon` (recommended).
-2. Upload the entire contents of this ZIP to the repository root.
-3. Create a new Netlify site from that repository.
-4. No custom build command is required for the frontend.
-5. Configure `OCTON_APPROVAL_SECRET` first.
-6. Leave `OCTON_GITHUB_WRITE_ENABLED=false` until GitHub integration testing.
-7. Add GitHub credentials only when ready to connect PLEASE.
-8. Optional: deploy `supabase/schema.sql` to a dedicated Octon Supabase project for persistent audit history.
+Keep `OCTON_GITHUB_WRITE_ENABLED=false`.
 
-## GitHub manual upload note
+Octon may research, audit, diagnose, recommend, generate code and tests autonomously. Commit/push remains blocked until an exact change hash is approved and the global write switch is deliberately enabled later.
 
-For the FIRST upload, upload the complete ZIP contents.
+## Required Netlify environment variables
 
-For future Octon updates, normally only upload files explicitly listed in that release's update instructions. Never re-upload `node_modules`, `.netlify`, `.env` or local logs.
+Already required:
+- `GITHUB_TOKEN`
+- `OCTON_APPROVAL_SECRET`
+- `OCTON_GITHUB_WRITE_ENABLED=false`
 
-## Local verification
+For live web research:
+- `OPENAI_API_KEY`
+- recommended `OCTON_RESEARCH_MODEL=gpt-5.6-terra`
 
-With Node 20+ installed:
+Optional for frequent PageSpeed automation:
+- `GOOGLE_PAGESPEED_API_KEY`
 
-```bash
-npm install
-npm run check
-npm run dev
-```
+PLEASE defaults are built in, but can be overridden:
+- `OCTON_GITHUB_OWNER=AdrianAlbertoMoraSinning`
+- `OCTON_GITHUB_REPO=Please`
+- `OCTON_GITHUB_BRANCH=main`
+- `OCTON_PORTAL_URL=https://pleasewebportal.netlify.app/`
+- `OCTON_PORTAL_MARKET=Calgary and surrounding areas, Alberta, Canada`
+- `OCTON_PORTAL_JURISDICTION=Alberta, Canada`
 
-## Core rule
+## Main endpoints
+- `/api/github-read`
+- `/api/code-health`
+- `/api/runtime-health`
+- `/api/portal-snapshot`
+- `/api/pagespeed-audit`
+- `/api/research-review`
+- `/api/live-review`
+- `/api/change-hash`
+- `/api/approval-token`
+- `/api/github-write`
 
-**Octon may research, audit, recommend, generate and test autonomously. It may not write an approved portal change to GitHub unless Adrian explicitly approves that exact change.**
+## Important limitations
 
+Static analysis is heuristic. Runtime smoke checks do not exercise authenticated workflows. The next testing layer should add controlled synthetic end-to-end tests with dedicated test accounts and non-production transaction modes.
 
-## v1.1 GitHub read-only connector
-
-- Adds `/api/github-read` for live, server-side inspection of the whitelisted PLEASE repository.
-- Uses `GITHUB_TOKEN` only inside the Netlify Function; the token is never sent to the browser.
-- Reports repository metadata, default branch, file/directory counts, extension mix and a bounded file sample.
-- Does not create, edit, delete, merge, commit or push anything.
-- `OCTON_GITHUB_WRITE_ENABLED=false` remains the required safe state during this phase.
+Regulatory findings are issue spotting for human/legal review, not a legal compliance certification.

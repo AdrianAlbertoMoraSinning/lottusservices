@@ -1,0 +1,5 @@
+{
+  "version": "1.2",
+  "demoFindings": [],
+  "note": "v1.2 does not substitute demo findings for failed live connectors."
+}
