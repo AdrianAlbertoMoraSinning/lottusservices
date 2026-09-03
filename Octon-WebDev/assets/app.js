@@ -30,3 +30,18 @@ $('#runAudit').addEventListener('click', async ()=>{
 });
 
 loadData().catch(()=>toast('Could not load local Octon registry.'));
+
+
+const githubBtn = $('#testGithub');
+if(githubBtn){
+  githubBtn.addEventListener('click', async ()=>{
+    githubBtn.disabled=true; const old=githubBtn.textContent; githubBtn.textContent='Connecting…';
+    try{
+      const res=await fetch('/api/github-read',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({portalId:'please'})});
+      const data=await res.json();
+      if(!res.ok) throw new Error(data.detail||data.error||'GitHub read test failed');
+      toast(`GitHub connected: ${data.repository} · ${data.fileCount} files · READ ONLY`);
+      console.info('Octon GitHub read-only inspection',data);
+    }catch(e){toast(e.message)}finally{githubBtn.disabled=false;githubBtn.textContent=old;}
+  });
+}

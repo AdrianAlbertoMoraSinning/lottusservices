@@ -1,4 +1,4 @@
-# Octon v1.0
+# Octon v1.1
 
 **Octon** is Lottus' supervised Web Development AI Agent: a control center for continuously reviewing and improving web portals while keeping final production authority with Adrian.
 
@@ -49,3 +49,12 @@ npm run dev
 ## Core rule
 
 **Octon may research, audit, recommend, generate and test autonomously. It may not write an approved portal change to GitHub unless Adrian explicitly approves that exact change.**
+
+
+## v1.1 GitHub read-only connector
+
+- Adds `/api/github-read` for live, server-side inspection of the whitelisted PLEASE repository.
+- Uses `GITHUB_TOKEN` only inside the Netlify Function; the token is never sent to the browser.
+- Reports repository metadata, default branch, file/directory counts, extension mix and a bounded file sample.
+- Does not create, edit, delete, merge, commit or push anything.
+- `OCTON_GITHUB_WRITE_ENABLED=false` remains the required safe state during this phase.
