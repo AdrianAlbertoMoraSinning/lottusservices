@@ -1,0 +1,35 @@
+[
+  {
+    "id": "OCT-DEMO-001",
+    "portalId": "please",
+    "category": "Conversion",
+    "severity": "medium",
+    "title": "Strengthen service-to-quote conversion path",
+    "summary": "Audit service pages for a consistent primary CTA, trust proof and friction reduction before quote submission.",
+    "status": "proposed",
+    "risk": "low",
+    "impact": "high"
+  },
+  {
+    "id": "OCT-DEMO-002",
+    "portalId": "please",
+    "category": "Performance",
+    "severity": "low",
+    "title": "Image delivery optimization review",
+    "summary": "Check responsive image sizing, lazy loading and modern formats across high-traffic pages.",
+    "status": "proposed",
+    "risk": "low",
+    "impact": "medium"
+  },
+  {
+    "id": "OCT-DEMO-003",
+    "portalId": "please",
+    "category": "Governance",
+    "severity": "high",
+    "title": "Enforce approval gate before repository writes",
+    "summary": "Every code-changing action must carry a unique approval record tied to a diff, repository and commit intent.",
+    "status": "required",
+    "risk": "critical",
+    "impact": "high"
+  }
+]

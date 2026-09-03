@@ -1,0 +1,17 @@
+{
+  "name": "octon-webdev-ai-agent",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Octon - supervised AI agent for continuous web portal improvement",
+  "scripts": {
+    "dev": "netlify dev",
+    "check": "node scripts/check.mjs"
+  },
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.57.0"
+  },
+  "devDependencies": {
+    "netlify-cli": "^23.5.0"
+  }
+}

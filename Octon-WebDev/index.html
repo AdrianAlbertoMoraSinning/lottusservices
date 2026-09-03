@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b1020" />
+  <title>Octon | Web Development AI Agent</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/assets/styles.css" />
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="mark">O</div>
+        <div><strong>Octon</strong><span>WebDev AI Agent</span></div>
+      </div>
+      <nav>
+        <button class="nav active" data-view="dashboard">Overview</button>
+        <button class="nav" data-view="portals">Portals</button>
+        <button class="nav" data-view="findings">Findings</button>
+        <button class="nav" data-view="approvals">Approvals</button>
+        <button class="nav" data-view="governance">Governance</button>
+      </nav>
+      <div class="sidebar-note">
+        <span class="dot green"></span>
+        Human approval required for production writes
+      </div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Continuous improvement control center</p>
+          <h1>Octon v1.0</h1>
+        </div>
+        <button id="runAudit" class="primary">Run PLEASE review</button>
+      </header>
+
+      <section id="dashboard" class="view active-view">
+        <div class="hero card">
+          <div>
+            <span class="pill">PILOT</span>
+            <h2>P.L.E.A.S.E. is the first monitored portal</h2>
+            <p>Octon is designed to inspect technology, UX, conversion, security, privacy, accessibility, SEO and competitive positioning—then propose improvements for approval.</p>
+          </div>
+          <div class="score-wrap">
+            <div class="score" id="score">--</div>
+            <span>Current review score</span>
+          </div>
+        </div>
+
+        <div class="grid metrics">
+          <article class="card"><span>Registered portals</span><strong id="portalCount">1</strong><small>PLEASE active pilot</small></article>
+          <article class="card"><span>Open findings</span><strong id="findingCount">3</strong><small>Demo baseline until first live audit</small></article>
+          <article class="card"><span>Pending approvals</span><strong id="pendingCount">0</strong><small>No code is applied without approval</small></article>
+          <article class="card"><span>Write access</span><strong id="writeStatus">OFF</strong><small>Safe by default</small></article>
+        </div>
+
+        <div class="grid two">
+          <article class="card">
+            <div class="section-head"><div><p class="eyebrow">Operating loop</p><h3>How Octon works</h3></div></div>
+            <ol class="flow">
+              <li><b>Observe</b><span>Portal, repository, market, standards and applicable rules.</span></li>
+              <li><b>Diagnose</b><span>Detect technical, visual, commercial and compliance gaps.</span></li>
+              <li><b>Design</b><span>Create a proposed change with impact, risk, tests and rollback.</span></li>
+              <li><b>Approve</b><span>Adrian authorizes the exact proposed change.</span></li>
+              <li><b>Apply</b><span>Commit to GitHub; existing deployment pipeline takes over.</span></li>
+              <li><b>Verify</b><span>Re-check production and preserve audit history.</span></li>
+            </ol>
+          </article>
+
+          <article class="card">
+            <div class="section-head"><div><p class="eyebrow">Safety model</p><h3>Authorization boundaries</h3></div></div>
+            <div class="rule"><span>Research</span><b class="yes">Autonomous</b></div>
+            <div class="rule"><span>Audit & recommendations</span><b class="yes">Autonomous</b></div>
+            <div class="rule"><span>Generate code & tests</span><b class="yes">Autonomous</b></div>
+            <div class="rule"><span>Commit/push to GitHub</span><b class="warn">Approval required</b></div>
+            <div class="rule"><span>Production deployment</span><b class="warn">Via approved GitHub change</b></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="portals" class="view">
+        <article class="card">
+          <div class="section-head"><div><p class="eyebrow">Registry</p><h2>Managed portals</h2></div></div>
+          <div id="portalTable"></div>
+        </article>
+      </section>
+
+      <section id="findings" class="view">
+        <article class="card">
+          <div class="section-head"><div><p class="eyebrow">Improvement queue</p><h2>Findings</h2></div></div>
+          <div id="findingList"></div>
+        </article>
+      </section>
+
+      <section id="approvals" class="view">
+        <article class="card">
+          <div class="section-head"><div><p class="eyebrow">Human gate</p><h2>Approvals</h2></div></div>
+          <p class="muted">Approval records are bound to a portal, repository, exact change payload and timestamp. The GitHub writer rejects unapproved requests.</p>
+          <div id="approvalList" class="empty">No pending approvals yet.</div>
+        </article>
+      </section>
+
+      <section id="governance" class="view">
+        <div class="grid two">
+          <article class="card"><p class="eyebrow">Principle 01</p><h3>Human authority</h3><p>Octon recommends and prepares. Repository writes require an explicit, specific approval.</p></article>
+          <article class="card"><p class="eyebrow">Principle 02</p><h3>Least privilege</h3><p>GitHub credentials should be fine-grained and limited to repositories Octon is allowed to manage.</p></article>
+          <article class="card"><p class="eyebrow">Principle 03</p><h3>Evidence before change</h3><p>Every proposal should include why the change matters, expected impact, risk, test plan and rollback path.</p></article>
+          <article class="card"><p class="eyebrow">Principle 04</p><h3>Client separation</h3><p>Portal-specific credentials and client data remain segregated. Octon stores control metadata, not pooled client operational data.</p></article>
+        </div>
+      </section>
+    </main>
+  </div>
+  <div id="toast" class="toast"></div>
+  <script src="/assets/app.js" type="module"></script>
+</body>
+</html>
