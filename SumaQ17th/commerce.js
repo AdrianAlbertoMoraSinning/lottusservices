@@ -6,6 +6,8 @@ const pendingKey='sumaqPendingCommerceOrder';
 let items=[];
 let cart=read(cartKey,[]);
 let officialMenu=null;
+const initialCategory=new URLSearchParams(location.search).get('category');
+let initialCategoryApplied=false;
 function read(k,f){try{return JSON.parse(localStorage.getItem(k)||JSON.stringify(f))}catch{return f}}
 function write(k,v){localStorage.setItem(k,JSON.stringify(v))}
 function money(v){return new Intl.NumberFormat('en-CA',{style:'currency',currency:'CAD'}).format(Number(v)||0)}
@@ -19,7 +21,17 @@ function lineName(l,i){return l.variantName?`${i.name} — ${l.variantName}`:i.n
 function subtotal(){return cart.reduce((s,l)=>{const i=find(l.id);return s+(i?linePrice(l,i)*Number(l.qty||0):0)},0)}
 function setStatus(text,error=false){const el=document.getElementById('checkoutMsg');if(el){el.textContent=text;el.classList.toggle('error',error)}}
 async function loadOfficialMenu(){if(mode!=='pickup')return null;try{const r=await fetch('assets/data/official-menu-jan-2026.json',{cache:'no-store'});if(!r.ok)throw new Error('Official menu data unavailable.');officialMenu=await r.json();return officialMenu}catch(error){console.error(error);return null}}
-function addOfficialMetadata(dbItems){if(mode!=='pickup'||!officialMenu?.food)return dbItems;const byId=new Map(officialMenu.food.map(i=>[i.id,i]));return dbItems.map(item=>{const o=byId.get(item.id);return o?{...item,variants:o.variants||null,optionText:o.optionText||''}:item})}
+function mergeOfficialCatalog(dbItems){
+  if(mode!=='pickup'||!officialMenu?.food)return dbItems||[];
+  const central=new Map((dbItems||[]).map(item=>[item.id,item]));
+  const merged=officialMenu.food.map(o=>{
+    const c=central.get(o.id);central.delete(o.id);
+    if(!c)return {...o,active:true};
+    return {...o,...c,category:o.category,image:c.image||o.image||'',variants:o.variants||null,optionText:o.optionText||'',sortOrder:Number(o.sortOrder??c.sortOrder??0),active:true};
+  });
+  central.forEach(item=>{if(item.active!==false&&item.category!=='__system')merged.push(item)});
+  return merged.sort((a,b)=>Number(a.sortOrder||0)-Number(b.sortOrder||0)||String(a.name).localeCompare(String(b.name)));
+}
 function officialFallback(){return (officialMenu?.food||window.SUMAQ_CATALOGS?.pickup||[]).map(i=>({...i,active:true}))}
 function ensureDialog(){let d=document.getElementById('productDetailDialog');if(d)return d;d=document.createElement('dialog');d.id='productDetailDialog';d.className='product-detail-dialog';d.innerHTML='<div id="productModalContent"></div>';document.body.appendChild(d);d.addEventListener('click',e=>{if(e.target===d)d.close()});return d}
 function openProduct(id){
@@ -39,9 +51,24 @@ function openProduct(id){
 function renderMenu(){
   const root=document.getElementById('catalog');if(!root)return;
   if(!items.length){root.innerHTML='<div class="catalog-error"><h3>Menu temporarily unavailable</h3><p>The central catalogue could not be loaded.</p></div>';return}
-  const cats=[...new Set(items.map(i=>i.category))];const q=new URLSearchParams(location.search).get('category');if(q&&cats.includes(q))root.dataset.category=q;const selected=root.dataset.category||'All';const visible=selected==='All'?items:items.filter(i=>i.category===selected);
+  const cats=[...new Set(items.map(i=>i.category))];
+  if(!initialCategoryApplied){
+    if(initialCategory&&cats.includes(initialCategory))root.dataset.category=initialCategory;
+    initialCategoryApplied=true;
+  }
+  const selected=root.dataset.category||'All';const visible=selected==='All'?items:items.filter(i=>i.category===selected);
   root.innerHTML='<div class="category-filter" style="grid-column:1/-1">'+['All',...cats].map(c=>`<button type="button" class="${selected===c?'active':''}" data-category="${esc(c)}">${esc(c)}</button>`).join('')+'</div>'+visible.map(i=>`<article class="product-card" tabindex="0" role="button" data-product-id="${esc(i.id)}" aria-label="View ${esc(i.name)}">${itemImage(i,'loading="lazy"')}<div class="product-copy"><span class="eyebrow">${esc(i.category)}</span><h3>${esc(i.name)}</h3><p>${esc(i.description)}</p>${i.optionText?`<p class="product-option-note compact">${esc(i.optionText)}</p>`:''}<div class="product-meta"><strong>${priceLabel(i)}</strong><small>per ${esc(i.unit)}</small></div></div></article>`).join('');
-  root.querySelectorAll('[data-category]').forEach(b=>b.onclick=e=>{e.stopPropagation();root.dataset.category=b.dataset.category;renderMenu()});root.querySelectorAll('[data-product-id]').forEach(card=>{card.onclick=()=>openProduct(card.dataset.productId);card.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openProduct(card.dataset.productId)}}});if(location.hash==='#catalog'){requestAnimationFrame(()=>root.scrollIntoView({block:'start',behavior:'auto'}));}
+  root.querySelectorAll('[data-category]').forEach(b=>b.onclick=e=>{
+    e.stopPropagation();
+    const next=b.dataset.category;
+    root.dataset.category=next;
+    const url=new URL(location.href);
+    if(next==='All')url.searchParams.delete('category');else url.searchParams.set('category',next);
+    url.hash='catalog';
+    history.replaceState({},'',url.pathname+(url.search||'')+url.hash);
+    renderMenu();
+  });
+  root.querySelectorAll('[data-product-id]').forEach(card=>{card.onclick=()=>openProduct(card.dataset.productId);card.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openProduct(card.dataset.productId)}}});if(location.hash==='#catalog'){requestAnimationFrame(()=>root.scrollIntoView({block:'start',behavior:'auto'}));}
 }
 function renderCart(){
   const root=document.getElementById('cartItems');const count=cart.reduce((s,l)=>s+Number(l.qty||0),0);document.querySelectorAll('[data-cart-count]').forEach(n=>n.textContent=count);if(!root)return;
@@ -56,8 +83,8 @@ async function init(){
     if(!window.SumaQData?.configured)throw new Error('Central catalogue is not configured.');
     let syncOk=true;
     if(mode==='pickup')try{await SumaQData.callFunction('ensure-menu-jan-2026',{});}catch(error){syncOk=false;console.warn('Official menu sync could not run; using bundled official menu.',error)}
-    try{items=addOfficialMetadata(await SumaQData.catalog(mode));}catch(error){if(mode==='pickup'&&officialMenu){items=officialFallback();}else throw error;}
-    if(mode==='pickup'&&!syncOk)items=officialFallback();
+    try{items=mergeOfficialCatalog(await SumaQData.catalog(mode));}catch(error){if(mode==='pickup'&&officialMenu){items=officialFallback();}else throw error;}
+    if(mode==='pickup'&&!syncOk)items=mergeOfficialCatalog(items);
     cart=cart.filter(l=>find(l.id));write(cartKey,cart);
     renderMenu();renderCart();setupMobileCart();const params=new URLSearchParams(location.search);if(params.get('payment')==='success'){setStatus(`Demo payment approved. Order ${params.get('order')||''} is confirmed and shared with SumaQ.`);history.replaceState({},'',location.pathname)}
   }catch(err){console.error(err);renderMenu();setStatus(err.message,true)}

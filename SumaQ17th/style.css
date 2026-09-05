@@ -1411,3 +1411,75 @@ body[data-commerce] .cart-row>.product-image-placeholder{width:54px!important;he
   .page-about .about-divider h2{font-size:1.24rem!important}
   .page-about .about-divider.closing{min-height:92px!important}
 }
+
+
+/* ================================================================
+   CLIENT ROUND — 2026-09-05
+   Scope: Home crop fidelity, Desserts red strip left bleed,
+   redirected Pickup filter navigation, and About text refinement.
+   ================================================================ */
+
+/* HOME — reproduce the original panoramic crop from the approved design.
+   Keep the high-resolution source image; only the viewport/crop changes. */
+@media(min-width:901px){
+  .page-index .home-at-home-reference{
+    min-height:0!important;
+    height:auto!important;
+    aspect-ratio:1441/501!important;
+    overflow:hidden!important;
+  }
+  .page-index .home-at-home-reference>img{
+    width:100%!important;
+    height:100%!important;
+    object-fit:cover!important;
+    object-position:center 22%!important;
+  }
+}
+@media(max-width:900px){
+  .page-index .home-at-home-reference>img{
+    object-fit:cover!important;
+    object-position:center 28%!important;
+  }
+}
+
+/* MENU / DESSERTS — the red statement begins flush at the left viewport edge,
+   while preserving its existing height, copy and right endpoint. */
+@media(min-width:761px){
+  .page-menu .menu-ref-dessert .wine-strip{
+    position:relative!important;
+    left:calc(-1 * clamp(46px,5vw,78px))!important;
+    width:calc(100% + clamp(46px,5vw,78px))!important;
+    margin-right:0!important;
+    border-radius:0!important;
+  }
+}
+@media(max-width:760px){
+  .page-menu .menu-ref-dessert .wine-strip{
+    position:relative!important;
+    left:-28px!important;
+    width:calc(100% + 28px)!important;
+    margin-right:0!important;
+    border-radius:0!important;
+  }
+}
+
+/* ABOUT — slightly quieter white copy with more breathing room from the image.
+   Mobile is deliberately restrained so the copy no longer becomes oversized. */
+@media(min-width:761px){
+  .page-about .about-cell.copy{
+    padding:clamp(30px,3.7vw,56px) clamp(40px,4.6vw,70px)!important;
+  }
+  .page-about .about-cell.copy p{
+    font-size:clamp(1.08rem,1.18vw,1.28rem)!important;
+    line-height:1.42!important;
+  }
+}
+@media(max-width:760px){
+  .page-about .about-cell.copy{
+    padding:30px 26px!important;
+  }
+  .page-about .about-cell.copy p{
+    font-size:clamp(1rem,4.3vw,1.10rem)!important;
+    line-height:1.42!important;
+  }
+}
