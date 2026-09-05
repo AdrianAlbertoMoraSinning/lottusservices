@@ -1593,3 +1593,35 @@ body[data-commerce] .cart-row>.product-image-placeholder{width:54px!important;he
     font-size:.9rem!important;
   }
 }
+
+
+/* ================================================================
+   HOME HERO VIDEO — FINAL CLIENT ASSETS — 2026-09-05
+   A single video element loads only the client edit appropriate to
+   the viewport: 16:9 for desktop/tablet and 4:5 for mobile.
+   No overlays, labels, buttons or native video controls.
+   The previous hero image remains only as a poster/fallback.
+   ================================================================ */
+.page-index .home-video-stage{
+  width:100%!important;
+  background:#000!important;
+  overflow:hidden!important;
+  line-height:0!important;
+}
+.page-index .home-video-stage .home-hero-video{
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  aspect-ratio:16/9!important;
+  border:0!important;
+  margin:0!important;
+  padding:0!important;
+  background:#000!important;
+  object-fit:cover!important;
+  object-position:center center!important;
+}
+@media(max-width:900px){
+  .page-index .home-video-stage .home-hero-video{
+    aspect-ratio:4/5!important;
+  }
+}
