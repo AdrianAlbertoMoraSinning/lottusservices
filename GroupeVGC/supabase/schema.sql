@@ -254,6 +254,19 @@ alter table public.reviews enable row level security;
 alter table public.invoices enable row level security;
 alter table public.invoice_items enable row level security;
 
+drop policy if exists "public active services" on public.services;
+drop policy if exists "public visible reviews" on public.reviews;
+drop policy if exists "public settings read" on public.settings;
+drop policy if exists "admins admin_users" on public.admin_users;
+drop policy if exists "admins settings" on public.settings;
+drop policy if exists "admins services" on public.services;
+drop policy if exists "admins bookings" on public.bookings;
+drop policy if exists "admins booking_items" on public.booking_items;
+drop policy if exists "admins availability" on public.availability_blocks;
+drop policy if exists "admins reviews" on public.reviews;
+drop policy if exists "admins invoices" on public.invoices;
+drop policy if exists "admins invoice_items" on public.invoice_items;
+
 -- Public data: only active services, visible reviews, and safe settings.
 create policy "public active services" on public.services for select to anon using (active=true);
 create policy "public visible reviews" on public.reviews for select to anon using (visible=true);

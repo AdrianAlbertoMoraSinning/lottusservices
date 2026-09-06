@@ -8,7 +8,7 @@ const defaults=[
 {id:'entretien',name:'Entretien et soutien sur place',category:'Entretien',description:'Services d’entretien et aide générale sur place, selon les besoins confirmés.',price:0,unit:'heure',minimum:1,image:'assets/service-packing.webp',active:true,sort_order:60}
 ];
 let servicesCache=null,settingsCache={gst_rate:5,business_hours:'24/7'};
-function money(n){return new Intl.NumberFormat('fr-CA',{style:'currency',currency:'CAD'}).format(Number(n||0))}
+function money(n){const locale=window.VGCI18N?.locale?.()||'fr-CA';return new Intl.NumberFormat(locale,{style:'currency',currency:'CAD'}).format(Number(n||0))}
 function escapeHtml(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
 async function getSettings(){if(!window.RBMData?.configured())return settingsCache;try{const a=await RBMData.table.get('settings','id=eq.1&select=*');if(a?.[0])settingsCache=a[0]}catch(e){}return settingsCache}
 async function getServices({includeInactive=false}={}){if(servicesCache&&!includeInactive)return servicesCache;if(!window.RBMData?.configured())return defaults.filter(x=>includeInactive||x.active);try{const rows=await RBMData.table.get('services',`select=id,name,category,description,price,unit,minimum,image,active,sort_order&order=sort_order.asc${includeInactive?'':'&active=eq.true'}`);if(!includeInactive)servicesCache=rows;return rows}catch(e){return defaults.filter(x=>includeInactive||x.active)}}

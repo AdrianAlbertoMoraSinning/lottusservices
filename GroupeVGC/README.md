@@ -24,3 +24,13 @@ Tous les fichiers sont déjà inclus dans `/assets` et référencés dans les pa
 
 ## Tarifs
 Aucun tarif commercial n’a été inventé. Les services sont affichés « Sur devis ». Le schéma accepte initialement des prix à 0; l’administrateur pourra saisir les tarifs réels lorsqu’ils seront confirmés.
+
+## V12 — Portail multilingue
+Le portail prend en charge trois langues sur l’ensemble de l’interface actuelle :
+- Français (FR) — langue par défaut
+- English (EN)
+- Español (ES)
+
+Le sélecteur de langue est affiché dans l’en-tête. Le choix est mémorisé dans le navigateur (`localStorage`) et reste actif pendant la navigation entre les pages. Les valeurs techniques utilisées par Supabase (statuts, formulaires et facturation) restent stables indépendamment de la langue affichée.
+
+Le moteur multilingue est centralisé dans `i18n.js`. Les services standards actuels sont également traduits. Les contenus libres saisis ultérieurement par un administrateur ou provenant de tiers (par exemple un nouvel avis ou un nouveau service personnalisé) restent dans la langue dans laquelle ils ont été saisis, sauf si une traduction correspondante est ajoutée au moteur.

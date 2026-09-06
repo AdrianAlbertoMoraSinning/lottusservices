@@ -30,3 +30,7 @@ Remplacer dans `GroupeVGC` :
 - `DEPLOY_GITHUB.md`
 
 Si `supabase-config.js` n'a pas encore été remplacé par la version connectée, le remplacer également.
+
+
+## Mise à jour design réservation v11
+Remplacer: `booking.html`, `booking.js`, `style.css`.

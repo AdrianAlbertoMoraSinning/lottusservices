@@ -841,3 +841,57 @@ td{
 .no-payment-note{position:relative;padding:16px 16px 16px 42px;background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.12);line-height:1.5}.no-payment-note::before{content:"✓";position:absolute;left:16px;top:16px;color:#a8d6a3;font-weight:950}.buyer-cart .muted-light{line-height:1.6;color:#d3dee6}
 @media(max-width:900px){.booking-layout{grid-template-columns:1fr;padding:34px 20px 70px}.cart-panel.buyer-cart{position:static;order:2}.time-slots{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:620px){.booking-hero{padding:52px 20px 46px}.booking-hero h1{font-size:clamp(2.5rem,12vw,3.5rem)}.booking-trust{display:grid}.booking-trust span{width:max-content;max-width:100%}.form-section{padding:20px 17px;border-radius:19px}.form-grid{grid-template-columns:1fr}.booking-service-option{grid-template-columns:1fr}.service-hours{padding-left:34px!important}.time-slots{grid-template-columns:repeat(2,1fr)}.step-heading>span{width:42px;height:42px;flex-basis:42px}.step-heading h2{font-size:1.25rem}}
+
+/* V12 multilingual selector: French / English / Spanish */
+.language-switcher{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  flex:0 0 auto;
+  padding:5px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:#fff;
+  box-shadow:0 6px 18px rgba(23,50,77,.08);
+}
+.language-switcher .language-icon{
+  display:grid;
+  place-items:center;
+  width:26px;
+  height:26px;
+  font-size:.9rem;
+}
+.language-switcher button{
+  appearance:none;
+  border:0;
+  background:transparent;
+  color:var(--dark);
+  min-width:34px;
+  height:30px;
+  padding:0 8px;
+  border-radius:999px;
+  font:inherit;
+  font-size:.74rem;
+  font-weight:900;
+  letter-spacing:.04em;
+  cursor:pointer;
+}
+.language-switcher button:hover,
+.language-switcher button:focus-visible{
+  background:var(--soft);
+  outline:none;
+}
+.language-switcher button.active{
+  background:var(--dark);
+  color:#fff;
+}
+@media(max-width:1120px){
+  .site-header{gap:10px}
+  .language-switcher{margin-left:auto}
+}
+@media(max-width:520px){
+  .language-switcher{gap:2px;padding:4px}
+  .language-switcher .language-icon{display:none}
+  .language-switcher button{min-width:30px;height:28px;padding:0 6px;font-size:.7rem}
+}
+@media print{.language-switcher{display:none!important}}
