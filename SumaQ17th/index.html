@@ -13,12 +13,12 @@
 <meta content="yes" name="apple-mobile-web-app-capable"/>
 <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
 <meta content="SumaQ" name="apple-mobile-web-app-title"/>
-<link href="style.css?v=20260905r4" rel="stylesheet"/></head><body class="designer-page page-index"><header class="topbar" id="top"><a aria-label="SumaQ on 17th home" class="brand" href="index.html"><img alt="SumaQ on 17th" src="assets/sumaq-logo-white.png"/></a><button aria-label="Open menu" class="menu-toggle" type="button">☰</button><nav aria-label="Main navigation" class="nav-links"><a class="active" href="index.html">Home</a><a href="menu.html">Menu</a><a href="reservations.html">Reservations</a><a href="private-events.html">Private Events</a><a href="order-pickup.html">Pickup</a><a href="shop.html">Shop</a><a href="delivery.html">Delivery</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav></header><main class="modular-main home-reference-final">
+<link href="style.css?v=20260906r1" rel="stylesheet"/></head><body class="designer-page page-index"><header class="topbar" id="top"><a aria-label="SumaQ on 17th home" class="brand" href="index.html"><img alt="SumaQ on 17th" src="assets/sumaq-logo-white.png"/></a><button aria-label="Open menu" class="menu-toggle" type="button">☰</button><nav aria-label="Main navigation" class="nav-links"><a class="active" href="index.html">Home</a><a href="menu.html">Menu</a><a href="reservations.html">Reservations</a><a href="private-events.html">Private Events</a><a href="order-pickup.html">Pickup</a><a href="shop.html">Shop</a><a href="delivery.html">Delivery</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav></header><main class="modular-main home-reference-final">
 <section aria-label="Sumaq culinary experience" class="home-video-stage">
-<video aria-label="Sumaq culinary experience" autoplay class="home-hero-video" data-mobile-src="assets/video/hero-sumaq-mobile.mp4" data-web-src="assets/video/hero-sumaq-web.mp4" loop playsinline poster="assets/client-photos/home-hero.webp" preload="metadata"></video>
-<button aria-label="Turn on video sound" class="home-video-sound" hidden title="Turn on sound" type="button">
-<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4Z" fill="currentColor"></path><path d="M16.2 8.1a5.4 5.4 0 0 1 0 7.8M18.8 5.7a8.8 8.8 0 0 1 0 12.6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.9"></path><path d="m17.3 16.7 4-4m0 4-4-4" class="sound-block-mark" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path></svg>
-</button>
+<video aria-label="Sumaq culinary experience" autoplay class="home-hero-video" loop muted playsinline poster="assets/client-photos/home-hero.webp" preload="metadata">
+<source media="(max-width: 900px)" src="assets/video/hero-sumaq-mobile.mp4" type="video/mp4"/>
+<source src="assets/video/hero-sumaq-web.mp4" type="video/mp4"/>
+</video>
 </section>
 <section class="home-heart-reference">
 <div class="home-ref-photo"><img alt="SumaQ shrimp and quinoa dish" src="assets/menu-1920/inka-salad.webp"/></div>
@@ -43,86 +43,4 @@
 <a class="design-btn wine home-order-now" href="delivery.html">Order Now</a>
 </div>
 </section>
-</main><footer class="footer editorial-footer footer-reference"><div class="footer-left"><a class="footer-logo-lockup" href="index.html"><img alt="SumaQ on 17th" src="assets/sumaq-logo-white-footer.png"/></a><div class="footer-follow"><span>Follow us</span><div class="footer-social-row"><a aria-label="Instagram" href="https://www.instagram.com/sumaqon17th/" rel="noopener" target="_blank"><svg class="social-icon" viewbox="0 0 24 24"><rect fill="none" height="18" rx="5" stroke="currentColor" stroke-width="2" width="18" x="3" y="3"></rect><circle cx="12" cy="12" fill="none" r="4" stroke="currentColor" stroke-width="2"></circle><circle cx="17.4" cy="6.7" fill="currentColor" r="1.2"></circle></svg></a><a aria-label="Facebook" href="https://www.facebook.com/sumaqon17th" rel="noopener" target="_blank"><svg class="social-icon" viewbox="0 0 24 24"><path d="M13.7 22v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5H17V4.6c-.5-.1-1.4-.2-2.5-.2-2.5 0-4.2 1.5-4.2 4.3v2.2H7.5V14h2.8v8h3.4Z" fill="currentColor"></path></svg></a></div></div></div><div aria-hidden="true" class="footer-rule"></div><nav aria-label="Footer navigation" class="footer-nav"><a href="menu.html">Menu</a><a href="delivery.html">Delivery</a><a href="reservations.html">Reservations</a><a href="private-events.html">Private Events</a><a href="contact.html">Contact</a><a href="work-with-us.html">Work With Us</a><a href="admin.html">Administration</a></nav></footer><script>
-(function(){
-  var stage=document.querySelector('.home-video-stage');
-  var video=stage&&stage.querySelector('.home-hero-video');
-  var soundButton=stage&&stage.querySelector('.home-video-sound');
-  if(!video||!soundButton) return;
-
-  var media=window.matchMedia('(max-width: 900px)');
-  var userEnabledSound=false;
-
-  function showSoundButton(){
-    soundButton.hidden=false;
-    stage.classList.add('sound-needs-gesture');
-  }
-
-  function hideSoundButton(){
-    soundButton.hidden=true;
-    stage.classList.remove('sound-needs-gesture');
-  }
-
-  function tryMutedFallback(){
-    video.muted=true;
-    var fallback=video.play();
-    if(fallback&&typeof fallback.catch==='function') fallback.catch(function(){
-      /* If autoplay itself is blocked, the visible sound button is also the play affordance. */
-    });
-    showSoundButton();
-  }
-
-  function tryPlayWithSound(){
-    video.muted=false;
-    video.volume=1;
-    var attempt=video.play();
-    if(attempt&&typeof attempt.then==='function'){
-      attempt.then(function(){
-        hideSoundButton();
-      }).catch(function(){
-        tryMutedFallback();
-      });
-    }else{
-      /* Older browsers cannot report autoplay policy reliably. */
-      window.setTimeout(function(){
-        if(video.paused) tryMutedFallback();
-        else hideSoundButton();
-      },250);
-    }
-  }
-
-  function selectHeroVideo(){
-    var next=media.matches?video.dataset.mobileSrc:video.dataset.webSrc;
-    if(video.dataset.activeSrc===next) return;
-    video.dataset.activeSrc=next;
-    video.src=next;
-    video.load();
-    if(userEnabledSound){
-      video.muted=false;
-      video.volume=1;
-      var resumed=video.play();
-      if(resumed&&typeof resumed.catch==='function') resumed.catch(tryMutedFallback);
-    }else{
-      tryPlayWithSound();
-    }
-  }
-
-  soundButton.addEventListener('click',function(){
-    userEnabledSound=true;
-    video.muted=false;
-    video.volume=1;
-    var activated=video.play();
-    if(activated&&typeof activated.then==='function'){
-      activated.then(hideSoundButton).catch(function(){
-        showSoundButton();
-      });
-    }else{
-      hideSoundButton();
-    }
-  });
-
-  if(typeof media.addEventListener==='function') media.addEventListener('change',selectHeroVideo);
-  else if(typeof media.addListener==='function') media.addListener(selectHeroVideo);
-  selectHeroVideo();
-})();
-</script><script src="script.js"></script><script src="https://cdn.jotfor.ms/agent/embedjs/019f4787dc9070008494bdde9961d38e81b7/embed.js"></script></body></html>
+</main><footer class="footer editorial-footer footer-reference"><div class="footer-left"><a class="footer-logo-lockup" href="index.html"><img alt="SumaQ on 17th" src="assets/sumaq-logo-white-footer.png"/></a><div class="footer-follow"><span>Follow us</span><div class="footer-social-row"><a aria-label="Instagram" href="https://www.instagram.com/sumaqon17th/" rel="noopener" target="_blank"><svg class="social-icon" viewbox="0 0 24 24"><rect fill="none" height="18" rx="5" stroke="currentColor" stroke-width="2" width="18" x="3" y="3"></rect><circle cx="12" cy="12" fill="none" r="4" stroke="currentColor" stroke-width="2"></circle><circle cx="17.4" cy="6.7" fill="currentColor" r="1.2"></circle></svg></a><a aria-label="Facebook" href="https://www.facebook.com/sumaqon17th" rel="noopener" target="_blank"><svg class="social-icon" viewbox="0 0 24 24"><path d="M13.7 22v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5H17V4.6c-.5-.1-1.4-.2-2.5-.2-2.5 0-4.2 1.5-4.2 4.3v2.2H7.5V14h2.8v8h3.4Z" fill="currentColor"></path></svg></a></div></div></div><div aria-hidden="true" class="footer-rule"></div><nav aria-label="Footer navigation" class="footer-nav"><a href="menu.html">Menu</a><a href="delivery.html">Delivery</a><a href="reservations.html">Reservations</a><a href="private-events.html">Private Events</a><a href="contact.html">Contact</a><a href="work-with-us.html">Work With Us</a><a href="admin.html">Administration</a></nav></footer><script src="script.js"></script><script src="https://cdn.jotfor.ms/agent/embedjs/019f4787dc9070008494bdde9961d38e81b7/embed.js"></script></body></html>

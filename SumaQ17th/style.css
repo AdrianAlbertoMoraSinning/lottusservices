@@ -1626,50 +1626,47 @@ body[data-commerce] .cart-row>.product-image-placeholder{width:54px!important;he
   }
 }
 
+
+
 /* ================================================================
-   HOME HERO AUDIO POLICY — progressive sound enablement — 2026-09-05
-   Attempt audible autoplay first. Only if the browser blocks it do we
-   continue muted and reveal one small, unobtrusive sound control.
+   CLIENT ADJUSTMENTS — 2026-09-06
+   1) Hero videos are intentionally silent: no sound affordance.
+   2) Home "Order Now" uses the same CTA sizing/typography as other design buttons.
+   3) Desktop Desserts title, red statement and View here CTA share one right edge.
    ================================================================ */
-.page-index .home-video-stage{position:relative!important}
-.page-index .home-video-sound{
-  position:absolute;
-  z-index:4;
-  right:clamp(12px,1.6vw,24px);
-  bottom:clamp(12px,1.6vw,24px);
-  width:42px;
-  height:42px;
-  display:grid;
-  place-items:center;
-  padding:0;
-  border:1px solid rgba(255,255,255,.48);
-  border-radius:50%;
-  background:rgba(15,15,15,.52);
-  color:#fff;
-  box-shadow:0 4px 16px rgba(0,0,0,.18);
-  backdrop-filter:blur(6px);
-  -webkit-backdrop-filter:blur(6px);
-  cursor:pointer;
-  opacity:.88;
-  transition:opacity .18s ease,transform .18s ease,background .18s ease;
+.page-index .home-at-home-reference .home-order-now{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:max-content!important;
+  min-width:0!important;
+  padding:12px 20px!important;
+  border:0!important;
+  border-radius:0!important;
+  font:500 1.2rem 'Playfair Display',serif!important;
+  margin-top:18px!important;
+  float:none!important;
 }
-.page-index .home-video-sound[hidden]{display:none!important}
-.page-index .home-video-sound:hover,
-.page-index .home-video-sound:focus-visible{
-  opacity:1;
-  transform:scale(1.04);
-  background:rgba(15,15,15,.68);
-  outline:2px solid rgba(255,255,255,.78);
-  outline-offset:2px;
-}
-.page-index .home-video-sound svg{width:22px;height:22px;display:block}
-.page-index .home-video-sound .sound-block-mark{display:block}
-@media(max-width:900px){
-  .page-index .home-video-sound{
-    width:38px;
-    height:38px;
-    right:12px;
-    bottom:12px;
+
+@media(min-width:761px){
+  .page-menu .menu-ref-dessert .menu-ref-copy{
+    width:100%!important;
+    align-items:flex-end!important;
+    text-align:right!important;
   }
-  .page-index .home-video-sound svg{width:20px;height:20px}
+  .page-menu .menu-ref-dessert .wine-strip{
+    --dessert-left-bleed:clamp(46px,5vw,78px);
+    box-sizing:border-box!important;
+    position:relative!important;
+    left:0!important;
+    width:calc(100% + var(--dessert-left-bleed))!important;
+    margin-left:calc(-1 * var(--dessert-left-bleed))!important;
+    margin-right:0!important;
+    border-radius:0!important;
+  }
+  .page-menu .menu-ref-dessert h2,
+  .page-menu .menu-ref-dessert .design-btn{
+    align-self:flex-end!important;
+    margin-right:0!important;
+  }
 }
