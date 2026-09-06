@@ -34,3 +34,7 @@ Le portail prend en charge trois langues sur l’ensemble de l’interface actue
 Le sélecteur de langue est affiché dans l’en-tête. Le choix est mémorisé dans le navigateur (`localStorage`) et reste actif pendant la navigation entre les pages. Les valeurs techniques utilisées par Supabase (statuts, formulaires et facturation) restent stables indépendamment de la langue affichée.
 
 Le moteur multilingue est centralisé dans `i18n.js`. Les services standards actuels sont également traduits. Les contenus libres saisis ultérieurement par un administrateur ou provenant de tiers (par exemple un nouvel avis ou un nouveau service personnalisé) restent dans la langue dans laquelle ils ont été saisis, sauf si une traduction correspondante est ajoutée au moteur.
+
+
+## V12.1 deployment note
+Language selector path corrected for the `/groupevgc/` subdirectory deployment.
