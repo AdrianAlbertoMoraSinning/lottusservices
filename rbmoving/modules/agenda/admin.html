@@ -13,7 +13,8 @@
     <form id="invoiceForm" class="form-card invoice-builder">
       <div class="invoice-form-head"><div><p class="eyebrow">Create / edit</p><h2>Client Invoice</h2></div><button type="button" id="newInvoiceBtn" class="btn ghost dark small-btn">New Invoice</button></div>
       <input type="hidden" id="invoiceId">
-      <label>From booking (optional)<select id="invoiceBooking"><option value="">Manual invoice / no booking</option></select></label>
+      <div class="two"><label>Invoice number<input id="invoiceNumber" maxlength="60" placeholder="Leave blank to generate automatically" autocomplete="off"></label><label>From booking (optional)<select id="invoiceBooking"><option value="">Manual invoice / no booking</option></select></label></div>
+      <p class="note invoice-number-note">You can enter your own invoice number for direct/manual clients. Leave it blank and RB Moving will generate one automatically. Invoice numbers must be unique.</p>
       <div class="two"><label>Client name<input id="invoiceClientName" required></label><label>Invoice date<input id="invoiceDate" type="date" required></label></div>
       <div class="two"><label>Email<input id="invoiceClientEmail" type="email"></label><label>Phone<input id="invoiceClientPhone"></label></div>
       <div class="two"><label>Due date<input id="invoiceDueDate" type="date"></label><label>Status<select id="invoiceStatus"><option>Draft</option><option>Issued</option><option>Sent</option><option>Payment Pending</option><option>Paid</option><option>Cancelled</option></select></label></div>
