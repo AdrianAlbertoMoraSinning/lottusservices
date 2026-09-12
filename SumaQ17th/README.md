@@ -63,3 +63,9 @@ On Home and Menu, mobile now uses the clickable calls-to-action printed inside t
 - Made the Reservations orange rail continuous through the entire section on desktop and mobile.
 - Refined the shared footer proportions, logo, social icons, orange rule, navigation spacing and mobile layout.
 - Preserved the existing Pickup, Shop, Supabase, reservations, administration and chatbot functionality.
+
+## Reservations Staff Portal (September 2026)
+
+A separate mobile-first operational portal is available at `staff-reservations.html`. It is intentionally isolated from the Administration dashboard so floor staff can review daily reservations without access to menus, orders, sales reports or website configuration.
+
+Features include Today / Upcoming / Calendar views, guest counts, reservation status, table assignment, staff notes, a live activity feed and automatic refresh. See `STAFF_RESERVATIONS_SETUP.md` for the one-time Supabase migration and Netlify staff PIN environment variable.

@@ -67,3 +67,7 @@ Product uploads are limited to 2 MB each. Admin can delete individual records. T
 ## Current payment state
 
 The current payment screens remain demonstrations. Orders and reservations are stored centrally, but no real card charge occurs until the Stripe Checkout functions and webhook are activated with live Stripe variables.
+
+## Reservations Staff Portal
+
+After the main schema is active, run `supabase/staff-reservations-portal.sql` once in the Supabase SQL Editor. Then add the protected Netlify environment variable `SUMAQ_RESERVATIONS_STAFF_PIN` and redeploy. Full instructions are in `STAFF_RESERVATIONS_SETUP.md`.

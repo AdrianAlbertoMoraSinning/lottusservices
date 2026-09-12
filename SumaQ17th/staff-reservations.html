@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="robots" content="noindex,nofollow,noarchive"/>
+<title>Sumaq Reservations Staff</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"/>
+<link href="favicon.ico" rel="icon" sizes="any"/>
+<link href="assets/icons/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<meta name="theme-color" content="#111b24"/>
+<link href="staff-reservations.css?v=20260911r1" rel="stylesheet"/>
+</head>
+<body class="staff-page">
+<main>
+<section class="staff-login" id="staffLogin" aria-labelledby="staffLoginTitle">
+  <div class="staff-login-card">
+    <img src="assets/sumaq-logo-white.png" alt="Sumaq on 17th" class="staff-login-logo"/>
+    <p class="staff-kicker">Staff access</p>
+    <h1 id="staffLoginTitle">Reservations</h1>
+    <p class="staff-login-copy">Daily reservation view for the Sumaq floor team. This portal does not provide access to website administration.</p>
+    <label>Your name<input id="staffName" autocomplete="name" maxlength="80" placeholder="e.g. Mario"/></label>
+    <label>Staff access PIN<input id="staffPin" autocomplete="current-password" inputmode="numeric" type="password" maxlength="32" placeholder="Enter staff PIN"/></label>
+    <button class="staff-primary" id="staffLoginBtn" type="button">Open reservations</button>
+    <p class="staff-message" id="staffLoginMsg" aria-live="polite"></p>
+  </div>
+</section>
+
+<section class="staff-app hidden" id="staffApp">
+  <header class="staff-header">
+    <div class="staff-brand-row">
+      <a href="index.html" class="staff-brand" aria-label="Sumaq on 17th home"><img src="assets/sumaq-logo-white.png" alt="Sumaq on 17th"/></a>
+      <div><strong>Sumaq on 17th</strong><small>Reservations Staff</small></div>
+    </div>
+    <div class="staff-header-actions">
+      <button class="staff-icon-btn" id="staffRefresh" type="button" aria-label="Refresh reservations" title="Refresh">↻</button>
+      <button class="staff-icon-btn" id="staffLogout" type="button" aria-label="Log out" title="Log out">↪</button>
+    </div>
+  </header>
+
+  <nav class="staff-tabs" aria-label="Reservation views">
+    <button class="active" data-view="today" type="button">Today</button>
+    <button data-view="upcoming" type="button">Upcoming</button>
+    <button data-view="date" type="button">Calendar</button>
+  </nav>
+
+  <section class="staff-date-row hidden" id="staffDateRow">
+    <label for="staffDate">Select date</label>
+    <input type="date" id="staffDate"/>
+  </section>
+
+  <section class="staff-summary" aria-live="polite">
+    <div><span id="staffDayLabel">Today</span><strong id="staffReservationCount">0 reservations</strong></div>
+    <div class="staff-guest-total"><strong id="staffGuestCount">0</strong><span>guests</span></div>
+  </section>
+
+  <section class="staff-reservation-list" id="staffReservationList" aria-label="Reservations"></section>
+  <div class="staff-empty hidden" id="staffEmpty">
+    <strong>No reservations</strong><p>There are no reservations for this selection.</p>
+  </div>
+
+  <section class="staff-activity-section">
+    <div class="staff-section-heading"><div><p class="staff-kicker">Live operations</p><h2>Activity Feed</h2></div><span class="staff-live-dot">Live</span></div>
+    <div id="staffActivity" class="staff-activity"></div>
+  </section>
+
+  <footer class="staff-footer">Sumaq Reservations Staff · Operational view only</footer>
+</section>
+</main>
+
+<div class="staff-modal hidden" id="staffReservationModal" role="dialog" aria-modal="true" aria-labelledby="staffModalTitle">
+  <div class="staff-modal-card">
+    <button type="button" class="staff-modal-close" id="staffModalClose" aria-label="Close">×</button>
+    <p class="staff-kicker">Reservation details</p>
+    <h2 id="staffModalTitle">Guest</h2>
+    <div class="staff-detail-grid" id="staffDetailGrid"></div>
+    <div class="staff-edit-grid">
+      <label>Status<select id="staffModalStatus"></select></label>
+      <label>Table<input id="staffModalTable" maxlength="40" placeholder="e.g. Table 8"/></label>
+      <label class="staff-full">Staff note<textarea id="staffModalNote" rows="3" maxlength="500" placeholder="Optional operational note"></textarea></label>
+    </div>
+    <div class="staff-modal-actions">
+      <button class="staff-secondary" id="staffModalCancel" type="button">Cancel</button>
+      <button class="staff-primary" id="staffModalSave" type="button">Save update</button>
+    </div>
+    <p class="staff-message" id="staffModalMsg" aria-live="polite"></p>
+  </div>
+</div>
+
+<script src="staff-reservations.js?v=20260911r1"></script>
+</body>
+</html>
