@@ -13,13 +13,13 @@
 <meta content="yes" name="apple-mobile-web-app-capable"/>
 <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
 <meta content="SumaQ" name="apple-mobile-web-app-title"/>
-<link href="style.css?v=20260906r1" rel="stylesheet"/></head><body class="designer-page page-menu"><header class="topbar" id="top"><a aria-label="SumaQ on 17th home" class="brand" href="index.html"><img alt="SumaQ on 17th" src="assets/sumaq-logo-white.png"/></a><button aria-label="Open menu" class="menu-toggle" type="button">☰</button><nav aria-label="Main navigation" class="nav-links"><a href="index.html">Home</a><a class="active" href="menu.html">Menu</a><a href="reservations.html">Reservations</a><a href="private-events.html">Private Events</a><a href="order-pickup.html">Pickup</a><a href="shop.html">Shop</a><a href="delivery.html">Delivery</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav></header><main class="menu-reference-final">
+<link href="style.css?v=20260913r1" rel="stylesheet"/></head><body class="designer-page page-menu"><header class="topbar" id="top"><a aria-label="SumaQ on 17th home" class="brand" href="index.html"><img alt="SumaQ on 17th" src="assets/sumaq-logo-white.png"/></a><button aria-label="Open menu" class="menu-toggle" type="button">☰</button><nav aria-label="Main navigation" class="nav-links"><a href="index.html">Home</a><a class="active" href="menu.html">Menu</a><a href="reservations.html">Reservations</a><a href="private-events.html">Private Events</a><a href="order-pickup.html">Pickup</a><a href="shop.html">Shop</a><a href="delivery.html">Delivery</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav></header><main class="menu-reference-final">
 <section class="menu-ref-section menu-ref-main">
 <div class="menu-ref-photo"><img alt="SumaQ ceviche and seafood menu" src="assets/menu-1920/ceviche-sumaq.webp"/></div>
 <div class="menu-ref-copy">
 <h1>Menu</h1>
 <p class="menu-colour-strip purple-strip">We celebrate the authentic and diverse flavours of Peruvian gastronomy</p>
-<a class="design-btn pink-button" href="order-pickup.html#catalog">View here</a>
+<button class="design-btn pink-button menu-card-trigger" type="button" data-menu-card="main">View here</button>
 </div>
 </section>
 <section class="menu-ref-section menu-ref-dessert reverse">
@@ -27,7 +27,7 @@
 <div class="menu-ref-copy">
 <h2>Desserts</h2>
 <p class="menu-colour-strip wine-strip">The perfect sweet ending to your Peruvian journey.</p>
-<a class="design-btn orange" href="order-pickup.html?category=Desserts#catalog">View here</a>
+<button class="design-btn orange menu-card-trigger" type="button" data-menu-card="desserts">View here</button>
 </div>
 </section>
 <section class="menu-ref-section menu-ref-cocktails">
@@ -35,7 +35,27 @@
 <div class="menu-ref-copy">
 <h2>Cocktails</h2>
 <p class="menu-colour-strip teal-strip">Signature cocktails inspired by the vibrant spirit of Peru</p>
-<a class="design-btn green-button" href="order-pickup.html?category=Cocktails#catalog">View here</a>
+<button class="design-btn green-button menu-card-trigger" type="button" data-menu-card="drinks">View here</button>
 </div>
 </section>
-</main><footer class="footer editorial-footer footer-reference"><div class="footer-left"><a class="footer-logo-lockup" href="index.html"><img alt="SumaQ on 17th" src="assets/sumaq-logo-white-footer.png"/></a><div class="footer-follow"><span>Follow us</span><div class="footer-social-row"><a aria-label="Instagram" href="https://www.instagram.com/sumaqon17th/" rel="noopener" target="_blank"><svg class="social-icon" viewbox="0 0 24 24"><rect fill="none" height="18" rx="5" stroke="currentColor" stroke-width="2" width="18" x="3" y="3"></rect><circle cx="12" cy="12" fill="none" r="4" stroke="currentColor" stroke-width="2"></circle><circle cx="17.4" cy="6.7" fill="currentColor" r="1.2"></circle></svg></a><a aria-label="Facebook" href="https://www.facebook.com/sumaqon17th" rel="noopener" target="_blank"><svg class="social-icon" viewbox="0 0 24 24"><path d="M13.7 22v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5H17V4.6c-.5-.1-1.4-.2-2.5-.2-2.5 0-4.2 1.5-4.2 4.3v2.2H7.5V14h2.8v8h3.4Z" fill="currentColor"></path></svg></a></div></div></div><div aria-hidden="true" class="footer-rule"></div><nav aria-label="Footer navigation" class="footer-nav"><a href="menu.html">Menu</a><a href="delivery.html">Delivery</a><a href="reservations.html">Reservations</a><a href="private-events.html">Private Events</a><a href="contact.html">Contact</a><a href="work-with-us.html">Work With Us</a><a href="admin.html">Administration</a></nav></footer><script src="script.js"></script><script src="https://cdn.jotfor.ms/agent/embedjs/019f4787dc9070008494bdde9961d38e81b7/embed.js"></script></body></html>
+</main>
+<dialog class="menu-card-dialog" id="menuCardDialog" aria-labelledby="menuCardTitle">
+  <div class="menu-card-shell">
+    <header class="menu-card-header">
+      <div><span class="menu-card-kicker">Sumaq on 17th</span><h2 id="menuCardTitle">Menu</h2></div>
+      <button class="menu-card-close" id="menuCardClose" type="button" aria-label="Close menu">×</button>
+    </header>
+    <div class="menu-card-body" id="menuCardBody">
+      <img id="menuCardImage" alt="" loading="eager"/>
+      <div class="menu-card-pending hidden" id="menuCardPending">
+        <strong>Dessert menu coming soon</strong>
+        <p>We are waiting for the final dessert card from Sumaq. Please check back shortly.</p>
+      </div>
+    </div>
+    <footer class="menu-card-actions" id="menuCardActions">
+      <a class="menu-card-pdf" id="menuCardPdf" href="#" target="_blank" rel="noopener">Open PDF</a>
+      <button class="menu-card-done" id="menuCardDone" type="button">Close</button>
+    </footer>
+  </div>
+</dialog>
+<footer class="footer editorial-footer footer-reference"><div class="footer-left"><a class="footer-logo-lockup" href="index.html"><img alt="SumaQ on 17th" src="assets/sumaq-logo-white-footer.png"/></a><div class="footer-follow"><span>Follow us</span><div class="footer-social-row"><a aria-label="Instagram" href="https://www.instagram.com/sumaqon17th/" rel="noopener" target="_blank"><svg class="social-icon" viewbox="0 0 24 24"><rect fill="none" height="18" rx="5" stroke="currentColor" stroke-width="2" width="18" x="3" y="3"></rect><circle cx="12" cy="12" fill="none" r="4" stroke="currentColor" stroke-width="2"></circle><circle cx="17.4" cy="6.7" fill="currentColor" r="1.2"></circle></svg></a><a aria-label="Facebook" href="https://www.facebook.com/sumaqon17th" rel="noopener" target="_blank"><svg class="social-icon" viewbox="0 0 24 24"><path d="M13.7 22v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5H17V4.6c-.5-.1-1.4-.2-2.5-.2-2.5 0-4.2 1.5-4.2 4.3v2.2H7.5V14h2.8v8h3.4Z" fill="currentColor"></path></svg></a></div></div></div><div aria-hidden="true" class="footer-rule"></div><nav aria-label="Footer navigation" class="footer-nav"><a href="menu.html">Menu</a><a href="delivery.html">Delivery</a><a href="reservations.html">Reservations</a><a href="private-events.html">Private Events</a><a href="contact.html">Contact</a><a href="work-with-us.html">Work With Us</a><a href="admin.html">Administration</a></nav></footer><script src="script.js"></script><script src="menu-cards.js?v=20260913r1"></script><script src="https://cdn.jotfor.ms/agent/embedjs/019f4787dc9070008494bdde9961d38e81b7/embed.js"></script></body></html>
