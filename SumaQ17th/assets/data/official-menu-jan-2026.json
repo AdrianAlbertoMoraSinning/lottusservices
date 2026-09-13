@@ -1,5 +1,5 @@
 {
-  "version": "2026-08-31-client-round-2",
+  "version": "2026-09-13-sides-photo-hotfix",
   "source": "MENU jan-2026.pdf + client-provided dessert/cocktail photo set; dessert/cocktail pricing includes public/current references and client-confirmation tier where no supplied price was available.",
   "food": [
     {
@@ -328,7 +328,7 @@
       "description": "Fried seafood platter with crispy calamari, fish and shrimp, served with yuca fries and bold house sauces.",
       "price": 29,
       "unit": "plate",
-      "image": "",
+      "image": "assets/menu-1920/jalea.webp",
       "sortOrder": 300
     },
     {
@@ -382,7 +382,7 @@
       "description": "White rice with Peruvian corn.",
       "price": 6,
       "unit": "side",
-      "image": "",
+      "image": "assets/menu-1920/arroz.webp",
       "sortOrder": 500
     },
     {
@@ -392,7 +392,7 @@
       "description": "Native baby potatoes or French fries.",
       "price": 6,
       "unit": "side",
-      "image": "",
+      "image": "assets/menu-1920/papas-nativas.webp",
       "sortOrder": 510
     },
     {
@@ -402,7 +402,7 @@
       "description": "Cassava fries.",
       "price": 6,
       "unit": "side",
-      "image": "",
+      "image": "assets/menu-1920/fried-yuca.webp",
       "sortOrder": 520
     },
     {
@@ -412,7 +412,7 @@
       "description": "Fried plantain with cheese.",
       "price": 7,
       "unit": "side",
-      "image": "",
+      "image": "assets/menu-1920/platano-maduro.webp",
       "sortOrder": 530
     },
     {
@@ -422,7 +422,7 @@
       "description": "Ají amarillo and huacatay.",
       "price": 3.5,
       "unit": "side",
-      "image": "",
+      "image": "assets/menu-1920/aji-amarillo-aioli.webp",
       "sortOrder": 540
     },
     {
@@ -432,7 +432,7 @@
       "description": "Rocoto pepper and mayo aioli.",
       "price": 3.5,
       "unit": "side",
-      "image": "",
+      "image": "assets/menu-1920/rocoto-aioli.webp",
       "sortOrder": 550
     },
     {
