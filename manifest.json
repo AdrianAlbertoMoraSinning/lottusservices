@@ -1,10 +1,10 @@
 {
-  "name":"Lottus Services Inc.",
+  "name":"Lottus Services Inc. — Digital Systems & Web Development",
   "short_name":"Lottus",
   "start_url":"/",
   "display":"standalone",
-  "background_color":"#050606",
-  "theme_color":"#050606",
-  "description":"Reliable hauling and dump trailer services in Calgary.",
+  "background_color":"#f4f7fb",
+  "theme_color":"#07101d",
+  "description":"Modern websites, business portals, operational systems and digital automation by Lottus Services Inc.",
   "icons":[]
 }

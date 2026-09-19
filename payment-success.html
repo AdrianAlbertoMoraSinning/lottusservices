@@ -3,95 +3,25 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Payment Successful | Lottus Services Inc.</title>
-  <meta name="description" content="Payment confirmation for Lottus Services Inc." />
+  <title>Payment Complete | Lottus Services Inc.</title>
+  <meta name="theme-color" content="#07101d" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
-
-  <style>
-    .success-page{
-      min-height:100vh;
-      background:
-        radial-gradient(circle at top right, rgba(244,185,32,.15), transparent 34%),
-        linear-gradient(135deg,#050505 0%,#0d0b04 55%,#171101 100%);
-    }
-
-    .success-wrap{
-      max-width:880px;
-      margin:0 auto;
-      padding:80px 20px 100px;
-    }
-
-    .success-card{
-      background:rgba(10,10,10,.88);
-      border:1px solid rgba(244,185,32,.4);
-      border-radius:28px;
-      padding:42px;
-      box-shadow:0 24px 70px rgba(0,0,0,.45);
-    }
-
-    .success-icon{
-      width:62px;
-      height:62px;
-      border-radius:50%;
-      display:grid;
-      place-items:center;
-      background:#f4b920;
-      color:#050505;
-      font-size:2rem;
-      font-weight:900;
-      margin-bottom:20px;
-    }
-
-    .success-card h2{
-      margin-bottom:14px;
-    }
-
-    .success-card p{
-      color:rgba(255,255,255,.75);
-      max-width:680px;
-      line-height:1.65;
-    }
-
-    .success-actions{
-      margin-top:28px;
-    }
-
-    @media(max-width:760px){
-      .success-card{
-        padding:30px 24px;
-      }
-    }
-  </style>
 </head>
-
 <body class="success-page">
-  <header class="site-header">
-    <a class="brand" href="index.html" aria-label="Lottus Services Inc. home">
-      <span class="brand-mark">L</span>
-      <span><strong>LOTTUS</strong><small>SERVICES INC.</small></span>
-    </a>
-    <a class="header-call" href="index.html">Back to Home</a>
+  <header class="site-header subpage-header">
+    <a class="brand" href="index.html"><span class="brand-symbol"><img src="images/lottus-logo.png" alt="" /></span><span class="brand-copy"><strong>LOTTUS</strong><small>Digital Systems &amp; Web Development</small></span></a>
   </header>
-
-  <main class="success-wrap">
+  <main class="payment-shell">
     <section class="success-card">
       <div class="success-icon">✓</div>
       <p class="eyebrow">Payment completed</p>
-      <h2>Thank you. Your payment was successful.</h2>
-      <p>
-        Lottus Services Inc. has received your payment through Stripe.
-        A receipt will be sent to the email provided during checkout.
-      </p>
-
-      <div class="success-actions">
-        <a class="btn primary" href="index.html">Return to Home</a>
-      </div>
+      <h1>Thank you. Payment received.</h1>
+      <p>Your payment was completed through Stripe. A receipt will be sent to the email provided during checkout.</p>
+      <div class="payment-actions"><a class="btn btn-primary" href="index.html">Return to Lottus <span>↗</span></a></div>
     </section>
   </main>
-
-  <footer>
-    <strong>Lottus Services Inc.</strong>
-    <span>Calgary, AB · 825-945-6590</span>
-  </footer>
 </body>
 </html>
