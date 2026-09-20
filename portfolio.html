@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Technical Portfolio | Lottus Services Inc.</title>
+  <meta name="description" content="Explore Lottus Services Inc. technical portfolio: business portals, operational systems, websites, booking, accounting, industrial, clinical and developer-tooling projects." />
+  <meta name="theme-color" content="#07101d" />
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="portfolio-page">
+  <header class="site-header subpage-header" id="top">
+    <a class="brand" href="index.html"><span class="brand-symbol"><img src="images/lottus-logo.png" alt="" /></span><span class="brand-copy"><strong>LOTTUS</strong><small>Technical Portfolio</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mainNav" aria-label="Open navigation"><span></span><span></span></button>
+    <nav class="main-nav" id="mainNav"><a href="index.html">Home</a><a href="#flagship-cases">Systems</a><a href="#client-work">Client work</a><a href="#stack">Stack</a></nav>
+    <a class="header-cta" href="index.html#contact">Start a project <span>↗</span></a>
+  </header>
+
+  <main>
+    <section class="portfolio-hero section-shell reveal">
+      <p class="eyebrow">Technical portfolio · 2026</p>
+      <h1>Built work. <span>Visible capability.</span></h1>
+      <p>This portfolio explains what each project actually does, what engineering capability it demonstrates, and how the same architecture can be extended for a new client. Public deployments are linked where available; private operational functions remain protected.</p>
+      <div class="portfolio-summary"><span><b>Systems</b> operational platforms and business software</span><span><b>Experiences</b> customer-facing websites and conversion flows</span><span><b>Integrations</b> databases, payments, email, APIs and cloud functions</span></div>
+    </section>
+
+    <section class="portfolio-filter-shell section-shell" aria-label="Portfolio filters">
+      <button class="filter-chip active" data-filter="all">All work</button><button class="filter-chip" data-filter="system">Systems</button><button class="filter-chip" data-filter="operations">Operations</button><button class="filter-chip" data-filter="commerce">Commerce</button><button class="filter-chip" data-filter="professional">Professional services</button><button class="filter-chip" data-filter="tooling">Developer tooling</button>
+    </section>
+
+    <section id="flagship-cases" class="section-shell case-list">
+      <article id="please" class="case-study reveal" data-categories="system operations">
+        <div class="case-index">01</div><div class="case-main"><div class="case-heading"><div><span class="case-type">Service operations · Flagship platform</span><h2>PLEASE</h2></div><div class="case-status">Live deployment</div></div>
+        <p class="case-lead">A complete service-orchestration platform connecting the customer request with the internal team, service providers, operational execution, billing and reporting.</p>
+        <div class="case-columns"><div><h3>What has been built</h3><ul><li>Public service catalogue, quote and service-request flows.</li><li>Administration, developer provisioning and provider portals with separate roles and sessions.</li><li>Request → Job conversion, master calendar, provider assignment/reassignment and multi-provider teams.</li><li>Customer tracking, scheduling changes, operational status and photo/document workflows.</li><li>Invoices, Stripe-ready checkout, provider payments, revenue/cost/gross-profit separation and reports.</li><li>Transactional notifications and operational exports.</li></ul></div><div><h3>Technical strength</h3><p>PLEASE demonstrates the highest level of workflow complexity in the portfolio. The data model preserves lifecycle history while allowing controlled edits, and the portal separates public, customer, provider, admin and developer concerns rather than forcing everything into one interface.</p><h3>What this can become</h3><p>The architecture can be adapted to field service, staffing, dispatch, home services, trades, facilities, contractor networks or any operation where jobs move through multiple people and states.</p></div></div>
+        <div class="case-stack"><span>Supabase/PostgreSQL</span><span>Netlify Functions</span><span>Custom Auth/Sessions</span><span>RLS</span><span>Stripe-ready billing</span><span>Resend</span><span>CSV/XLSX</span></div>
+        <div class="case-actions"><a href="https://pleaseservice.ca" target="_blank" rel="noopener">Open live site ↗</a><a href="https://github.com/AdrianAlbertoMoraSinning/Please" target="_blank" rel="noopener">GitHub repository ↗</a></div></div>
+      </article>
+
+      <article id="ics" class="case-study reveal" data-categories="system operations">
+        <div class="case-index">02</div><div class="case-main"><div class="case-heading"><div><span class="case-type">Industrial operations · Concrete production</span><h2>Integrity Concrete Solutions</h2></div><div class="case-status">Client portal</div></div>
+        <p class="case-lead">An operations portal that joins quality-control inputs with production and inventory instead of treating them as separate spreadsheets.</p>
+        <div class="case-columns"><div><h3>What has been built</h3><ul><li>Administrator and Operator role profiles.</li><li>Aggregate moisture tests and weather conditions.</li><li>Concrete cylinder strength tracking and formula catalogue.</li><li>Batch operations, production posting and raw-material consumption.</li><li>Unified inventory, Kardex ledger and controlled adjustments.</li><li>Dashboards, audit trail and in-app role-aware operations manual.</li></ul></div><div><h3>Technical strength</h3><p>The portal translates a real industrial workflow into linked records: quality inputs influence water adjustments; production consumes inventory; Kardex preserves movement history; roles and RLS control access.</p><h3>What this can become</h3><p>Scheduling, maintenance, purchasing, cost-per-batch, equipment uptime, supplier performance and BI dashboards can be added without discarding the existing operational foundation.</p></div></div>
+        <div class="case-stack"><span>Supabase Auth</span><span>PostgreSQL</span><span>RLS</span><span>Inventory/Kardex</span><span>Netlify Functions</span><span>Audit trail</span></div>
+        <div class="case-actions"><a href="https://icsintegrityconcretesolutions.netlify.app" target="_blank" rel="noopener">Open deployment ↗</a><a href="https://github.com/AdrianAlbertoMoraSinning/ICS" target="_blank" rel="noopener">GitHub repository ↗</a></div></div>
+      </article>
+
+      <article id="kinetica" class="case-study reveal" data-categories="system operations professional">
+        <div class="case-index">03</div><div class="case-main"><div class="case-heading"><div><span class="case-type">Professional practice · Practitioner platform</span><h2>KineticaPlus</h2></div><div class="case-status">Client platform</div></div>
+        <p class="case-lead">A practice-management system derived from proven scheduling and provider architecture, then adapted to practitioners, rooms, insurance/cash workflows and clinical documentation.</p>
+        <div class="case-columns"><div><h3>What has been built</h3><ul><li>Administration, practitioner and developer-provisioning portals.</li><li>Requests, appointments, master calendar and practitioner assignment.</li><li>Room rental workflows and rental administration.</li><li>Invoices, practitioner payments, insurance/cash ledger.</li><li>Clinical SOAP notes with Draft → Signed → Amended lifecycle.</li><li>Audit logs, private practitioner documents and role-based clinical access.</li></ul></div><div><h3>Technical strength</h3><p>The important engineering result is adaptation: generic field-service concepts were refactored into domain-specific clinical language and permissions, while signed notes become read-only and later changes are appended as amendments rather than silently overwritten.</p><h3>What this can become</h3><p>With privacy/security review, the platform can continue toward deeper patient intake, insurer integrations, payments, room utilization, practitioner analytics and external scheduling/payment APIs.</p></div></div>
+        <div class="case-stack"><span>Supabase</span><span>Netlify Functions</span><span>Private Storage</span><span>RLS</span><span>Clinical audit</span><span>Role sessions</span></div>
+        <div class="case-actions"><a href="https://kineticaplus.netlify.app" target="_blank" rel="noopener">Open deployment ↗</a><a href="https://github.com/AdrianAlbertoMoraSinning/KineticaPlus" target="_blank" rel="noopener">GitHub repository ↗</a></div></div>
+      </article>
+
+      <article id="cal" class="case-study reveal" data-categories="system professional">
+        <div class="case-index">04</div><div class="case-main"><div class="case-heading"><div><span class="case-type">Business finance · Accounting architecture</span><h2>CAL 1.5</h2></div><div class="case-status">Product / demo</div></div>
+        <p class="case-lead">Canadian Accounting by Lottus is designed as a client-isolated accounting platform rather than a shared multi-customer data pool.</p>
+        <div class="case-columns"><div><h3>What has been built</h3><ul><li>Financial dashboard, receivables and payables foundation.</li><li>Banking/reconciliation workspace and general journal controls.</li><li>GST/HST/QST working papers, financial reports and exports.</li><li>Canadian starter chart of accounts and audit trail.</li><li>Private document-vault architecture and legal acceptance workflow.</li><li>Customer-controlled Supabase deployment model.</li></ul></div><div><h3>Technical strength</h3><p>CAL demonstrates architecture choices driven by data custody. Production customers are intended to receive separate controlled database/storage environments, with sensitive writes mediated server-side and posted accounting events handled by reversal/adjustment instead of silent deletion.</p><h3>What this can become</h3><p>Portal integrations can feed approved invoices and operational events into CAL while maintaining accounting separation; future modules can add richer reconciliation, budgeting and management reporting.</p></div></div>
+        <div class="case-stack"><span>Client isolation</span><span>Double-entry controls</span><span>Supabase</span><span>Netlify Functions</span><span>Audit</span><span>Canadian tax working papers</span></div>
+        <div class="case-actions"><a href="https://webdevtest.ca" target="_blank" rel="noopener">Open demo ↗</a><a href="https://github.com/AdrianAlbertoMoraSinning/cal" target="_blank" rel="noopener">GitHub repository ↗</a></div></div>
+      </article>
+
+      <article id="poolkick" class="case-study reveal" data-categories="system commerce">
+        <div class="case-index">05</div><div class="case-main"><div class="case-heading"><div><span class="case-type">Consumer SaaS · Sports social product</span><h2>PoolKick</h2></div><div class="case-status">Product prototype</div></div>
+        <p class="case-lead">A responsive tournament prediction platform that turns private football pools into a complete user product with scoring, competition and administration.</p>
+        <div class="case-columns"><div><h3>What has been built</h3><ul><li>Profiles, avatars, registration/login and private pool codes.</li><li>Tournament catalogue and exact-score predictions with kickoff locking.</li><li>Automatic scoring, leaderboard and player statistics.</li><li>Commissioner controls, chat/reactions and notifications.</li><li>Platform administration for tournaments and results.</li><li>Bilingual EN/ES foundation and full in-app manual.</li></ul></div><div><h3>Technical strength</h3><p>This project demonstrates a modern Vite application with two operating modes: immediate browser demo mode and shared Supabase production mode. Scoring rules are stored per pool, allowing different competition formats without breaking existing groups.</p><h3>What this can become</h3><p>Official sports-data feeds, licensed team assets, richer community mechanics, premium/private tournaments and subscription features can extend the product.</p></div></div>
+        <div class="case-stack"><span>Vite</span><span>JavaScript</span><span>Supabase</span><span>RLS</span><span>Local demo mode</span><span>Responsive product UI</span></div>
+        <div class="case-actions"><a href="https://poolkick.netlify.app" target="_blank" rel="noopener">Open product ↗</a><a href="https://github.com/AdrianAlbertoMoraSinning/PoolKick" target="_blank" rel="noopener">GitHub repository ↗</a></div></div>
+      </article>
+
+      <article id="octon" class="case-study reveal" data-categories="system tooling">
+        <div class="case-index">06</div><div class="case-main"><div class="case-heading"><div><span class="case-type">Developer tooling · Verification</span><h2>Octon v1.5</h2></div><div class="case-status">Engineering tool</div></div>
+        <p class="case-lead">A portal review engine that separates suspected static-code problems from production-verified failures before scoring a deployment.</p>
+        <div class="case-columns"><div><h3>What has been built</h3><ul><li>Repository map and code-health pipeline.</li><li>Production verification of assets, routes, favicons and Netlify Functions.</li><li>Confidence states: confirmed, probable, needs verification, verified in production.</li><li>False-positive clearing when production proves a target exists.</li><li>Read-only GitHub App access, SSRF protections and credential redaction.</li><li>Traceable evidence with target, status and verification timestamp.</li></ul></div><div><h3>Technical strength</h3><p>Octon proves capability in developer tooling and defensive automation. It intentionally minimizes automatic write authority and treats ambiguous evidence as inconclusive instead of manufacturing certainty.</p><h3>What this can become</h3><p>Continuous quality gates, deployment checks, regression monitoring, client-site health dashboards and approval-controlled remediation workflows.</p></div></div>
+        <div class="case-stack"><span>GitHub App</span><span>Read-only inspection</span><span>Production HTTP checks</span><span>SSRF controls</span><span>Evidence scoring</span></div>
+        <div class="case-actions"><a href="https://octon-webdev.netlify.app" target="_blank" rel="noopener">Open deployment ↗</a><a href="Octon-WebDev/">Local project preview ↗</a></div></div>
+      </article>
+    </section>
+
+    <section id="client-work" class="client-work-section section-space">
+      <div class="section-shell"><div class="section-intro reveal"><p class="eyebrow">Client-facing work</p><h2>Web experiences that connect <span>to real business workflows.</span></h2><p>These projects show breadth across industries and different levels of backend complexity.</p></div>
+        <div class="mini-case-grid">
+          <article class="mini-case reveal" data-categories="commerce operations"><span>Hospitality</span><h3>SumaQ on 17th</h3><p>Centralized catalogues, reservations, private-event inquiries, orders, sales reporting, product-image storage and a separate mobile-first staff reservations portal.</p><div><a href="SumaQ17th/">Open local deployment ↗</a></div></article>
+          <article class="mini-case reveal" data-categories="operations"><span>Moving / logistics</span><h3>RB Moving</h3><p>Shared availability, server-side slot protection, administration, service pricing, booking, final invoices, hosted Stripe Checkout and Google-review integration foundation.</p><div><a href="https://rbmoving.ca" target="_blank" rel="noopener">Open live site ↗</a></div></article>
+          <article class="mini-case reveal" data-categories="operations"><span>Moving / logistics</span><h3>Rowshan Moving</h3><p>Booking, public availability, admin controls, invoice workspace, private invoice links, Stripe-hosted checkout, Google reviews connector and hardened password recovery.</p><div><a href="https://rowshanglobal.com" target="_blank" rel="noopener">Open live site ↗</a></div></article>
+          <article class="mini-case reveal" data-categories="professional"><span>Auto finance</span><h3>Montecristo Auto Finance</h3><p>Pre-approval, full credit application, appointment workflow, advisor positioning, educational content, reviews and multi-form lead routing.</p><div><a href="https://mtcautofinance.ca" target="_blank" rel="noopener">Open live site ↗</a></div></article>
+          <article class="mini-case reveal" data-categories="professional"><span>Oil &amp; Gas</span><h3>Strata Drilling</h3><p>Technical consulting positioning, detailed expert profile, country experience, education/awards and direct contact journeys for a specialized engineering audience.</p><div><a href="https://stratadrilling.ca" target="_blank" rel="noopener">Open live site ↗</a></div></article>
+          <article class="mini-case reveal" data-categories="professional"><span>Legal services</span><h3>AP Abogados Asociados</h3><p>Executive legal-services architecture with practice areas, founder profile, experience, publications, consultation CTA and credibility-driven content design.</p><div><a href="https://apabogadosasociados.com" target="_blank" rel="noopener">Open live site ↗</a></div></article>
+          <article class="mini-case reveal" data-categories="operations professional"><span>Logistics · multilingual</span><h3>Groupe VGC</h3><p>FR/EN/ES portal with language persistence, independent Supabase foundation and optional Stripe architecture for a Montréal logistics and maintenance operation.</p><div><a href="GroupeVGC/">Open deployment ↗</a></div></article>
+          <article class="mini-case reveal" data-categories="commerce"><span>Retail / catalogue</span><h3>ONTA Store</h3><p>Digital showroom and retail presentation demonstrating product discovery, visual merchandising and customer-facing catalogue architecture.</p><div><a href="Onta/">Open deployment ↗</a></div></article>
+          <article class="mini-case reveal" data-categories="commerce"><span>Apparel</span><h3>LuBoutique</h3><p>Responsive storefront, dynamic JSON catalogue, filters/options, persistent shopping bag, private-list registration, local admin metrics and integration-ready structure.</p><div><a href="LuBoutique/">Open deployment ↗</a></div></article>
+          <article class="mini-case reveal" data-categories="professional"><span>Local services</span><h3>JP Painting</h3><p>Portfolio-led service website with transformation photography, conversion-focused contact flow and payment-path foundation.</p><div><a href="JPPaintings/">Open deployment ↗</a></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="stack" class="section-shell section-space">
+      <div class="tech-panel reveal"><div class="tech-copy"><p class="eyebrow">Proven environment</p><h2>Architecture chosen for the workflow—not for fashion.</h2><p>The portfolio repeatedly uses lightweight front ends, cloud deployment and database-backed workflows. Components are selected per project, but the engineering principles remain consistent: least privilege, server-side secrets, clear data ownership and auditable state changes.</p></div><div class="tech-orbit"><span>HTML / CSS / JS</span><span>Vite</span><span>Supabase</span><span>PostgreSQL</span><span>RLS</span><span>Supabase Storage</span><span>Netlify</span><span>Netlify Functions</span><span>GitHub</span><span>Stripe</span><span>Resend / Email</span><span>Google integrations</span><span>CSV / XLSX</span><span>PWA</span></div></div>
+    </section>
+
+    <section class="contact-section section-shell"><div class="contact-card reveal"><div><p class="eyebrow">From idea to working portal</p><h2>Use this portfolio as a starting point, not a menu of limits.</h2><p>Existing modules accelerate delivery, but the objective is always to model the next client's real workflow and build the right combination of experience, data and automation.</p></div><div class="contact-actions"><a class="contact-primary" href="https://wa.me/18259456590?text=Hello%20Lottus%2C%20I%20reviewed%20your%20technical%20portfolio%20and%20would%20like%20to%20discuss%20a%20project." target="_blank" rel="noopener"><span>Discuss a project</span><b>↗</b></a><a href="index.html"><span>Return</span><strong>Lottus home →</strong></a></div></div></section>
+  </main>
+
+  <footer class="site-footer section-shell"><div class="footer-brand"><span class="brand-symbol"><img src="images/lottus-logo.png" alt="" /></span><div><strong>LOTTUS SERVICES INC.</strong><small>Technical Portfolio</small></div></div><div class="footer-meta"><span>Calgary, Alberta · Canada</span><span>© <span id="year"></span> Lottus Services Inc.</span></div><a class="back-top" href="#top">Back to top ↑</a></footer>
+  <script src="app.js"></script><script src="portfolio.js"></script>
+</body>
+</html>

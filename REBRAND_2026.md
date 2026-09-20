@@ -18,3 +18,12 @@ The root files (`index.html`, `style.css`, `app.js`, `manifest.json`, `payment.h
 
 ## Legacy assets
 Old truck / trailer image files are no longer used by the website and can be removed permanently after deployment validation.
+
+## Technical portfolio expansion — September 19, 2026
+- Added `portfolio.html` as a dedicated technical portfolio with project filtering.
+- Expanded flagship systems to PLEASE, ICS, KineticaPlus, CAL, PoolKick and Octon.
+- Added technical conclusions describing what each system proves and reasonable extension potential.
+- Added live/deployment and GitHub verification links where available.
+- Added architecture section explaining the repeatable GitHub → Netlify → Supabase → integrations environment.
+- Expanded client experience coverage to SumaQ, RB Moving, Rowshan Moving, Montecristo Auto Finance, Strata Drilling, AP Abogados Asociados, Groupe VGC, ONTA, LuBoutique and JP Painting.
+- No private credentials, admin passwords or server secret values are exposed in the public portfolio.
