@@ -60,3 +60,24 @@
 @media(max-width:1180px){.system-showcase{grid-template-columns:1fr}.please-side-stack{grid-template-columns:1fr 1fr;grid-template-rows:none}.mock-video-primary video{min-height:260px}.please-kpi-strip{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:760px){.please-side-stack{grid-template-columns:1fr}.please-kpi-strip{grid-template-columns:1fr 1fr}.mock-video-card video,.mock-video-primary video{min-height:200px}}
 @media(max-width:560px){.please-kpi-strip{grid-template-columns:1fr}}
+
+
+/* --- PLEASE case study layout fix (Sep 2026) --- */
+.evidence-wide{grid-template-columns:.82fr 1.18fr;gap:28px;align-items:stretch;min-height:520px}
+.evidence-wide .evidence-index{position:absolute;top:18px;left:20px;margin:0;z-index:2}
+.evidence-wide .evidence-content{display:flex;flex-direction:column;justify-content:center;max-width:420px;padding-top:34px;padding-right:0}
+.evidence-wide .evidence-content p{max-width:420px}
+.system-showcase{display:grid;grid-template-columns:1fr 1fr;grid-template-areas:'main main' 'sub1 sub2' 'kpi kpi';gap:14px;align-content:start;min-height:auto}
+.mock-video-primary{grid-area:main}
+.please-side-stack{display:contents}
+.please-side-stack .mock-video-card:nth-child(1){grid-area:sub1}
+.please-side-stack .mock-video-card:nth-child(2){grid-area:sub2}
+.mock-video-card{border-radius:20px;overflow:hidden;background:linear-gradient(180deg,#071321,#08192c);border:1px solid rgba(82,155,230,.18);box-shadow:0 18px 42px rgba(1,10,22,.22)}
+.mock-video-card video{display:block;width:100%;height:230px;min-height:230px;object-fit:cover}
+.mock-video-primary video{height:290px;min-height:290px}
+.mock-video-card .video-caption{min-height:44px}
+.please-kpi-strip{grid-area:kpi;grid-template-columns:repeat(4,1fr);margin-top:2px}
+.please-kpi-strip span{min-height:74px;padding:14px 15px;border-radius:14px}
+@media(max-width:1180px){.evidence-wide{grid-template-columns:1fr}.evidence-wide .evidence-content{max-width:none;padding-top:28px}.system-showcase{grid-template-columns:1fr 1fr;grid-template-areas:'main main' 'sub1 sub2' 'kpi kpi'}}
+@media(max-width:760px){.system-showcase{grid-template-columns:1fr;grid-template-areas:'main' 'sub1' 'sub2' 'kpi'}.mock-video-primary video,.mock-video-card video{height:220px;min-height:220px}.please-kpi-strip{grid-template-columns:1fr 1fr}}
+@media(max-width:540px){.please-kpi-strip{grid-template-columns:1fr}}
