@@ -138,87 +138,109 @@
   }));
 
 
+  const Ctx = window.AudioContext || window.webkitAudioContext;
+  const getAudioContext = async () => {
+    if (!Ctx) return null;
+    const ctx = window.__lottusSteelCtx || (window.__lottusSteelCtx = new Ctx());
+    if (ctx.state === 'suspended') {
+      try { await ctx.resume(); } catch (_) {}
+    }
+    return ctx;
+  };
+
+  const noiseBufferFor = (ctx) => {
+    if (window.__lottusSteelNoiseBuffer) return window.__lottusSteelNoiseBuffer;
+    const buffer = ctx.createBuffer(1, ctx.sampleRate * 1.8, ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < data.length; i += 1) data[i] = (Math.random() * 2 - 1) * (1 - i / data.length);
+    window.__lottusSteelNoiseBuffer = buffer;
+    return buffer;
+  };
+
+  const withAudio = async (fn) => {
+    const ctx = await getAudioContext();
+    if (!ctx) return false;
+    try {
+      fn(ctx, ctx.currentTime);
+      window.__lottusSteelAudioUnlocked = true;
+      return true;
+    } catch (_) {
+      return false;
+    }
+  };
+
+  const playSteelAccessFx = async (mode = 'full') => withAudio((ctx, now) => {
+    const buffer = noiseBufferFor(ctx);
+    const burst = (time, duration, { low = 2200, high = 160, gain = 0.05 } = {}) => {
+      const src = ctx.createBufferSource();
+      src.buffer = buffer;
+      const hp = ctx.createBiquadFilter();
+      hp.type = 'highpass';
+      hp.frequency.value = high;
+      const lp = ctx.createBiquadFilter();
+      lp.type = 'lowpass';
+      lp.frequency.value = low;
+      const g = ctx.createGain();
+      g.gain.setValueAtTime(0.0001, time);
+      g.gain.linearRampToValueAtTime(gain, time + 0.01);
+      g.gain.exponentialRampToValueAtTime(0.0001, time + duration);
+      src.connect(hp); hp.connect(lp); lp.connect(g); g.connect(ctx.destination);
+      src.start(time);
+      src.stop(time + duration + 0.05);
+    };
+    const tone = (time, freq, duration, gain = 0.024, type = 'triangle') => {
+      const osc = ctx.createOscillator();
+      const g = ctx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, time);
+      osc.frequency.exponentialRampToValueAtTime(Math.max(40, freq * 0.62), time + duration);
+      g.gain.setValueAtTime(0.0001, time);
+      g.gain.linearRampToValueAtTime(gain, time + 0.008);
+      g.gain.exponentialRampToValueAtTime(0.0001, time + duration);
+      osc.connect(g); g.connect(ctx.destination);
+      osc.start(time);
+      osc.stop(time + duration + 0.04);
+    };
+    if (mode === 'click') {
+      burst(now, 0.12, { low: 2500, high: 420, gain: 0.028 });
+      tone(now, 310, 0.09, 0.016, 'triangle');
+      tone(now + 0.012, 168, 0.12, 0.009, 'sine');
+      return;
+    }
+    burst(now, 0.2, { low: 3600, high: 520, gain: 0.07 });
+    tone(now, 196, 0.16, 0.026, 'triangle');
+    tone(now + 0.02, 96, 0.32, 0.022, 'sine');
+    burst(now + 0.09, 1.05, { low: 1500, high: 115, gain: 0.032 });
+    tone(now + 0.12, 136, 0.75, 0.015, 'sawtooth');
+    burst(now + 0.92, 0.2, { low: 3000, high: 700, gain: 0.06 });
+    tone(now + 0.91, 262, 0.16, 0.022, 'triangle');
+  });
+
+  const clickSoundSelector = 'a[href], button, [role="button"], [data-tab-target], .menu-toggle';
+  document.addEventListener('click', (event) => {
+    const target = event.target.closest(clickSoundSelector);
+    if (!target) return;
+    if (target.closest('#steelIntro')) return;
+    playSteelAccessFx('click');
+  }, true);
+
+  ['pointerdown', 'touchstart', 'keydown'].forEach(evt => {
+    window.addEventListener(evt, () => {
+      if (!window.__lottusSteelAudioUnlocked) playSteelAccessFx('click');
+    }, { once: true, passive: true });
+  });
+
   const steelIntro = document.getElementById('steelIntro');
-  const replayIntroButtons = document.querySelectorAll('[data-replay-intro]');
 
   if (steelIntro && document.body.classList.contains('home-page')) {
-    const enterSoundBtn = document.getElementById('steelEnterSound');
-    const skipIntroBtn = document.getElementById('steelSkipIntro');
     const reducedIntroMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let introOpening = false;
     let introVisible = false;
     let autoOpenTimer = null;
     let hideTimer = null;
 
-    const setSeen = () => {
-      try { sessionStorage.setItem('lottusSteelIntroSeen', '1'); } catch (_) {}
-    };
-
-    const clearSeen = () => {
-      try { sessionStorage.removeItem('lottusSteelIntroSeen'); } catch (_) {}
-    };
-
-    const noiseBufferFor = (ctx) => {
-      if (window.__lottusSteelNoiseBuffer) return window.__lottusSteelNoiseBuffer;
-      const buffer = ctx.createBuffer(1, ctx.sampleRate * 1.5, ctx.sampleRate);
-      const data = buffer.getChannelData(0);
-      for (let i = 0; i < data.length; i += 1) data[i] = (Math.random() * 2 - 1) * (1 - i / data.length);
-      window.__lottusSteelNoiseBuffer = buffer;
-      return buffer;
-    };
-
-    const playMetalDoorFx = async () => {
-      const Ctx = window.AudioContext || window.webkitAudioContext;
-      if (!Ctx) return;
-      const ctx = window.__lottusSteelCtx || (window.__lottusSteelCtx = new Ctx());
-      if (ctx.state === 'suspended') await ctx.resume();
-      const now = ctx.currentTime;
-      const buffer = noiseBufferFor(ctx);
-
-      const burst = (time, duration, { low = 2600, high = 180, gain = 0.05 } = {}) => {
-        const src = ctx.createBufferSource();
-        src.buffer = buffer;
-        const hp = ctx.createBiquadFilter();
-        hp.type = 'highpass';
-        hp.frequency.value = high;
-        const lp = ctx.createBiquadFilter();
-        lp.type = 'lowpass';
-        lp.frequency.value = low;
-        const g = ctx.createGain();
-        g.gain.setValueAtTime(0.0001, time);
-        g.gain.linearRampToValueAtTime(gain, time + 0.012);
-        g.gain.exponentialRampToValueAtTime(0.0001, time + duration);
-        src.connect(hp); hp.connect(lp); lp.connect(g); g.connect(ctx.destination);
-        src.start(time);
-        src.stop(time + duration + 0.04);
-      };
-
-      const tone = (time, freq, duration, gain = 0.025, type = 'triangle') => {
-        const osc = ctx.createOscillator();
-        const g = ctx.createGain();
-        osc.type = type;
-        osc.frequency.setValueAtTime(freq, time);
-        osc.frequency.exponentialRampToValueAtTime(Math.max(40, freq * 0.65), time + duration);
-        g.gain.setValueAtTime(0.0001, time);
-        g.gain.linearRampToValueAtTime(gain, time + 0.008);
-        g.gain.exponentialRampToValueAtTime(0.0001, time + duration);
-        osc.connect(g); g.connect(ctx.destination);
-        osc.start(time);
-        osc.stop(time + duration + 0.03);
-      };
-
-      burst(now, 0.2, { low: 3400, high: 480, gain: 0.06 });
-      tone(now, 184, 0.14, 0.024, 'triangle');
-      tone(now + 0.025, 92, 0.28, 0.02, 'sine');
-      burst(now + 0.08, 0.82, { low: 1400, high: 120, gain: 0.028 });
-      tone(now + 0.1, 130, 0.62, 0.014, 'sawtooth');
-      burst(now + 0.74, 0.17, { low: 2800, high: 640, gain: 0.05 });
-      tone(now + 0.73, 252, 0.14, 0.022, 'triangle');
-    };
-
     const finishIntro = () => {
       introVisible = false;
-      setSeen();
       steelIntro.classList.add('is-hidden', 'is-finished');
       steelIntro.classList.remove('is-active');
       steelIntro.setAttribute('aria-hidden', 'true');
@@ -227,25 +249,17 @@
       kickVideos();
     };
 
-    const openSteelIntro = async (withSound = false) => {
+    const openSteelIntro = async () => {
       if (introOpening || !introVisible) return;
       introOpening = true;
       steelIntro.classList.add('opening');
-      if (withSound) {
-        try { await playMetalDoorFx(); } catch (_) {}
-      }
+      playSteelAccessFx('full');
       window.clearTimeout(autoOpenTimer);
       window.clearTimeout(hideTimer);
-      hideTimer = window.setTimeout(finishIntro, reducedIntroMotion ? 900 : 1800);
+      hideTimer = window.setTimeout(finishIntro, reducedIntroMotion ? 1200 : 2300);
     };
 
-    const showSteelIntro = (force = false) => {
-      const seen = !force && (() => { try { return sessionStorage.getItem('lottusSteelIntroSeen') === '1'; } catch (_) { return false; } })();
-      if (seen) {
-        steelIntro.classList.add('is-hidden');
-        steelIntro.setAttribute('aria-hidden', 'true');
-        return;
-      }
+    const showSteelIntro = () => {
       introVisible = true;
       introOpening = false;
       steelIntro.classList.remove('is-hidden', 'is-finished', 'opening');
@@ -253,23 +267,23 @@
       document.body.classList.add('intro-active');
       requestAnimationFrame(() => steelIntro.classList.add('is-active'));
       window.clearTimeout(autoOpenTimer);
-      autoOpenTimer = window.setTimeout(() => openSteelIntro(false), reducedIntroMotion ? 850 : 1700);
+      window.setTimeout(() => playSteelAccessFx('full'), 180);
+      autoOpenTimer = window.setTimeout(openSteelIntro, reducedIntroMotion ? 1500 : 3000);
     };
 
-    if (enterSoundBtn) enterSoundBtn.addEventListener('click', () => openSteelIntro(true));
-    if (skipIntroBtn) skipIntroBtn.addEventListener('click', () => openSteelIntro(false));
-    replayIntroButtons.forEach(btn => btn.addEventListener('click', () => {
-      clearSeen();
-      showSteelIntro(true);
-    }));
+    const unlockAndAccentIntro = () => {
+      if (!introVisible || window.__lottusSteelAudioUnlocked) return;
+      playSteelAccessFx('full');
+    };
+    ['pointerdown', 'touchstart', 'keydown'].forEach(evt => window.addEventListener(evt, unlockAndAccentIntro, { passive: true }));
 
     window.addEventListener('keydown', (event) => {
       if (!introVisible) return;
-      if (event.key === 'Escape') openSteelIntro(false);
-      if (event.key === 'Enter') openSteelIntro(true);
+      if (event.key === 'Escape' || event.key === 'Enter' || event.key === ' ') openSteelIntro();
     });
 
-    showSteelIntro(false);
+    showSteelIntro();
   }
+
 
 })();

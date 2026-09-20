@@ -1,1 +1,1 @@
-Lottus Steel Doors Intro added to the home page. Includes automatic silent visual reveal, optional metallic sound on user interaction, replay trigger, and original steel-door motion graphics implemented in HTML/CSS/JS.
+Steel intro updated: always shows on home load, lighter metallic palette across the site, simplified intro without marketing copy/buttons, longer sequence, synthesized metallic access audio attempted on entry, and similar UI click sounds added for navigation and interactive controls.
