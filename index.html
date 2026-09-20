@@ -23,6 +23,28 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body class="home-page">
+  <div class="steel-intro" id="steelIntro" aria-hidden="true">
+    <div class="steel-intro__ambient steel-intro__ambient--left" aria-hidden="true"></div>
+    <div class="steel-intro__ambient steel-intro__ambient--right" aria-hidden="true"></div>
+    <div class="steel-intro__backlight" aria-hidden="true"></div>
+    <div class="steel-intro__frame steel-intro__frame--top" aria-hidden="true"></div>
+    <div class="steel-intro__frame steel-intro__frame--bottom" aria-hidden="true"></div>
+    <div class="steel-door steel-door--left" aria-hidden="true"><span class="steel-door__edge"></span></div>
+    <div class="steel-door steel-door--right" aria-hidden="true"><span class="steel-door__edge"></span></div>
+    <div class="steel-intro__content">
+      <p class="steel-intro__eyebrow">LOTTUS ACCESS SEQUENCE · STEEL DOORS INTRO</p>
+      <div class="steel-intro__crest" aria-hidden="true"><img src="images/lottus-logo-transparent.png" alt="" /></div>
+      <h2>Original cinematic gateway reveal for a stronger first impression.</h2>
+      <p>Brushed steel doors, polished reflections and a controlled sci-fi reveal open directly into the Lottus experience. The visual sequence starts automatically. Metallic sound unlocks when the visitor interacts.</p>
+      <div class="steel-intro__actions">
+        <button class="steel-btn steel-btn-primary" type="button" id="steelEnterSound">Enter with sound</button>
+        <button class="steel-btn steel-btn-secondary" type="button" id="steelSkipIntro">Continue silently</button>
+      </div>
+      <small>Original effect created for Lottus — inspired by classic high-tech portal reveals, without reproducing third-party artwork.</small>
+    </div>
+    <div class="steel-intro__scanline" aria-hidden="true"></div>
+    <div class="steel-intro__seam" aria-hidden="true"></div>
+  </div>
   <div class="site-noise" aria-hidden="true"></div>
   <header class="site-header" id="top">
     <a class="brand" href="index.html" aria-label="Lottus Services Inc. home">
@@ -54,6 +76,7 @@
         <div class="trust-strip" aria-label="Delivery principles">
           <span>Business-first architecture</span><i></i><span>Role-based security</span><i></i><span>Cloud deployment</span><i></i><span>Integration-ready</span>
         </div>
+        <button class="intro-replay-link" type="button" data-replay-intro>Replay steel doors intro</button>
       </div>
       <div class="hero-media reveal" aria-label="Animated Lottus systems overview">
         <div class="video-shell">
@@ -169,7 +192,7 @@
               </div>
             </div>
           </article>
-          <article class="evidence-card reveal"><div class="evidence-index">02</div><span class="case-type">Industrial operations</span><h3>Integrity Concrete Solutions</h3><p>Production, laboratory quality, batch formulas, material consumption, inventory/Kardex, user roles and audit history.</p><div class="mini-chart bars"><i style="--v:68%"></i><i style="--v:88%"></i><i style="--v:54%"></i><i style="--v:94%"></i><i style="--v:76%"></i></div><a href="portfolio.html#ics">Explore system →</a></article>
+          <article class="evidence-card reveal"><div class="evidence-index">02</div><span class="case-type">Industrial operations</span><h3>Concrete Operations & Quality System</h3><p>Production, laboratory quality, batch formulas, material consumption, inventory/Kardex, user roles and audit history.</p><div class="mini-chart bars"><i style="--v:68%"></i><i style="--v:88%"></i><i style="--v:54%"></i><i style="--v:94%"></i><i style="--v:76%"></i></div><a href="portfolio.html#concrete-operations">Explore system →</a></article>
           <article class="evidence-card reveal"><div class="evidence-index">03</div><span class="case-type">Clinical operations</span><h3>KineticaPlus</h3><p>Appointments, practitioners, rooms, payments, insurance/cash workflows and secure SOAP documentation with signed-note amendments.</p><div class="ring-visual"><span>ROLE<br>CONTROL</span></div><a href="portfolio.html#kinetica">Explore system →</a></article>
           <article class="evidence-card reveal"><div class="evidence-index">04</div><span class="case-type">Financial platform</span><h3>CAL 1.5</h3><p>Accounts receivable/payable foundation, journal controls, reconciliation, GST/HST/QST working papers, reports, vault architecture and audit.</p><div class="sparkline"><i></i><i></i><i></i><i></i><i></i><i></i></div><a href="portfolio.html#cal">Explore system →</a></article>
           <article class="evidence-card reveal"><div class="evidence-index">05</div><span class="case-type">Consumer product</span><h3>PoolKick</h3><p>Private football prediction pools, profiles, scoring rules, leaderboards, tournament controls, reactions, notifications and bilingual foundation.</p><div class="score-visual"><span>COL <b>2</b></span><em>VS</em><span>ARG <b>1</b></span></div><a href="https://poolkick.netlify.app" target="_blank" rel="noopener">Open product ↗</a></article>

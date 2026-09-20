@@ -15,7 +15,7 @@ The current codebase contains substantially more than marketing websites. It inc
 - a broader web-development platform/tooling initiative (`Octon-WebDev/`)
 - serverless Netlify functions and payment/database integrations at repository level.
 
-Outside the folders in this particular ZIP, the Lottus portfolio also includes active work such as CAL, Integrity Concrete Solutions, KineticaPlus, Montecristo Auto Finance and Strata Drilling. The new homepage references the strongest of those as portfolio/system work without creating broken local routes.
+Outside the folders in this particular ZIP, the Lottus portfolio also includes active work such as CAL, Concrete Operations & Quality System, KineticaPlus, Montecristo Auto Finance and Strata Drilling. The new homepage references the strongest of those as portfolio/system work without creating broken local routes.
 
 ## New corporate position
 **Lottus Services Inc. — Digital Systems & Web Development**
@@ -32,7 +32,7 @@ This supports both simple client websites and the more valuable custom-system wo
 ## Credibility strategy used in the redesign
 Instead of generic claims, the page now shows two proof layers:
 
-- **Platforms & systems:** PLEASE, CAL, Integrity Concrete Solutions and KineticaPlus.
+- **Platforms & systems:** PLEASE, CAL, Concrete Operations & Quality System and KineticaPlus.
 - **Selected work:** SumaQ on 17th, Groupe VGC, RB Moving, ONTA, JP Painting and Drilling & Well Engineering, plus secondary portfolio references.
 
 ## Technical / deployment decisions
@@ -44,4 +44,4 @@ Instead of generic claims, the page now shows two proof layers:
 - Root metadata and the manifest now reflect the technology business.
 
 ## Suggested next iteration after live review
-After the new root site is deployed and visually reviewed on the real domain, the highest-value next improvements would be to add polished screenshots/case-study details for CAL, ICS and KineticaPlus, and connect a dedicated lead-intake workflow or CRM-backed project inquiry form if Lottus wants to move beyond WhatsApp/phone as the primary contact path.
+After the new root site is deployed and visually reviewed on the real domain, the highest-value next improvements would be to add polished screenshots/case-study details for CAL, Concrete Operations & Quality System and KineticaPlus, and connect a dedicated lead-intake workflow or CRM-backed project inquiry form if Lottus wants to move beyond WhatsApp/phone as the primary contact path.

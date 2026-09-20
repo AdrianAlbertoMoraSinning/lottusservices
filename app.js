@@ -136,4 +136,140 @@
     const panel = group.querySelector(`[data-tab-panel="${tab.dataset.tabTarget}"]`);
     if (panel) panel.hidden = false;
   }));
+
+
+  const steelIntro = document.getElementById('steelIntro');
+  const replayIntroButtons = document.querySelectorAll('[data-replay-intro]');
+
+  if (steelIntro && document.body.classList.contains('home-page')) {
+    const enterSoundBtn = document.getElementById('steelEnterSound');
+    const skipIntroBtn = document.getElementById('steelSkipIntro');
+    const reducedIntroMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let introOpening = false;
+    let introVisible = false;
+    let autoOpenTimer = null;
+    let hideTimer = null;
+
+    const setSeen = () => {
+      try { sessionStorage.setItem('lottusSteelIntroSeen', '1'); } catch (_) {}
+    };
+
+    const clearSeen = () => {
+      try { sessionStorage.removeItem('lottusSteelIntroSeen'); } catch (_) {}
+    };
+
+    const noiseBufferFor = (ctx) => {
+      if (window.__lottusSteelNoiseBuffer) return window.__lottusSteelNoiseBuffer;
+      const buffer = ctx.createBuffer(1, ctx.sampleRate * 1.5, ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < data.length; i += 1) data[i] = (Math.random() * 2 - 1) * (1 - i / data.length);
+      window.__lottusSteelNoiseBuffer = buffer;
+      return buffer;
+    };
+
+    const playMetalDoorFx = async () => {
+      const Ctx = window.AudioContext || window.webkitAudioContext;
+      if (!Ctx) return;
+      const ctx = window.__lottusSteelCtx || (window.__lottusSteelCtx = new Ctx());
+      if (ctx.state === 'suspended') await ctx.resume();
+      const now = ctx.currentTime;
+      const buffer = noiseBufferFor(ctx);
+
+      const burst = (time, duration, { low = 2600, high = 180, gain = 0.05 } = {}) => {
+        const src = ctx.createBufferSource();
+        src.buffer = buffer;
+        const hp = ctx.createBiquadFilter();
+        hp.type = 'highpass';
+        hp.frequency.value = high;
+        const lp = ctx.createBiquadFilter();
+        lp.type = 'lowpass';
+        lp.frequency.value = low;
+        const g = ctx.createGain();
+        g.gain.setValueAtTime(0.0001, time);
+        g.gain.linearRampToValueAtTime(gain, time + 0.012);
+        g.gain.exponentialRampToValueAtTime(0.0001, time + duration);
+        src.connect(hp); hp.connect(lp); lp.connect(g); g.connect(ctx.destination);
+        src.start(time);
+        src.stop(time + duration + 0.04);
+      };
+
+      const tone = (time, freq, duration, gain = 0.025, type = 'triangle') => {
+        const osc = ctx.createOscillator();
+        const g = ctx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, time);
+        osc.frequency.exponentialRampToValueAtTime(Math.max(40, freq * 0.65), time + duration);
+        g.gain.setValueAtTime(0.0001, time);
+        g.gain.linearRampToValueAtTime(gain, time + 0.008);
+        g.gain.exponentialRampToValueAtTime(0.0001, time + duration);
+        osc.connect(g); g.connect(ctx.destination);
+        osc.start(time);
+        osc.stop(time + duration + 0.03);
+      };
+
+      burst(now, 0.2, { low: 3400, high: 480, gain: 0.06 });
+      tone(now, 184, 0.14, 0.024, 'triangle');
+      tone(now + 0.025, 92, 0.28, 0.02, 'sine');
+      burst(now + 0.08, 0.82, { low: 1400, high: 120, gain: 0.028 });
+      tone(now + 0.1, 130, 0.62, 0.014, 'sawtooth');
+      burst(now + 0.74, 0.17, { low: 2800, high: 640, gain: 0.05 });
+      tone(now + 0.73, 252, 0.14, 0.022, 'triangle');
+    };
+
+    const finishIntro = () => {
+      introVisible = false;
+      setSeen();
+      steelIntro.classList.add('is-hidden', 'is-finished');
+      steelIntro.classList.remove('is-active');
+      steelIntro.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('intro-active');
+      introOpening = false;
+      kickVideos();
+    };
+
+    const openSteelIntro = async (withSound = false) => {
+      if (introOpening || !introVisible) return;
+      introOpening = true;
+      steelIntro.classList.add('opening');
+      if (withSound) {
+        try { await playMetalDoorFx(); } catch (_) {}
+      }
+      window.clearTimeout(autoOpenTimer);
+      window.clearTimeout(hideTimer);
+      hideTimer = window.setTimeout(finishIntro, reducedIntroMotion ? 900 : 1800);
+    };
+
+    const showSteelIntro = (force = false) => {
+      const seen = !force && (() => { try { return sessionStorage.getItem('lottusSteelIntroSeen') === '1'; } catch (_) { return false; } })();
+      if (seen) {
+        steelIntro.classList.add('is-hidden');
+        steelIntro.setAttribute('aria-hidden', 'true');
+        return;
+      }
+      introVisible = true;
+      introOpening = false;
+      steelIntro.classList.remove('is-hidden', 'is-finished', 'opening');
+      steelIntro.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('intro-active');
+      requestAnimationFrame(() => steelIntro.classList.add('is-active'));
+      window.clearTimeout(autoOpenTimer);
+      autoOpenTimer = window.setTimeout(() => openSteelIntro(false), reducedIntroMotion ? 850 : 1700);
+    };
+
+    if (enterSoundBtn) enterSoundBtn.addEventListener('click', () => openSteelIntro(true));
+    if (skipIntroBtn) skipIntroBtn.addEventListener('click', () => openSteelIntro(false));
+    replayIntroButtons.forEach(btn => btn.addEventListener('click', () => {
+      clearSeen();
+      showSteelIntro(true);
+    }));
+
+    window.addEventListener('keydown', (event) => {
+      if (!introVisible) return;
+      if (event.key === 'Escape') openSteelIntro(false);
+      if (event.key === 'Enter') openSteelIntro(true);
+    });
+
+    showSteelIntro(false);
+  }
+
 })();
