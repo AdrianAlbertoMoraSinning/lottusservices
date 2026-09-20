@@ -255,7 +255,6 @@
     const target = event.target.closest(clickSoundSelector);
     if (!target) return;
     if (target.closest('#steelIntro')) return;
-    if (target.matches('[data-contact-intro], [data-contact-intro] *')) return;
     playSteelAccessFx('click');
   }, true);
 
@@ -326,29 +325,6 @@
     if (event.key === 'Escape' || event.key === 'Enter' || event.key === ' ') openSteelIntro();
   });
 
-  const contactLinks = [...document.querySelectorAll('a[href="#contact"], a[href$="#contact"]')];
-  contactLinks.forEach(link => {
-    link.dataset.contactIntro = '1';
-    link.addEventListener('click', (event) => {
-      const href = link.getAttribute('href') || '#contact';
-      const url = new URL(href, window.location.href);
-      event.preventDefault();
-      playSteelAccessFx('click');
-      showSteelIntro({
-        afterComplete: () => {
-          const samePage = url.pathname === window.location.pathname;
-          if (samePage) {
-            const target = document.getElementById('contact');
-            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            else window.location.hash = 'contact';
-          } else {
-            window.location.href = url.href;
-          }
-        },
-        immediateSound: true
-      });
-    });
-  });
 
   if (document.body.classList.contains('home-page')) {
     showSteelIntro({ immediateSound: true });
