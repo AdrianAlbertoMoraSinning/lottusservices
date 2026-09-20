@@ -1,0 +1,36 @@
+LOTTUS SERVICES INC. — PREMIUM TECHNOLOGY ITERATION
+September 2026
+
+FULL DEPLOYMENT
+Upload the complete contents of this repository root to the existing Lottus repository. Do not upload the enclosing lottusservices-main folder as an extra nested folder.
+
+MAIN NEW / MODIFIED PUBLIC FILES
+- index.html
+- portfolio.html
+- capability-websites.html
+- capability-portals.html
+- capability-systems.html
+- capability-integrations.html
+- style.css
+- app.js
+- payment.html
+- payment-success.html
+- manifest.json
+- browserconfig.xml
+
+NEW BRAND / MEDIA ASSETS
+- favicon.ico
+- favicons/
+- images/lottus-logo-transparent.png
+- images/lottus-logo-white.jpg
+- images/lottus-mark-transparent.png
+- images/lottus-og.jpg
+- media/platform-flow.mp4
+- media/portfolio-loop.mp4
+
+INTERNAL DOCUMENTATION
+- REBRAND_2026.md
+- PORTFOLIO_TECHNICAL_NOTES_2026.md
+
+PUBLIC DISCLOSURE RULE
+The customer-facing Lottus pages intentionally contain no repository/GitHub links. Live deployments and contained public experiences are used instead.
