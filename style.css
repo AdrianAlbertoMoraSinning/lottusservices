@@ -93,3 +93,15 @@
 video.autoloop-video{background:#07101d}
 video.autoloop-video.is-playing{filter:none}
 video.autoloop-video.autoplay-blocked{outline:1px solid rgba(82,220,255,.35)}
+
+/* --- Portfolio application video previews (Sep 2026) --- */
+.portfolio-case{display:flex;flex-direction:column;gap:16px}
+.portfolio-case.featured{display:grid;grid-template-columns:1.05fr .95fr;gap:22px;align-items:start}
+.portfolio-case-main{display:flex;flex-direction:column;gap:0}
+.portfolio-preview,.client-mini-video{background:linear-gradient(180deg,#081524,#0a1b31);border:1px solid rgba(84,161,232,.18);border-radius:18px;overflow:hidden;box-shadow:0 14px 34px rgba(2,10,22,.18)}
+.portfolio-preview video{display:block;width:100%;height:238px;object-fit:cover;background:#06101d}
+.portfolio-preview .video-caption{padding:10px 12px 14px}
+.client-mini-video{margin-bottom:14px;border-radius:16px}
+.client-mini-video video{display:block;width:100%;height:158px;object-fit:cover;background:#06101d}
+@media (max-width: 1100px){.portfolio-case.featured{grid-template-columns:1fr}.portfolio-preview video{height:220px}}
+@media (max-width: 720px){.client-mini-video video{height:182px}}
