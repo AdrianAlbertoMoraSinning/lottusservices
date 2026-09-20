@@ -48,14 +48,14 @@
 
   const markBlocked = (video) => {
     video.classList.add('autoplay-blocked');
-    video.controls = false;
+    // Browser/OS policy fallback: expose native controls only when autoplay truly fails.
+    video.controls = true;
   };
 
   const playVideo = async (video) => {
     if (!video) return;
     configureVideo(video);
     try {
-      video.load();
       await video.play();
       markPlaying(video);
     } catch (_) {
@@ -71,7 +71,7 @@
 
   const kickVideos = () => {
     videos.forEach(video => {
-      playVideo(video);
+      if (video.classList.contains('hero-loop') || visibleEnough(video)) playVideo(video);
     });
   };
 
@@ -79,11 +79,11 @@
     configureVideo(video);
     ['loadedmetadata', 'loadeddata', 'canplay', 'canplaythrough'].forEach(evt => {
       video.addEventListener(evt, () => {
-        playVideo(video);
+        if (video.classList.contains('hero-loop') || visibleEnough(video)) playVideo(video);
       }, { passive: true });
     });
     video.addEventListener('pause', () => {
-      if (document.visibilityState === 'visible') {
+      if (document.visibilityState === 'visible' && visibleEnough(video)) {
         setTimeout(() => playVideo(video), 80);
       }
     });
@@ -110,8 +110,8 @@
   });
 
   // Retry after initial layout/network settles and keep visible videos alive.
-  [60, 180, 420, 900, 1600, 2600].forEach(ms => setTimeout(kickVideos, ms));
-  setInterval(kickVideos, 1400);
+  [100, 350, 900, 1800].forEach(ms => setTimeout(kickVideos, ms));
+  setInterval(kickVideos, 2200);
 
   const reveals = document.querySelectorAll('.reveal');
   if (!('IntersectionObserver' in window) || reducedUI) {
