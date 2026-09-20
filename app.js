@@ -18,92 +18,103 @@
   const year = document.getElementById('year');
   if (year) year.textContent = new Date().getFullYear();
 
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const videos = [...document.querySelectorAll('video.autoloop-video, video[autoplay]')];
+  // IMPORTANT: reduced-motion only affects decorative UI motion.
+  // Product/showcase videos remain active because they are core content.
+  const reducedUI = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const videos = [...document.querySelectorAll('video[autoplay], video.autoloop-video')];
 
   const configureVideo = (video) => {
+    if (!video) return;
+    video.autoplay = true;
     video.muted = true;
     video.defaultMuted = true;
     video.loop = true;
     video.playsInline = true;
-    video.preload = 'metadata';
+    video.preload = 'auto';
+    video.setAttribute('autoplay', '');
     video.setAttribute('muted', '');
     video.setAttribute('loop', '');
     video.setAttribute('playsinline', '');
     video.setAttribute('webkit-playsinline', '');
-    video.setAttribute('preload', 'metadata');
-    if (reducedMotion) {
-      video.autoplay = false;
-      video.removeAttribute('autoplay');
-      video.pause();
+    video.setAttribute('preload', 'auto');
+    video.controls = false;
+  };
+
+  const markPlaying = (video) => {
+    video.classList.add('is-playing');
+    video.classList.remove('autoplay-blocked');
+    video.controls = false;
+  };
+
+  const markBlocked = (video) => {
+    video.classList.add('autoplay-blocked');
+    video.controls = false;
+  };
+
+  const playVideo = async (video) => {
+    if (!video) return;
+    configureVideo(video);
+    try {
+      video.load();
+      await video.play();
+      markPlaying(video);
+    } catch (_) {
+      markBlocked(video);
     }
   };
 
-  const ensureVideoButton = (video) => {
-    if (!video.parentElement || video.parentElement.querySelector(':scope > .video-toggle')) return;
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'video-toggle';
-    button.setAttribute('aria-label', 'Pause animation');
-    button.innerHTML = '<span aria-hidden="true">Ⅱ</span><b>Pause</b>';
-    button.addEventListener('click', async () => {
-      if (video.paused) {
-        video.dataset.userPaused = 'false';
-        try { await video.play(); } catch (_) {}
-        button.setAttribute('aria-label', 'Pause animation');
-        button.innerHTML = '<span aria-hidden="true">Ⅱ</span><b>Pause</b>';
-      } else {
-        video.dataset.userPaused = 'true';
-        video.pause();
-        button.setAttribute('aria-label', 'Play animation');
-        button.innerHTML = '<span aria-hidden="true">▶</span><b>Play</b>';
-      }
+  const visibleEnough = (video) => {
+    const r = video.getBoundingClientRect();
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    return r.bottom > -120 && r.top < vh + 160;
+  };
+
+  const kickVideos = () => {
+    videos.forEach(video => {
+      playVideo(video);
     });
-    video.parentElement.appendChild(button);
-    if (reducedMotion) {
-      button.setAttribute('aria-label', 'Play animation');
-      button.innerHTML = '<span aria-hidden="true">▶</span><b>Play</b>';
-    }
   };
 
   videos.forEach(video => {
     configureVideo(video);
-    ensureVideoButton(video);
+    ['loadedmetadata', 'loadeddata', 'canplay', 'canplaythrough'].forEach(evt => {
+      video.addEventListener(evt, () => {
+        playVideo(video);
+      }, { passive: true });
+    });
+    video.addEventListener('pause', () => {
+      if (document.visibilityState === 'visible') {
+        setTimeout(() => playVideo(video), 80);
+      }
+    });
   });
 
-  const playVisibleVideo = async (video) => {
-    if (reducedMotion || video.dataset.userPaused === 'true') return;
-    try { await video.play(); } catch (_) {}
-  };
-
-  const kickVideos = () => {
-    if (reducedMotion) return;
-    const vh = window.innerHeight || document.documentElement.clientHeight;
-    videos.forEach(video => {
-      const r = video.getBoundingClientRect();
-      if (r.bottom > -120 && r.top < vh + 160) playVisibleVideo(video);
-    });
-  };
+  document.addEventListener('DOMContentLoaded', kickVideos);
+  window.addEventListener('load', kickVideos);
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') kickVideos();
+  });
 
   if ('IntersectionObserver' in window) {
     const videoObserver = new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        const video = entry.target;
-        if (entry.isIntersecting) playVisibleVideo(video);
-        else if (!video.paused) video.pause();
+        if (entry.isIntersecting) playVideo(entry.target);
       });
-    }, { threshold: 0.18, rootMargin: '160px 0px 160px 0px' });
+    }, { threshold: 0.08, rootMargin: '220px 0px 220px 0px' });
     videos.forEach(v => videoObserver.observe(v));
-  } else if (!reducedMotion) {
-    videos.forEach(playVisibleVideo);
   }
 
-  document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState !== 'visible') videos.forEach(v => v.pause());
+  // User interaction also retries any browser-blocked video immediately.
+  ['scroll', 'resize', 'touchstart', 'pointerdown', 'click', 'keydown'].forEach(evt => {
+    window.addEventListener(evt, kickVideos, { passive: true });
   });
 
+  // Retry after initial layout/network settles and keep visible videos alive.
+  [60, 180, 420, 900, 1600, 2600].forEach(ms => setTimeout(kickVideos, ms));
+  setInterval(kickVideos, 1400);
+
   const reveals = document.querySelectorAll('.reveal');
-  if (!('IntersectionObserver' in window) || reducedMotion) {
+  if (!('IntersectionObserver' in window) || reducedUI) {
     reveals.forEach(el => el.classList.add('visible'));
   } else {
     const io = new IntersectionObserver(entries => entries.forEach(entry => {
@@ -119,16 +130,13 @@
   tabs.forEach(tab => tab.addEventListener('click', () => {
     const group = tab.closest('[data-tabs]');
     if (!group) return;
-    group.querySelectorAll('[data-tab-target]').forEach(x => {
-      x.classList.remove('active');
-      x.setAttribute('aria-selected', 'false');
-    });
+    group.querySelectorAll('[data-tab-target]').forEach(x => x.classList.remove('active'));
     group.querySelectorAll('[data-tab-panel]').forEach(x => x.hidden = true);
     tab.classList.add('active');
-    tab.setAttribute('aria-selected', 'true');
     const panel = group.querySelector(`[data-tab-panel="${tab.dataset.tabTarget}"]`);
     if (panel) panel.hidden = false;
   }));
+
 
   const Ctx = window.AudioContext || window.webkitAudioContext;
   const INTRO_HOLD_MS = 3600;
@@ -225,9 +233,12 @@
       osc.stop(time + duration + 0.05);
     };
     if (mode === 'click') {
-      burst(now, 0.07, { low: 3200, high: 620, gain: 0.022 });
-      tone(now, 360, 0.09, 0.012, 'triangle');
-      tone(now + 0.012, 210, 0.16, 0.006, 'sine');
+      burst(now, 0.12, { low: 2800, high: 420, gain: 0.028 });
+      tone(now, 310, 0.10, 0.016, 'triangle');
+      tone(now + 0.012, 168, 0.18, 0.011, 'sine');
+      burst(now + 0.16, 0.78, { low: 1200, high: 120, gain: 0.013 });
+      tone(now + 0.16, 98, 1.05, 0.0075, 'sine');
+      tone(now + 0.28, 144, 0.9, 0.0045, 'triangle');
       return;
     }
     burst(now, 0.2, { low: 3600, high: 520, gain: 0.07 });
@@ -253,7 +264,7 @@
     }, { once: true, passive: true });
   });
 
-  const steelIntro = document.body.classList.contains('home-page') ? ensureSteelIntro() : null;
+  const steelIntro = ensureSteelIntro();
   const reducedIntroMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let introOpening = false;
   let introVisible = false;
@@ -267,7 +278,6 @@
   };
 
   const finishIntro = () => {
-    if (!steelIntro) return;
     introVisible = false;
     steelIntro.classList.add('is-hidden', 'is-finished');
     steelIntro.classList.remove('is-active');
@@ -283,7 +293,7 @@
   };
 
   const openSteelIntro = async () => {
-    if (!steelIntro || introOpening || !introVisible) return;
+    if (introOpening || !introVisible) return;
     introOpening = true;
     steelIntro.classList.add('opening');
     playSteelAccessFx('full');
@@ -292,7 +302,6 @@
   };
 
   const showSteelIntro = ({ afterComplete = null, immediateSound = true } = {}) => {
-    if (!steelIntro) return;
     introCompleteAction = afterComplete;
     introVisible = true;
     introOpening = false;
@@ -320,5 +329,6 @@
   if (document.body.classList.contains('home-page')) {
     showSteelIntro({ immediateSound: true });
   }
+
 
 })();

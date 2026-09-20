@@ -203,3 +203,19 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;bac
 
 .anchor-alias{position:absolute;transform:translateY(-96px);width:1px;height:1px;overflow:hidden;pointer-events:none}
 #services,#work{position:relative}
+
+
+/* Streamlined home showcase fix */
+.early-proof-heading p + h2{max-width:13ch}
+.early-proof-note{max-width:52ch;color:#6b7f98;font-size:16px;line-height:1.7;margin-top:10px}
+.showcase-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-top:28px}
+.showcase-card{display:flex;flex-direction:column;min-height:100%;padding:14px;border-radius:26px;background:#fff;border:1px solid #d9e3ee;box-shadow:0 18px 50px rgba(15,34,60,.08)}
+.showcase-card--wide{grid-column:span 2}
+.showcase-preview{border-radius:18px;overflow:hidden;background:#07101d;border:1px solid #d5deea;box-shadow:0 18px 40px rgba(4,19,38,.08)}
+.showcase-preview video{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#07101d}
+.showcase-copy{display:flex;flex-direction:column;gap:10px;padding:14px 4px 6px}.showcase-copy span{font-size:10px;letter-spacing:.14em;font-weight:800;color:#1d63ff;text-transform:uppercase}.showcase-copy h3{font-size:28px;line-height:1.08;margin:0;color:#1b2940}.showcase-copy p{margin:0;color:#64778f;line-height:1.65;font-size:14px}.showcase-copy a{display:inline-flex;align-items:center;gap:8px;padding-top:6px;font-size:13px;font-weight:800;color:#1d63ff}
+.home-work-section{display:none!important}
+.contact-direct{display:flex;flex-direction:column;gap:14px;margin-top:18px}.contact-email-inline,.contact-pay-inline{display:flex;flex-direction:column;gap:4px;padding:12px 16px;border-radius:18px;background:#fff;border:1px solid #dae5f1;color:#18263c;box-shadow:0 14px 34px rgba(15,34,60,.06)}.contact-email-inline span,.contact-pay-inline span{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#70849c;font-weight:700}.contact-email-inline strong,.contact-pay-inline strong{font-size:18px;line-height:1.35;color:#16253b}.form-pay{display:flex;align-items:center;justify-content:center;padding:14px 18px;border-radius:16px;background:#07101d;color:#fff;font-weight:700}
+.main-nav a[href="payment.html"]{color:#1d63ff;font-weight:800}
+@media(max-width:1150px){.showcase-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.showcase-card--wide{grid-column:span 2}}
+@media(max-width:720px){.showcase-grid{grid-template-columns:1fr}.showcase-card--wide{grid-column:auto}.showcase-copy h3{font-size:24px}.early-proof-note{font-size:15px}.contact-email-inline strong,.contact-pay-inline strong{font-size:16px}}
