@@ -130,19 +130,6 @@
     if (panel) panel.hidden = false;
   }));
 
-  document.querySelectorAll('[data-live-preview]').forEach(preview => {
-    const button = preview.querySelector('[data-load-preview]');
-    const iframe = preview.querySelector('iframe[data-src]');
-    const placeholder = preview.querySelector('.live-preview-placeholder');
-    if (!button || !iframe) return;
-    button.addEventListener('click', () => {
-      if (!iframe.src || iframe.src.endsWith('about:blank')) iframe.src = iframe.dataset.src;
-      preview.classList.add('is-loaded');
-      if (placeholder) placeholder.hidden = true;
-      button.setAttribute('aria-expanded', 'true');
-    });
-  });
-
   const Ctx = window.AudioContext || window.webkitAudioContext;
   const INTRO_HOLD_MS = 3600;
   const INTRO_OPEN_MS = 2760;
@@ -238,12 +225,9 @@
       osc.stop(time + duration + 0.05);
     };
     if (mode === 'click') {
-      burst(now, 0.12, { low: 2800, high: 420, gain: 0.028 });
-      tone(now, 310, 0.10, 0.016, 'triangle');
-      tone(now + 0.012, 168, 0.18, 0.011, 'sine');
-      burst(now + 0.16, 0.78, { low: 1200, high: 120, gain: 0.013 });
-      tone(now + 0.16, 98, 1.05, 0.0075, 'sine');
-      tone(now + 0.28, 144, 0.9, 0.0045, 'triangle');
+      burst(now, 0.07, { low: 3200, high: 620, gain: 0.022 });
+      tone(now, 360, 0.09, 0.012, 'triangle');
+      tone(now + 0.012, 210, 0.16, 0.006, 'sine');
       return;
     }
     burst(now, 0.2, { low: 3600, high: 520, gain: 0.07 });
@@ -269,7 +253,7 @@
     }, { once: true, passive: true });
   });
 
-  const steelIntro = ensureSteelIntro();
+  const steelIntro = document.body.classList.contains('home-page') ? ensureSteelIntro() : null;
   const reducedIntroMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let introOpening = false;
   let introVisible = false;
@@ -283,6 +267,7 @@
   };
 
   const finishIntro = () => {
+    if (!steelIntro) return;
     introVisible = false;
     steelIntro.classList.add('is-hidden', 'is-finished');
     steelIntro.classList.remove('is-active');
@@ -298,7 +283,7 @@
   };
 
   const openSteelIntro = async () => {
-    if (introOpening || !introVisible) return;
+    if (!steelIntro || introOpening || !introVisible) return;
     introOpening = true;
     steelIntro.classList.add('opening');
     playSteelAccessFx('full');
@@ -307,6 +292,7 @@
   };
 
   const showSteelIntro = ({ afterComplete = null, immediateSound = true } = {}) => {
+    if (!steelIntro) return;
     introCompleteAction = afterComplete;
     introVisible = true;
     introOpening = false;
