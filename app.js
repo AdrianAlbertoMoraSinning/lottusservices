@@ -139,8 +139,8 @@
 
 
   const Ctx = window.AudioContext || window.webkitAudioContext;
-  const INTRO_HOLD_MS = 6000;
-  const INTRO_OPEN_MS = 4600;
+  const INTRO_HOLD_MS = 3600;
+  const INTRO_OPEN_MS = 2760;
 
   const buildSteelIntroMarkup = () => `
     <div class="steel-intro" id="steelIntro" aria-hidden="true">
@@ -151,13 +151,10 @@
       <div class="steel-intro__frame steel-intro__frame--bottom" aria-hidden="true"></div>
       <div class="steel-door steel-door--left" aria-hidden="true"><span class="steel-door__edge"></span></div>
       <div class="steel-door steel-door--right" aria-hidden="true"><span class="steel-door__edge"></span></div>
-      <div class="steel-shutters" aria-hidden="true">
-        <span></span><span></span><span></span><span></span><span></span><span></span>
-        <span></span><span></span><span></span><span></span><span></span><span></span>
-      </div>
+      <div class="steel-shutters" aria-hidden="true"><span></span><span></span></div>
+      <div class="steel-intro__xmark" aria-hidden="true"><span></span><span></span></div>
       <div class="steel-intro__content" aria-label="Lottus access sequence">
         <div class="steel-intro__crest" aria-hidden="true"><img src="images/lottus-logo-transparent.png" alt="" /></div>
-        <p class="steel-intro__label">Lottus Digital Systems</p>
         <div class="steel-intro__loading" aria-hidden="true"><span></span></div>
       </div>
       <div class="steel-intro__scanline" aria-hidden="true"></div>
