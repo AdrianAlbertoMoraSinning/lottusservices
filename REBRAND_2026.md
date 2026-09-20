@@ -35,3 +35,10 @@ Public pages describe capabilities without exposing credentials, private adminis
 
 ## Deployment
 Upload the entire repository contents to the existing Lottus repository root. Netlify can continue deploying the project from the same site configuration.
+
+
+## Video visibility correction — September 2026
+- The Home hero now uses an explicit 28-second four-capability showreel with native controls.
+- Each capability detail page now contains a dedicated 7-second animated capability showcase with controls and a clear VIDEO label.
+- Portfolio showreel is visible with controls and a labeled frame.
+- Video posters and fallback text are included so the section remains understandable when autoplay is blocked.
