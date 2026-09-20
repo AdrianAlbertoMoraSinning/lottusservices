@@ -18,103 +18,92 @@
   const year = document.getElementById('year');
   if (year) year.textContent = new Date().getFullYear();
 
-  // IMPORTANT: reduced-motion only affects decorative UI motion.
-  // Product/showcase videos remain active because they are core content.
-  const reducedUI = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const videos = [...document.querySelectorAll('video[autoplay], video.autoloop-video')];
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const videos = [...document.querySelectorAll('video.autoloop-video, video[autoplay]')];
 
   const configureVideo = (video) => {
-    if (!video) return;
-    video.autoplay = true;
     video.muted = true;
     video.defaultMuted = true;
     video.loop = true;
     video.playsInline = true;
-    video.preload = 'auto';
-    video.setAttribute('autoplay', '');
+    video.preload = 'metadata';
     video.setAttribute('muted', '');
     video.setAttribute('loop', '');
     video.setAttribute('playsinline', '');
     video.setAttribute('webkit-playsinline', '');
-    video.setAttribute('preload', 'auto');
-    video.controls = false;
-  };
-
-  const markPlaying = (video) => {
-    video.classList.add('is-playing');
-    video.classList.remove('autoplay-blocked');
-    video.controls = false;
-  };
-
-  const markBlocked = (video) => {
-    video.classList.add('autoplay-blocked');
-    // Browser/OS policy fallback: expose native controls only when autoplay truly fails.
-    video.controls = true;
-  };
-
-  const playVideo = async (video) => {
-    if (!video) return;
-    configureVideo(video);
-    try {
-      await video.play();
-      markPlaying(video);
-    } catch (_) {
-      markBlocked(video);
+    video.setAttribute('preload', 'metadata');
+    if (reducedMotion) {
+      video.autoplay = false;
+      video.removeAttribute('autoplay');
+      video.pause();
     }
   };
 
-  const visibleEnough = (video) => {
-    const r = video.getBoundingClientRect();
-    const vh = window.innerHeight || document.documentElement.clientHeight;
-    return r.bottom > -120 && r.top < vh + 160;
-  };
-
-  const kickVideos = () => {
-    videos.forEach(video => {
-      if (video.classList.contains('hero-loop') || visibleEnough(video)) playVideo(video);
+  const ensureVideoButton = (video) => {
+    if (!video.parentElement || video.parentElement.querySelector(':scope > .video-toggle')) return;
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'video-toggle';
+    button.setAttribute('aria-label', 'Pause animation');
+    button.innerHTML = '<span aria-hidden="true">Ⅱ</span><b>Pause</b>';
+    button.addEventListener('click', async () => {
+      if (video.paused) {
+        video.dataset.userPaused = 'false';
+        try { await video.play(); } catch (_) {}
+        button.setAttribute('aria-label', 'Pause animation');
+        button.innerHTML = '<span aria-hidden="true">Ⅱ</span><b>Pause</b>';
+      } else {
+        video.dataset.userPaused = 'true';
+        video.pause();
+        button.setAttribute('aria-label', 'Play animation');
+        button.innerHTML = '<span aria-hidden="true">▶</span><b>Play</b>';
+      }
     });
+    video.parentElement.appendChild(button);
+    if (reducedMotion) {
+      button.setAttribute('aria-label', 'Play animation');
+      button.innerHTML = '<span aria-hidden="true">▶</span><b>Play</b>';
+    }
   };
 
   videos.forEach(video => {
     configureVideo(video);
-    ['loadedmetadata', 'loadeddata', 'canplay', 'canplaythrough'].forEach(evt => {
-      video.addEventListener(evt, () => {
-        if (video.classList.contains('hero-loop') || visibleEnough(video)) playVideo(video);
-      }, { passive: true });
-    });
-    video.addEventListener('pause', () => {
-      if (document.visibilityState === 'visible' && visibleEnough(video)) {
-        setTimeout(() => playVideo(video), 80);
-      }
-    });
+    ensureVideoButton(video);
   });
 
-  document.addEventListener('DOMContentLoaded', kickVideos);
-  window.addEventListener('load', kickVideos);
-  document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible') kickVideos();
-  });
+  const playVisibleVideo = async (video) => {
+    if (reducedMotion || video.dataset.userPaused === 'true') return;
+    try { await video.play(); } catch (_) {}
+  };
+
+  const kickVideos = () => {
+    if (reducedMotion) return;
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    videos.forEach(video => {
+      const r = video.getBoundingClientRect();
+      if (r.bottom > -120 && r.top < vh + 160) playVisibleVideo(video);
+    });
+  };
 
   if ('IntersectionObserver' in window) {
     const videoObserver = new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) playVideo(entry.target);
+        const video = entry.target;
+        if (entry.isIntersecting) playVisibleVideo(video);
+        else if (!video.paused) video.pause();
       });
-    }, { threshold: 0.08, rootMargin: '220px 0px 220px 0px' });
+    }, { threshold: 0.18, rootMargin: '160px 0px 160px 0px' });
     videos.forEach(v => videoObserver.observe(v));
+  } else if (!reducedMotion) {
+    videos.forEach(playVisibleVideo);
   }
 
-  // User interaction also retries any browser-blocked video immediately.
-  ['scroll', 'resize', 'touchstart', 'pointerdown', 'click', 'keydown'].forEach(evt => {
-    window.addEventListener(evt, kickVideos, { passive: true });
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState !== 'visible') videos.forEach(v => v.pause());
   });
 
-  // Retry after initial layout/network settles and keep visible videos alive.
-  [100, 350, 900, 1800].forEach(ms => setTimeout(kickVideos, ms));
-  setInterval(kickVideos, 2200);
-
   const reveals = document.querySelectorAll('.reveal');
-  if (!('IntersectionObserver' in window) || reducedUI) {
+  if (!('IntersectionObserver' in window) || reducedMotion) {
     reveals.forEach(el => el.classList.add('visible'));
   } else {
     const io = new IntersectionObserver(entries => entries.forEach(entry => {
@@ -130,13 +119,29 @@
   tabs.forEach(tab => tab.addEventListener('click', () => {
     const group = tab.closest('[data-tabs]');
     if (!group) return;
-    group.querySelectorAll('[data-tab-target]').forEach(x => x.classList.remove('active'));
+    group.querySelectorAll('[data-tab-target]').forEach(x => {
+      x.classList.remove('active');
+      x.setAttribute('aria-selected', 'false');
+    });
     group.querySelectorAll('[data-tab-panel]').forEach(x => x.hidden = true);
     tab.classList.add('active');
+    tab.setAttribute('aria-selected', 'true');
     const panel = group.querySelector(`[data-tab-panel="${tab.dataset.tabTarget}"]`);
     if (panel) panel.hidden = false;
   }));
 
+  document.querySelectorAll('[data-live-preview]').forEach(preview => {
+    const button = preview.querySelector('[data-load-preview]');
+    const iframe = preview.querySelector('iframe[data-src]');
+    const placeholder = preview.querySelector('.live-preview-placeholder');
+    if (!button || !iframe) return;
+    button.addEventListener('click', () => {
+      if (!iframe.src || iframe.src.endsWith('about:blank')) iframe.src = iframe.dataset.src;
+      preview.classList.add('is-loaded');
+      if (placeholder) placeholder.hidden = true;
+      button.setAttribute('aria-expanded', 'true');
+    });
+  });
 
   const Ctx = window.AudioContext || window.webkitAudioContext;
   const INTRO_HOLD_MS = 3600;
@@ -329,6 +334,5 @@
   if (document.body.classList.contains('home-page')) {
     showSteelIntro({ immediateSound: true });
   }
-
 
 })();
