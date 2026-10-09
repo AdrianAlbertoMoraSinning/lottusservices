@@ -1,0 +1,43 @@
+name: SumaQ smoke checks
+
+on:
+  push:
+    paths:
+      - 'SumaQ17th/**'
+      - 'netlify/functions/sumaq-*.js'
+      - 'netlify/functions/stripe-webhook.js'
+      - '.github/workflows/sumaq-smoke.yml'
+  pull_request:
+    paths:
+      - 'SumaQ17th/**'
+      - 'netlify/functions/sumaq-*.js'
+      - 'netlify/functions/stripe-webhook.js'
+
+jobs:
+  syntax:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Check SumaQ browser JavaScript
+        run: |
+          node --check SumaQ17th/commerce.js
+          node --check SumaQ17th/order-payment.js
+          node --check SumaQ17th/order-confirmation.js
+          node --check SumaQ17th/admin.js
+          node --check SumaQ17th/staff-reservations.js
+          node --check SumaQ17th/print-agent/index.js
+      - name: Check SumaQ Netlify functions
+        run: |
+          node --check netlify/functions/sumaq-data.js
+          node --check netlify/functions/sumaq-create-order-checkout.js
+          node --check netlify/functions/sumaq-confirm-order-payment.js
+          node --check netlify/functions/sumaq-kitchen.js
+          node --check netlify/functions/sumaq-print-agent.js
+          node --check netlify/functions/sumaq-order-ingest.js
+          node --check netlify/functions/sumaq-staff-reservations.js
+          node --check netlify/functions/stripe-webhook.js
+      - name: Validate official menu JSON
+        run: node -e "JSON.parse(require('fs').readFileSync('SumaQ17th/assets/data/official-menu-jan-2026.json','utf8')); console.log('menu json ok')"
