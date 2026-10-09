@@ -1,8 +1,40 @@
 const pendingMode=JSON.parse(sessionStorage.getItem('sumaqPendingOrder')||'{}').mode||'pickup';
-const CART_KEY='sumaqCart_'+pendingMode,PENDING_KEY='sumaqPendingCommerceOrder';
+const PENDING_KEY='sumaqPendingCommerceOrder';
 const pending=JSON.parse(sessionStorage.getItem(PENDING_KEY)||'null');
-const form=document.getElementById('orderDemoPaymentForm'),card=document.getElementById('orderCardNumber'),expiry=document.getElementById('orderExpiry');
+const form=document.getElementById('orderPaymentForm');
 const money=n=>new Intl.NumberFormat('en-CA',{style:'currency',currency:'CAD'}).format(n||0);
-if(!pending){document.getElementById('orderPaymentMsg').textContent='No pending order was found.';form?.querySelector('button')?.setAttribute('disabled','disabled')}else{document.getElementById('orderPaymentTotal').textContent=`${money(pending.total)} CAD`;document.getElementById('orderPayButton').textContent=`Simulate ${money(pending.total)} payment`;document.getElementById('orderSummary').innerHTML=pending.items.map(i=>`<div><span>${i.qty} × ${i.name}</span><strong>${money(i.price*i.qty)}</strong></div>`).join('')+`<div><span>GST</span><strong>${money(pending.tax)}</strong></div>`}
-card?.addEventListener('input',()=>card.value=card.value.replace(/\D/g,'').slice(0,16).replace(/(.{4})/g,'$1 ').trim());expiry?.addEventListener('input',()=>{const v=expiry.value.replace(/\D/g,'').slice(0,4);expiry.value=v.length>2?v.slice(0,2)+'/'+v.slice(2):v});
-form?.addEventListener('submit',async e=>{e.preventDefault();if(!pending)return;const button=form.querySelector('button');button.disabled=true;try{await SumaQData.callFunction('complete-demo-order',{publicId:pending.id});localStorage.setItem(CART_KEY,'[]');sessionStorage.removeItem(PENDING_KEY);document.getElementById('orderPaymentMsg').textContent='Demo payment approved. The central order is confirmed.';setTimeout(()=>location.href=`${pendingMode==='shop'?'shop.html':'order-pickup.html'}?payment=success&order=${encodeURIComponent(pending.id)}`,700)}catch(err){document.getElementById('orderPaymentMsg').textContent=err.message;button.disabled=false}});
+const msg=document.getElementById('orderPaymentMsg');
+
+if(!pending){
+  msg.textContent='No pending order was found.';
+  form?.querySelector('button')?.setAttribute('disabled','disabled');
+}else{
+  document.getElementById('orderPaymentTotal').textContent=`${money(pending.total)} CAD`;
+  document.getElementById('orderPayButton').textContent=`Pay ${money(pending.total)} securely`;
+  document.getElementById('orderSummary').innerHTML=pending.items.map(i=>`<div><span>${i.qty} × ${i.name}</span><strong>${money(i.price*i.qty)}</strong></div>`).join('')+`<div><span>GST</span><strong>${money(pending.tax)}</strong></div>`;
+}
+
+if(new URLSearchParams(location.search).get('payment')==='cancelled'){
+  msg.textContent='Payment was cancelled. Your order has not been paid. You can try again when ready.';
+}
+
+form?.addEventListener('submit',async e=>{
+  e.preventDefault();
+  if(!pending)return;
+  const button=form.querySelector('button');
+  button.disabled=true;
+  msg.textContent='Opening secure payment…';
+  try{
+    const response=await fetch('/.netlify/functions/sumaq-create-order-checkout',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({publicId:pending.id})
+    });
+    const json=await response.json().catch(()=>({}));
+    if(!response.ok||!json.url)throw new Error(json.error||'Secure checkout could not be opened.');
+    location.href=json.url;
+  }catch(err){
+    msg.textContent=err.message;
+    button.disabled=false;
+  }
+});
