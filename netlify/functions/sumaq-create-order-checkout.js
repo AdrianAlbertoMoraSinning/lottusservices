@@ -6,6 +6,10 @@ function env(name) {
   return value;
 }
 
+function json(statusCode, body) {
+  return { statusCode, headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }, body: JSON.stringify(body) };
+}
+
 async function supabase(path, { method = 'GET', body, prefer = 'return=representation' } = {}) {
   const base = env('SUPABASE_URL').replace(/\/$/, '');
   const key = env('SUPABASE_SERVICE_ROLE_KEY');
@@ -27,25 +31,39 @@ async function supabase(path, { method = 'GET', body, prefer = 'return=represent
 }
 
 exports.handler = async (event) => {
-  if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: JSON.stringify({ error: 'Method not allowed' }) };
-  }
+  if (event.httpMethod !== 'POST') return json(405, { error: 'Method not allowed' });
 
   try {
-    const { publicId } = JSON.parse(event.body || '{}');
+    const { publicId, preview = false } = JSON.parse(event.body || '{}');
     const id = String(publicId || '').trim().slice(0, 80);
     if (!id) throw new Error('Order ID is required.');
 
     const orders = await supabase(`orders?public_id=eq.${encodeURIComponent(id)}&select=id,public_id,order_type,customer_name,email,subtotal,tax,total,payment_status&limit=1`);
     if (!orders?.length) throw new Error('Order not found.');
     const order = orders[0];
-
-    if (/^Paid/i.test(order.payment_status || '')) {
-      throw new Error('This order is already paid.');
-    }
-
     const items = await supabase(`order_items?order_id=eq.${encodeURIComponent(order.id)}&select=product_name,unit_price,quantity,line_total&order=id.asc`);
     if (!items?.length) throw new Error('Order has no items.');
+
+    if (preview) {
+      return json(200, {
+        order: {
+          publicId: order.public_id,
+          orderType: order.order_type,
+          subtotal: Number(order.subtotal || 0),
+          tax: Number(order.tax || 0),
+          total: Number(order.total || 0),
+          paymentStatus: order.payment_status,
+          items: items.map((item) => ({
+            name: item.product_name,
+            price: Number(item.unit_price || 0),
+            qty: Number(item.quantity || 0),
+            lineTotal: Number(item.line_total || 0)
+          }))
+        }
+      });
+    }
+
+    if (/^Paid/i.test(order.payment_status || '')) throw new Error('This order is already paid.');
 
     const line_items = items.map((item) => ({
       quantity: Number(item.quantity || 1),
@@ -95,17 +113,9 @@ exports.handler = async (event) => {
       prefer: 'return=minimal'
     });
 
-    return {
-      statusCode: 200,
-      headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
-      body: JSON.stringify({ url: session.url })
-    };
+    return json(200, { url: session.url });
   } catch (error) {
     console.error(error);
-    return {
-      statusCode: 400,
-      headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
-      body: JSON.stringify({ error: error.message || 'Checkout could not be created.' })
-    };
+    return json(400, { error: error.message || 'Checkout could not be created.' });
   }
 };
