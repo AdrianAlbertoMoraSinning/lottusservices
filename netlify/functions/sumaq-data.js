@@ -28,9 +28,7 @@ async function request(path, { method = 'GET', body } = {}) {
   const text = await response.text();
   let data = null;
   try { data = text ? JSON.parse(text) : null; } catch { data = text; }
-  if (!response.ok) {
-    throw new Error(data?.message || data?.error || `Supabase error ${response.status}`);
-  }
+  if (!response.ok) throw new Error(data?.message || data?.error || `Supabase error ${response.status}`);
   return data;
 }
 
@@ -45,11 +43,7 @@ function cleanEmail(value) {
 }
 
 function normalizeTime(value) {
-  const raw = cleanText(value, 30)
-    .toLowerCase()
-    .replace(/\./g, '')
-    .replace(/\s+/g, ' ')
-    .trim();
+  const raw = cleanText(value, 30).toLowerCase().replace(/\./g, '').replace(/\s+/g, ' ').trim();
   const match = raw.match(/^(\d{1,2}):(\d{2})\s*(am|pm)?$/);
   if (!match) throw new Error('Invalid reservation time.');
   let hours = Number(match[1]);
@@ -98,8 +92,23 @@ async function validatedOrderLines(type, payloadItems) {
     const rows = await request('menu_items?select=slug,name,price,active&active=eq.true');
     const central = new Map((rows || []).map((row) => [row.slug, row]));
     return incoming.map((item) => {
-      const matched = officialPickupMatch(item.id);
-      if (!matched) throw new Error('One or more pickup items are no longer available.');
+      const requestedSlug = cleanText(item.id, 120);
+      const matched = officialPickupMatch(requestedSlug);
+      if (!matched) {
+        const liveCustom = central.get(requestedSlug);
+        if (!liveCustom || liveCustom.active === false) throw new Error('One or more pickup items are no longer available.');
+        const qty = quantity(item.qty);
+        const unitPrice = Number(liveCustom.price);
+        if (!Number.isFinite(unitPrice) || unitPrice < 0) throw new Error(`Invalid price for ${liveCustom.name}.`);
+        return {
+          product_slug: requestedSlug,
+          product_name: cleanText(liveCustom.name, 200),
+          unit_price: roundMoney(unitPrice),
+          quantity: qty,
+          line_total: roundMoney(unitPrice * qty)
+        };
+      }
+
       const { base, variant } = matched;
       const live = central.get(base.id);
       if (!live || live.active === false) throw new Error(`${base.name} is no longer available.`);
@@ -137,9 +146,7 @@ async function validatedOrderLines(type, payloadItems) {
 }
 
 exports.handler = async (event) => {
-  if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: JSON.stringify({ error: 'Method not allowed' }) };
-  }
+  if (event.httpMethod !== 'POST') return { statusCode: 405, body: JSON.stringify({ error: 'Method not allowed' }) };
 
   try {
     const { action, payload = {} } = JSON.parse(event.body || '{}');
