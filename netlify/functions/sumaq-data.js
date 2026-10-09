@@ -1,3 +1,5 @@
+const OFFICIAL_MENU = require('../../SumaQ17th/assets/data/official-menu-jan-2026.json');
+
 const ALLOWED_ACTIONS = new Set([
   'create-reservation',
   'create-event',
@@ -12,11 +14,12 @@ function env(name) {
 
 async function request(path, { method = 'GET', body } = {}) {
   const url = env('SUPABASE_URL').replace(/\/$/, '') + '/rest/v1/' + path;
+  const key = env('SUPABASE_SERVICE_ROLE_KEY');
   const response = await fetch(url, {
     method,
     headers: {
-      apikey: env('SUPABASE_SERVICE_ROLE_KEY'),
-      Authorization: `Bearer ${env('SUPABASE_SERVICE_ROLE_KEY')}`,
+      apikey: key,
+      Authorization: `Bearer ${key}`,
       'Content-Type': 'application/json',
       Prefer: 'return=representation'
     },
@@ -56,6 +59,81 @@ function normalizeTime(value) {
   if (period === 'am' && hours === 12) hours = 0;
   if (hours > 23 || Number(minutes) > 59) throw new Error('Invalid reservation time.');
   return `${String(hours).padStart(2, '0')}:${minutes}:00`;
+}
+
+function roundMoney(value) {
+  return Math.round((Number(value) + Number.EPSILON) * 100) / 100;
+}
+
+function quantity(value) {
+  const n = Number(value);
+  if (!Number.isInteger(n) || n < 1 || n > 99) throw new Error('Invalid item quantity.');
+  return n;
+}
+
+function officialPickupMatch(slug) {
+  const requested = cleanText(slug, 120);
+  const food = Array.isArray(OFFICIAL_MENU?.food) ? OFFICIAL_MENU.food : [];
+  const base = food
+    .filter((item) => requested === item.id || requested.startsWith(`${item.id}-`))
+    .sort((a, b) => b.id.length - a.id.length)[0];
+  if (!base) return null;
+  const suffix = requested === base.id ? '' : requested.slice(base.id.length + 1);
+  const variants = Array.isArray(base.variants) ? base.variants : [];
+  if (variants.length) {
+    if (!suffix) throw new Error(`Please select an option for ${base.name}.`);
+    const variant = variants.find((v) => v.id === suffix);
+    if (!variant) throw new Error(`Invalid option for ${base.name}.`);
+    return { base, variant };
+  }
+  if (suffix) return null;
+  return { base, variant: null };
+}
+
+async function validatedOrderLines(type, payloadItems) {
+  const incoming = Array.isArray(payloadItems) ? payloadItems.slice(0, 100) : [];
+  if (!incoming.length) throw new Error('Order is empty.');
+
+  if (type === 'pickup') {
+    const rows = await request('menu_items?select=slug,name,price,active&active=eq.true');
+    const central = new Map((rows || []).map((row) => [row.slug, row]));
+    return incoming.map((item) => {
+      const matched = officialPickupMatch(item.id);
+      if (!matched) throw new Error('One or more pickup items are no longer available.');
+      const { base, variant } = matched;
+      const live = central.get(base.id);
+      if (!live || live.active === false) throw new Error(`${base.name} is no longer available.`);
+      const qty = quantity(item.qty);
+      const unitPrice = variant ? Number(variant.price) : Number(live.price);
+      if (!Number.isFinite(unitPrice) || unitPrice < 0) throw new Error(`Invalid price for ${base.name}.`);
+      const productName = variant ? `${live.name || base.name} — ${variant.label}` : (live.name || base.name);
+      return {
+        product_slug: variant ? `${base.id}-${variant.id}` : base.id,
+        product_name: cleanText(productName, 200),
+        unit_price: roundMoney(unitPrice),
+        quantity: qty,
+        line_total: roundMoney(unitPrice * qty)
+      };
+    });
+  }
+
+  const rows = await request('shop_products?select=slug,name,price,active&active=eq.true');
+  const products = new Map((rows || []).map((row) => [row.slug, row]));
+  return incoming.map((item) => {
+    const slug = cleanText(item.id, 100);
+    const live = products.get(slug);
+    if (!live || live.active === false) throw new Error('One or more shop items are no longer available.');
+    const qty = quantity(item.qty);
+    const unitPrice = Number(live.price);
+    if (!Number.isFinite(unitPrice) || unitPrice < 0) throw new Error(`Invalid price for ${live.name}.`);
+    return {
+      product_slug: slug,
+      product_name: cleanText(live.name, 200),
+      unit_price: roundMoney(unitPrice),
+      quantity: qty,
+      line_total: roundMoney(unitPrice * qty)
+    };
+  });
 }
 
 exports.handler = async (event) => {
@@ -104,9 +182,17 @@ exports.handler = async (event) => {
     }
 
     if (action === 'create-order') {
+      const type = payload.type === 'shop' ? 'shop' : 'pickup';
+      const lines = await validatedOrderLines(type, payload.items);
+      const subtotal = roundMoney(lines.reduce((sum, item) => sum + Number(item.line_total), 0));
+      const tax = roundMoney(subtotal * 0.05);
+      const total = roundMoney(subtotal + tax);
+      const publicId = cleanText(payload.id, 60);
+      if (!publicId) throw new Error('Order ID is required.');
+
       const order = {
-        public_id: cleanText(payload.id, 60),
-        order_type: payload.type === 'shop' ? 'shop' : 'pickup',
+        public_id: publicId,
+        order_type: type,
         customer_name: cleanText(payload.customerName, 160),
         email: cleanEmail(payload.email),
         phone: cleanText(payload.phone, 40),
@@ -114,35 +200,28 @@ exports.handler = async (event) => {
         pickup_time: payload.pickupTime || null,
         fulfillment: cleanText(payload.fulfillment || 'Store pickup', 80),
         notes: cleanText(payload.notes, 2000),
-        subtotal: Number(payload.subtotal || 0),
-        tax: Number(payload.tax || 0),
-        total: Number(payload.total || 0),
+        subtotal,
+        tax,
+        total,
         status: 'Awaiting payment',
         payment_status: 'Pending'
       };
       const created = (await request('orders', { method: 'POST', body: order }))[0];
-      const lines = (payload.items || []).slice(0, 100).map((item) => ({
-        order_id: created.id,
-        product_slug: cleanText(item.id, 100),
-        product_name: cleanText(item.name, 200),
-        unit_price: Number(item.price || 0),
-        quantity: Number(item.qty || 0),
-        line_total: Number(item.price || 0) * Number(item.qty || 0)
-      }));
-      if (lines.length) await request('order_items', { method: 'POST', body: lines });
-      data = { ...created, items: lines };
+      const storedLines = lines.map((line) => ({ ...line, order_id: created.id }));
+      if (storedLines.length) await request('order_items', { method: 'POST', body: storedLines });
+      data = { ...created, items: storedLines };
     }
 
     return {
       statusCode: 200,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
       body: JSON.stringify({ data })
     };
   } catch (error) {
     console.error(error);
     return {
       statusCode: 400,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
       body: JSON.stringify({ error: error.message || 'Request failed' })
     };
   }
