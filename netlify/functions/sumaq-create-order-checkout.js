@@ -6,15 +6,18 @@ function env(name) {
   return value;
 }
 
-async function supabase(path) {
+async function supabase(path, { method = 'GET', body, prefer = 'return=representation' } = {}) {
   const base = env('SUPABASE_URL').replace(/\/$/, '');
   const key = env('SUPABASE_SERVICE_ROLE_KEY');
   const response = await fetch(`${base}/rest/v1/${path}`, {
+    method,
     headers: {
       apikey: key,
       Authorization: `Bearer ${key}`,
-      'Content-Type': 'application/json'
-    }
+      'Content-Type': 'application/json',
+      Prefer: prefer
+    },
+    body: body ? JSON.stringify(body) : undefined
   });
   const text = await response.text();
   let data = null;
@@ -82,8 +85,14 @@ exports.handler = async (event) => {
           sumaqOrderType: order.order_type
         }
       },
-      success_url: `${basePath}/${order.order_type === 'shop' ? 'shop.html' : 'order-pickup.html'}?payment=success&order=${encodeURIComponent(order.public_id)}`,
+      success_url: `${basePath}/order-confirmation.html?order=${encodeURIComponent(order.public_id)}&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${basePath}/order-payment.html?payment=cancelled`
+    });
+
+    await supabase(`orders?id=eq.${encodeURIComponent(order.id)}`, {
+      method: 'PATCH',
+      body: { stripe_session_id: session.id, updated_at: new Date().toISOString() },
+      prefer: 'return=minimal'
     });
 
     return {
