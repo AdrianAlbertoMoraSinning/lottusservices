@@ -39,5 +39,7 @@ jobs:
           node --check netlify/functions/sumaq-order-ingest.js
           node --check netlify/functions/sumaq-staff-reservations.js
           node --check netlify/functions/stripe-webhook.js
+      - name: Validate server pricing data import
+        run: node -e "require('./netlify/functions/sumaq-data.js'); console.log('server pricing import ok')"
       - name: Validate official menu JSON
         run: node -e "JSON.parse(require('fs').readFileSync('SumaQ17th/assets/data/official-menu-jan-2026.json','utf8')); console.log('menu json ok')"
