@@ -3,6 +3,7 @@ const PENDING_KEY='sumaqPendingCommerceOrder';
 let pending=JSON.parse(sessionStorage.getItem(PENDING_KEY)||'null');
 const form=document.getElementById('orderPaymentForm');
 const money=n=>new Intl.NumberFormat('en-CA',{style:'currency',currency:'CAD'}).format(Number(n)||0);
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const msg=document.getElementById('orderPaymentMsg');
 const button=document.getElementById('orderPayButton');
 
@@ -10,7 +11,7 @@ function renderOrder(order){
   if(!order)return;
   document.getElementById('orderPaymentTotal').textContent=`${money(order.total)} CAD`;
   button.textContent=`Pay ${money(order.total)} securely`;
-  document.getElementById('orderSummary').innerHTML=(order.items||[]).map(i=>`<div><span>${Number(i.qty||0)} × ${i.name}</span><strong>${money(Number(i.lineTotal??(Number(i.price||0)*Number(i.qty||0))))}</strong></div>`).join('')+`<div><span>GST</span><strong>${money(order.tax)}</strong></div>`;
+  document.getElementById('orderSummary').innerHTML=(order.items||[]).map(i=>`<div><span>${Number(i.qty||0)} × ${esc(i.name)}</span><strong>${money(Number(i.lineTotal??(Number(i.price||0)*Number(i.qty||0))))}</strong></div>`).join('')+`<div><span>GST</span><strong>${money(order.tax)}</strong></div>`;
 }
 
 async function loadAuthoritativeSummary(){
