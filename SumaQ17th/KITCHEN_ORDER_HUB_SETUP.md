@@ -1,52 +1,87 @@
-# Sumaq Kitchen Order Hub - setup
+# Sumaq Kitchen Order Hub - final software setup
 
-Implemented foundation:
+Implemented:
 - Unified kitchen dashboard: `/sumaq17th/kitchen-orders.html`
-- Paid web pickup orders can automatically enter the kitchen print queue.
-- Local print agent for network printers.
-- Print status, kitchen status and reprint support.
+- Real Stripe Checkout for web Pickup orders
+- Server-side payment confirmation plus Stripe webhook backup
+- Paid Pickup orders automatically enter the kitchen print queue
+- Normalized server-side ingestion endpoint for Uber Eats / Skip adapters
+- Kitchen states: New / Preparing / Ready / Completed
+- Print status, error visibility and Reprint
+- Local print agent for restaurant-owned network printers
+- Multi-printer target support (`kitchen`, and later `receipt`, `bar`, etc.)
+- Automatic recovery of stale print claims
 
-## 1. Supabase
+## 1. Sumaq Supabase database
 Run `supabase/kitchen-order-hub.sql` once in the **Sumaq** Supabase SQL Editor.
 
-This adds:
+The migration is idempotent and adds:
 - `source_channel`, `external_order_id` and `kitchen_status` to `orders`
 - `kitchen_print_jobs`
-- a trigger that queues a pickup order only after its payment status changes to a value beginning with `Paid`
+- unique external-order protection
+- multi-printer routing by `printer_target`
+- a trigger that queues paid Pickup orders on INSERT or when payment changes to `Paid...`
 
-## 2. Netlify environment variables
-Required for the local print bridge:
-- `SUMAQ_PRINT_AGENT_TOKEN` = long random secret
+## 2. Existing web Pickup payment flow
+The former demo completion path has been replaced.
+
+Flow:
+1. Website creates the unpaid order in Supabase.
+2. `sumaq-create-order-checkout` loads the order from Supabase and creates Stripe Checkout from server-side order values.
+3. Stripe returns to `order-confirmation.html` with the Checkout Session ID.
+4. `sumaq-confirm-order-payment` retrieves the Session directly from Stripe, verifies the linked Sumaq order and marks it Paid.
+5. `stripe-webhook.js` performs the same completion as a backup if the customer closes the browser after paying.
+6. The database trigger creates the kitchen print job.
+
+Only a Stripe-confirmed payment can create the normal paid web Pickup print flow.
+
+## 3. Kitchen staff access
+Open:
+- `/sumaq17th/kitchen-orders.html`
+
+The Kitchen Hub uses `SUMAQ_KITCHEN_STAFF_PIN` if configured. If it is absent, it reuses `SUMAQ_RESERVATIONS_STAFF_PIN`.
+
+## 4. Netlify variables
+Already-used platform variables:
+- `STRIPE_SECRET_KEY`
+- `STRIPE_WEBHOOK_SECRET`
+- `SUPABASE_URL`
+- `SUPABASE_SERVICE_ROLE_KEY`
+- `SITE_URL`
+
+Needed when the physical printer PC is activated:
+- `SUMAQ_PRINT_AGENT_TOKEN` = long random secret shared only between Netlify and the local print agent
+
+Needed only when an external marketplace adapter/middleware is activated:
+- `SUMAQ_ORDER_INGEST_TOKEN` = long random secret
 
 Optional:
-- `SUMAQ_KITCHEN_STAFF_PIN` = dedicated kitchen PIN. If absent, the dashboard uses `SUMAQ_RESERVATIONS_STAFF_PIN`.
+- `SUMAQ_KITCHEN_STAFF_PIN` = dedicated kitchen PIN
 
-Redeploy after adding variables.
+Never put secret values in client-side JavaScript or GitHub.
 
-Do not put these secret values in client-side JavaScript or share them in chat.
+## 5. Local restaurant computer - physical phase later
+Use `print-agent/` on an always-on Windows/Mac/Linux PC on the restaurant network. Node 18+ is required.
 
-## 3. Local restaurant computer
-Copy `print-agent/` to an always-on Windows/Mac/Linux mini-PC or computer on the restaurant network. Node 18+ is required.
-
-Start with:
+First run in software-only test mode:
 - `SUMAQ_PRINT_AGENT_TOKEN=<same secret as Netlify>`
 - `DRY_RUN=true`
+- `PRINTER_TARGET=kitchen`
 
-Run `npm start`. A queued paid pickup order should be rendered as a ticket in the console without touching a printer.
-
-Then obtain the kitchen printer IP and test:
+For physical activation later:
 - `PRINTER_HOST=<printer IP>`
-- `PRINTER_PORT=9100` (initial raw TCP/ESC-POS test)
+- `PRINTER_PORT=9100` for the first raw TCP/ESC-POS test
+- `PRINTER_TARGET=kitchen`
 - `DRY_RUN=false`
 
-The TP200/TKP300 must be physically tested. If either device rejects raw TCP printing, keep the Order Hub and replace only the local printer driver or physical printer.
+The TP200/TKP300 are restaurant-owned. We will test their direct network protocol physically. If a device rejects raw ESC/POS/TCP, the cloud Order Hub and database stay unchanged; only the local driver/device layer changes.
 
-## 4. Uber Eats / Skip
-Uber Eats and Skip are **not live yet** in this build.
+## 6. Uber Eats / Skip
+The internal Sumaq Order Hub side is ready.
 
-The kitchen dashboard is already designed to display those sources, but live ingestion requires the restaurant's marketplace/API credentials, an approved middleware/provider integration, or provider webhooks. Do not simulate or scrape marketplace orders in production.
+Endpoint:
+- `/.netlify/functions/sumaq-order-ingest`
 
-Once those credentials/integration routes are available, add a server-side adapter that normalizes each external order into the existing `orders` + `order_items` tables and changes the payment/acceptance state only after all items are stored.
+It accepts normalized server-to-server orders for `uber_eats` or `skip`, prevents duplicate external order IDs, stores order/items, marks the marketplace order paid externally, and lets the database trigger queue it for kitchen printing.
 
-## 5. Current payment caveat
-The current Sumaq web Pickup checkout still contains demo-payment logic. Before production launch, replace the demo completion with the real Stripe order-payment confirmation/webhook so only genuinely confirmed/paid web pickup orders are automatically printed.
+Live marketplace activation still requires provider-authorized API/webhook credentials or approved middleware. Those credentials are an external dependency, not unfinished Order Hub logic.
