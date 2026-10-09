@@ -15,10 +15,11 @@ exports.handler = async function (event) {
   if (!signature) return textResponse(400, 'Missing Stripe signature.');
 
   const stripe = new Stripe(stripeSecretKey);
+  const rawBody = event.isBase64Encoded ? Buffer.from(event.body || '', 'base64') : (event.body || '');
   let stripeEvent;
 
   try {
-    stripeEvent = stripe.webhooks.constructEvent(event.body, signature, webhookSecret);
+    stripeEvent = stripe.webhooks.constructEvent(rawBody, signature, webhookSecret);
   } catch (error) {
     return textResponse(400, `Webhook signature verification failed: ${error.message}`);
   }
@@ -97,7 +98,7 @@ function addMonthsUnix(unixSeconds, months) {
 function textResponse(statusCode, body) {
   return {
     statusCode,
-    headers: { 'Content-Type': 'text/plain' },
+    headers: { 'Content-Type': 'text/plain', 'Cache-Control': 'no-store' },
     body
   };
 }
