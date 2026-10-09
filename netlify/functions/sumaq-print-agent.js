@@ -11,9 +11,17 @@ async function request(path,{method='GET',body,prefer='return=representation'}={
   if(!r.ok)throw new Error(data?.message||data?.error||`Supabase error ${r.status}`);return data;
 }
 function auth(event){const supplied=event.headers['x-sumaq-print-agent-token']||'';const expected=env('SUMAQ_PRINT_AGENT_TOKEN');if(!safeEqual(supplied,expected)){const e=new Error('Unauthorized print agent.');e.status=401;throw e}}
+async function releaseStaleClaims(target){
+  const stale=new Date(Date.now()-2*60*1000).toISOString();
+  try{
+    await request(`kitchen_print_jobs?printer_target=eq.${encodeURIComponent(target)}&status=eq.claimed&claimed_at=lt.${encodeURIComponent(stale)}`,{method:'PATCH',body:{status:'pending',claimed_at:null,agent_name:'',last_error:'Recovered stale print claim',updated_at:new Date().toISOString()},prefer:'return=minimal'});
+  }catch(e){console.warn('Could not release stale print claims',e.message)}
+}
 async function poll(payload){
   const agent=clean(payload.agentName||'restaurant-agent',80);
-  const jobs=await request('kitchen_print_jobs?select=id,order_id,status,attempts,requested_at&status=eq.pending&order=requested_at.asc&limit=1');
+  const target=clean(payload.printerTarget||'kitchen',40)||'kitchen';
+  await releaseStaleClaims(target);
+  const jobs=await request(`kitchen_print_jobs?select=id,order_id,printer_target,status,attempts,requested_at&printer_target=eq.${encodeURIComponent(target)}&status=eq.pending&order=requested_at.asc&limit=1`);
   if(!jobs?.length)return null;
   const job=jobs[0];
   const claimed=await request(`kitchen_print_jobs?id=eq.${encodeURIComponent(job.id)}&status=eq.pending`,{method:'PATCH',body:{status:'claimed',claimed_at:new Date().toISOString(),agent_name:agent,attempts:Number(job.attempts||0)+1,updated_at:new Date().toISOString()}});
@@ -21,7 +29,7 @@ async function poll(payload){
   const orders=await request(`orders?id=eq.${encodeURIComponent(job.order_id)}&select=id,public_id,order_type,source_channel,external_order_id,customer_name,email,phone,pickup_date,pickup_time,fulfillment,notes,subtotal,tax,total,status,payment_status,kitchen_status,created_at`);
   if(!orders?.length)throw new Error('Order not found for print job.');
   const items=await request(`order_items?order_id=eq.${encodeURIComponent(job.order_id)}&select=product_name,unit_price,quantity,line_total&order=id.asc`);
-  return {jobId:job.id,order:{...orders[0],items:items||[]}};
+  return {jobId:job.id,printerTarget:job.printer_target,order:{...orders[0],items:items||[]}};
 }
 async function ack(payload){
   const id=clean(payload.jobId,80);if(!/^[0-9a-f-]{36}$/i.test(id))throw new Error('Invalid job ID.');
