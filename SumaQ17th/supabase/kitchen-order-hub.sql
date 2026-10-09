@@ -45,22 +45,31 @@ language plpgsql
 security definer
 set search_path = public
 as $$
+declare
+  should_queue boolean := false;
 begin
-  if coalesce(new.payment_status,'') ilike 'Paid%' then
-    if tg_op = 'INSERT' or coalesce(old.payment_status,'') not ilike 'Paid%' then
-      if coalesce(new.order_type,'') = 'pickup' then
-        insert into public.kitchen_print_jobs(order_id, printer_target, status, requested_at, updated_at)
-        values(new.id, 'kitchen', 'pending', now(), now())
-        on conflict (order_id, printer_target) do update set
-          status = 'pending',
-          requested_at = now(),
-          claimed_at = null,
-          printed_at = null,
-          last_error = '',
-          updated_at = now();
-      end if;
-    end if;
+  if coalesce(new.payment_status,'') not ilike 'Paid%' then
+    return new;
   end if;
+
+  if tg_op = 'INSERT' then
+    should_queue := true;
+  elsif tg_op = 'UPDATE' then
+    should_queue := coalesce(old.payment_status,'') not ilike 'Paid%';
+  end if;
+
+  if should_queue and coalesce(new.order_type,'') = 'pickup' then
+    insert into public.kitchen_print_jobs(order_id, printer_target, status, requested_at, updated_at)
+    values(new.id, 'kitchen', 'pending', now(), now())
+    on conflict (order_id, printer_target) do update set
+      status = 'pending',
+      requested_at = now(),
+      claimed_at = null,
+      printed_at = null,
+      last_error = '',
+      updated_at = now();
+  end if;
+
   return new;
 end;
 $$;
