@@ -1,5 +1,5 @@
 -- Sumaq on 17th - Kitchen Order Hub + print queue
--- Safe migration. Run once in Supabase SQL Editor.
+-- Safe migration. Run once in the Sumaq Supabase SQL Editor.
 
 alter table public.orders add column if not exists source_channel text not null default 'web_pickup';
 alter table public.orders add column if not exists external_order_id text;
@@ -41,7 +41,7 @@ set search_path = public
 as $$
 begin
   if coalesce(new.payment_status,'') ilike 'Paid%' and
-     (tg_op = 'INSERT' or coalesce(old.payment_status,'') not ilike 'Paid%') then
+     coalesce(old.payment_status,'') not ilike 'Paid%' then
     if coalesce(new.order_type,'') = 'pickup' then
       insert into public.kitchen_print_jobs(order_id, printer_target, status, requested_at, updated_at)
       values(new.id, 'kitchen', 'pending', now(), now())
@@ -60,10 +60,10 @@ $$;
 
 drop trigger if exists sumaq_queue_paid_order_trigger on public.orders;
 create trigger sumaq_queue_paid_order_trigger
-after insert or update of payment_status on public.orders
+after update of payment_status on public.orders
 for each row execute function public.sumaq_queue_paid_order_for_kitchen();
 
--- Existing web orders are explicitly labelled.
+-- Existing web pickup orders are explicitly labelled.
 update public.orders
 set source_channel = 'web_pickup'
 where order_type = 'pickup' and (source_channel is null or source_channel = '');
