@@ -1,8 +1,7 @@
 const ALLOWED_ACTIONS = new Set([
   'create-reservation',
   'create-event',
-  'create-order',
-  'complete-demo-order'
+  'create-order'
 ]);
 
 function env(name) {
@@ -17,6 +16,7 @@ async function request(path, { method = 'GET', body } = {}) {
     method,
     headers: {
       apikey: env('SUPABASE_SERVICE_ROLE_KEY'),
+      Authorization: `Bearer ${env('SUPABASE_SERVICE_ROLE_KEY')}`,
       'Content-Type': 'application/json',
       Prefer: 'return=representation'
     },
@@ -62,6 +62,7 @@ exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: JSON.stringify({ error: 'Method not allowed' }) };
   }
+
   try {
     const { action, payload = {} } = JSON.parse(event.body || '{}');
     if (!ALLOWED_ACTIONS.has(action)) throw new Error('Unsupported action.');
@@ -117,7 +118,7 @@ exports.handler = async (event) => {
         tax: Number(payload.tax || 0),
         total: Number(payload.total || 0),
         status: 'Awaiting payment',
-        payment_status: 'Pending (demo)'
+        payment_status: 'Pending'
       };
       const created = (await request('orders', { method: 'POST', body: order }))[0];
       const lines = (payload.items || []).slice(0, 100).map((item) => ({
@@ -130,18 +131,6 @@ exports.handler = async (event) => {
       }));
       if (lines.length) await request('order_items', { method: 'POST', body: lines });
       data = { ...created, items: lines };
-    }
-
-    if (action === 'complete-demo-order') {
-      const id = cleanText(payload.publicId, 60);
-      data = (await request(`orders?public_id=eq.${encodeURIComponent(id)}`, {
-        method: 'PATCH',
-        body: {
-          status: 'Confirmed',
-          payment_status: 'Paid (demo)',
-          paid_at: new Date().toISOString()
-        }
-      }))[0];
     }
 
     return {
