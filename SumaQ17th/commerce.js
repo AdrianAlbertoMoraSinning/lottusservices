@@ -11,7 +11,7 @@ let initialCategoryApplied=false;
 function read(k,f){try{return JSON.parse(localStorage.getItem(k)||JSON.stringify(f))}catch{return f}}
 function write(k,v){localStorage.setItem(k,JSON.stringify(v))}
 function money(v){return new Intl.NumberFormat('en-CA',{style:'currency',currency:'CAD'}).format(Number(v)||0)}
-function esc(s){return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function esc(s){return String(s??'').replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c]))}
 function find(id){return items.find(x=>x.id===id)}
 function itemImage(i,extra=''){return i.image?`<img src="${esc(i.image)}" alt="${esc(i.name)}" ${extra}>`:`<div class="product-image-placeholder" role="img" aria-label="${esc(i.name)}"><span>SUMAQ</span><small>on 17th</small></div>`}
 function variantPrices(i){return Array.isArray(i.variants)?i.variants.map(v=>Number(v.price)).filter(Number.isFinite):[]}
@@ -86,12 +86,12 @@ async function init(){
     try{items=mergeOfficialCatalog(await SumaQData.catalog(mode));}catch(error){if(mode==='pickup'&&officialMenu){items=officialFallback();}else throw error;}
     if(mode==='pickup'&&!syncOk)items=mergeOfficialCatalog(items);
     cart=cart.filter(l=>find(l.id));write(cartKey,cart);
-    renderMenu();renderCart();setupMobileCart();const params=new URLSearchParams(location.search);if(params.get('payment')==='success'){setStatus(`Demo payment approved. Order ${params.get('order')||''} is confirmed and shared with SumaQ.`);history.replaceState({},'',location.pathname)}
+    renderMenu();renderCart();setupMobileCart();const params=new URLSearchParams(location.search);if(params.get('payment')==='success'){setStatus(`Payment confirmed. Order ${params.get('order')||''} is confirmed and shared with Sumaq.`);history.replaceState({},'',location.pathname)}
   }catch(err){console.error(err);renderMenu();setStatus(err.message,true)}
 }
 const form=document.getElementById('checkoutForm');form?.addEventListener('submit',async e=>{
   e.preventDefault();if(!cart.length){alert('Please add at least one item to your order.');return}if(!form.reportValidity())return;if(!window.SumaQData?.configured){setStatus('Central ordering is not configured yet.',true);return}const button=form.querySelector('button[type="submit"]');button.disabled=true;
-  try{const customer=Object.fromEntries(new FormData(form).entries()),sub=Number(subtotal().toFixed(2)),tax=Number((sub*.05).toFixed(2));const order={id:'SQ-'+Date.now().toString(36).toUpperCase(),type:mode,createdAt:new Date().toISOString(),status:'Awaiting payment',paymentStatus:'Pending (demo)',items:cart.map(l=>{const i=find(l.id),variantSlug=l.variantId?`${i.id}-${l.variantId}`:i.id;return {...i,id:variantSlug,name:lineName(l,i),price:linePrice(l,i),qty:l.qty}}),subtotal:sub,tax,total:Number((sub+tax).toFixed(2)),...customer};await SumaQData.callFunction('create-order',order);sessionStorage.setItem(pendingKey,JSON.stringify(order));sessionStorage.setItem('sumaqPendingOrder',JSON.stringify({mode}));location.href='order-payment.html'}catch(err){setStatus(err.message,true);button.disabled=false}
+  try{const customer=Object.fromEntries(new FormData(form).entries()),sub=Number(subtotal().toFixed(2)),tax=Number((sub*.05).toFixed(2));const order={id:'SQ-'+Date.now().toString(36).toUpperCase(),type:mode,createdAt:new Date().toISOString(),status:'Awaiting payment',paymentStatus:'Pending',items:cart.map(l=>{const i=find(l.id),variantSlug=l.variantId?`${i.id}-${l.variantId}`:i.id;return {...i,id:variantSlug,name:lineName(l,i),price:linePrice(l,i),qty:l.qty}}),subtotal:sub,tax,total:Number((sub+tax).toFixed(2)),...customer};await SumaQData.callFunction('create-order',order);sessionStorage.setItem(pendingKey,JSON.stringify(order));sessionStorage.setItem('sumaqPendingOrder',JSON.stringify({mode}));location.href='order-payment.html'}catch(err){setStatus(err.message,true);button.disabled=false}
 });
 init();
 }());
